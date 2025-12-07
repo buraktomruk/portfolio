@@ -1,0 +1,14 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- ARKA PLAN DİKDÖRTGENİ KALDIRILDI. İkon artık saydamdır. -->
+  
+  <!--
+  Dikey merkezleme için: y=50 (orta) + dy=18 (harfi görsel merkeze kaydırmak için ayar) kullanıldı.
+  -->
+  <text x="50" y="50" dy="18" 
+    text-anchor="middle" 
+    font-family="sans-serif" 
+    font-size="65" 
+    font-weight="bolder" 
+    fill="#2563eb">BT</text>
+</svg>

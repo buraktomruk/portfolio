@@ -1,0 +1,18 @@
+{
+  "name": "Burak Tomruk Portfolio",
+  "short_name": "BT",
+  "description": "Burak Tomruk - Software Engineer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1e293b",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CiAgPCEtLSBBUktBIFBMQU4gRMSwS0TDllJUR0VOxLAgS0FMRElSSUxESS4gxLBrb24gYXJ0xLFrIHNheWRhbWTEsXIuIC0tPgogIAogIDwhLS0KICBEaWtleSBtZXJrZXpsZW1lIGnDp2luOiB5PTUwIChvcnRhKSArIGR5PTE4IChoYXJmaSBnw7Zyc2VsIG1lcmtlemUga2F5ZMSxcm1hayBpw6dpbiBheWFyKSBrdWxsYW7EsWxkxLEuCiAgLS0+CiAgPHRleHQgeD0iNTAiIHk9IjUwIiBkeT0iMTgiIAogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIgCiAgICBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgCiAgICBmb250LXNpemU9IjY1IiAKICAgIGZvbnQtd2VpZ2h0PSJib2xkZXIiIAogICAgZmlsbD0iIzI1NjNlYiI+QlQ8L3RleHQ+Cjwvc3ZnPgo=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

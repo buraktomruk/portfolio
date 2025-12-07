@@ -1,0 +1,59 @@
+{
+  "navbar": {
+    "about": "Über mich",
+    "skills": "Fähigkeiten",
+    "education": "Ausbildung"
+  },
+  "hero": {
+    "role": "Softwareentwickler",
+    "greeting": "Hallo, ich bin",
+    "tagline1": "Ein Full-Stack-Entwickler, spezialisiert auf skalierbare Architekturen und Performance-Optimierung. Ansässig in",
+    "tagline2": "München, Deutschland",
+    "download_resume": "Lebenslauf herunterladen",
+    "check_thesis": "Masterarbeit ansehen",
+    "connect": "Kontaktieren Sie mich"
+  },
+  "about": {
+    "title": "Über mich",
+    "p1": "Mit über 5 Jahren Erfahrung als Full-Stack-Entwickler bin ich auf den Aufbau skalierbarer Architekturen und die Optimierung der Performance spezialisiert, mit einem starken Fokus auf Frontend-Technologien.",
+    "p2": "Ich löse leidenschaftlich gerne komplexe technische Herausforderungen und betreue Entwickler, um die technische Umsetzung an den Geschäftszielen auszurichten. Mein Ziel ist es, Anwendungen zu schaffen, die die Benutzererfahrung ve Effizienz durch kollaborative Führung und innovative Problemlösung verbessern.",
+    "location_title": "Standort",
+    "location": "München, Deutschland",
+    "languages_title": "Sprachen",
+    "languages": "Englisch, Türkisch, Deutsch"
+  },
+  "skills": {
+    "title": "Technische Fähigkeiten",
+    "categories": {
+      "frontend": "Frontend Technologien",
+      "backend": "Backend & Daten",
+      "devops": "DevOps & CI/CD",
+      "testing": "Testing & QA",
+      "other": "Weitere Tools"
+    }
+  },
+  "education": {
+    "title": "Ausbildung",
+    "tum": {
+      "date": "2019 - 2022",
+      "university": "Technische Universität München (TUM)",
+      "degree": "Master of Science (M. Sc.) - Informatik",
+      "location": "München, Deutschland"
+    },
+    "bogazici": {
+      "date": "2013 - 2018",
+      "university": "Bogazici Universität",
+      "degree": "Bachelor of Science (B. Sc.) - Technische Informatik",
+      "location": "Istanbul, Türkei"
+    }
+  },
+  "footer": {
+    "all_rights_reserved": "Alle Rechte vorbehalten."
+  },
+  "chat": {
+    "header": "Fragen Sie Burak",
+    "initial_message": "Hallo! Ich bin Buraks KI-Assistent. Fragen Sie beni alles über seine Erfahrung oder Fähigkeiten!",
+    "placeholder": "Stellen Sie eine Frage...",
+    "tooltip": "Chat mit KI"
+  }
+}

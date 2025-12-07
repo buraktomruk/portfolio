@@ -1,0 +1,5 @@
+Bu bir placeholder dosyasıdır. PWA'nın Android cihazlarda yuvarlak ikonlarda düzgün görünmesi için,
+// ai_burak.JPG dosyasının yuvarlak kenarlara sahip, maskelenebilir bir PNG versiyonunu
+// bu yola (/public/ai_burak_maskable.png) koymanız gerekmektedir.
+// Şimdilik JPG dosyanızın kendisini maskable ikon olarak kullanıyoruz, ancak görseli
+// optimize etmeniz önerilir.

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- FAVICON (Google Search için Fiziksel Dosya Yolu) -->
+    <!-- Base64 yerine direkt dosya yolu kullanmak Google'ın ikon indekslemesini kolaylaştırır -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Apple Touch Icon (iOS için Base64 kullanımı devam edebilir veya dosya yolu verilebilir) -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CiAgPCEtLSBBUktBIFBMQU4gRMSwS0TDllJUR0VOxLAgS0FMRElSSUxESS4gxLBrb24gYXJ0xLFrIHNheWRhbWTEsXIuIC0tPgogIAogIDwhLS0KICBEaWtleSBtZXJrZXpsZW1lIGnDp2luOiB5PTUwIChvcnRhKSArIGR5PTE4IChoYXJmaSBnw7Zyc2VsIG1lcmtlemUga2F5ZMSxcm1hayBpw6dpbiBheWFyKSBrdWxsYW7EsWxkxLEuCiAgLS0+CiAgPHRleHQgeD0iNTAiIHk9IjUwIiBkeT0iMTgiIAogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIgCiAgICBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgCiAgICBmb250LXNpemU9IjY1IiAKICAgIGZvbnQtd2VpZ2h0PSJib2xkZXIiIAogICAgZmlsbD0iIzI1NjNlYiI+QlQ8L3RleHQ+Cjwvc3ZnPgo=" />
+
+    <!-- PWA Manifest Link -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- PWA Theme Color -->
+    <meta name="theme-color" content="#1e293b"/>
+    
+    <!-- SEO Meta Tags -->
+    <title>Burak Tomruk | Software Engineer</title>
+    <meta name="description" content="Portfolio of Burak Tomruk, a Software Engineer based in Munich, specializing in React, TypeScript, and scalable architectures." />
+    <meta name="keywords" content="Burak Tomruk, Software Engineer, Munich, React, TypeScript, Full Stack Developer, Germany" />
+    <meta name="author" content="Burak Tomruk" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph / LinkedIn Preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Burak Tomruk | Software Engineer" />
+    <meta property="og:description" content="View my portfolio, resume, and projects. Specializing in frontend performance and scalable web architectures." />
+    <meta property="og:image" content="/ai_burak.JPG" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Service Worker kaldırma (Cache Busting için zorunlu)
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+            console.log('Old Service Worker unregistered.');
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

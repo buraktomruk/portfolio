@@ -1,0 +1,59 @@
+{
+  "navbar": {
+    "about": "About",
+    "skills": "Skills",
+    "education": "Education"
+  },
+  "hero": {
+    "role": "Software Engineer",
+    "greeting": "Hello, I'm",
+    "tagline1": "A full-stack developer specializing in scalable architectures and performance optimization. Based in",
+    "tagline2": "Munich, Germany",
+    "download_resume": "Download My Resume",
+    "check_thesis": "Check Out My Master Thesis",
+    "connect": "Connect With Me"
+  },
+  "about": {
+    "title": "About Me",
+    "p1": "With over 5 years of experience as a full-stack developer, I specialize in building scalable architectures and optimizing performance, with a strong focus on frontend technologies.",
+    "p2": "I am passionate about solving complex technical challenges and mentoring developers to align technical execution with business outcomes. My goal is to create applications that enhance user experience and efficiency through collaborative leadership and innovative problem-solving.",
+    "location_title": "Location",
+    "location": "Munich, Germany",
+    "languages_title": "Languages",
+    "languages": "English, Turkish, German"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "categories": {
+      "frontend": "Frontend Technologies",
+      "backend": "Backend & Data",
+      "devops": "DevOps & CI/CD",
+      "testing": "Testing & QA",
+      "other": "Other Tools"
+    }
+  },
+  "education": {
+    "title": "Education",
+    "tum": {
+      "date": "2019 - 2022",
+      "university": "Technical University of Munich (TUM)",
+      "degree": "Master of Science (MSc) - Computer Science",
+      "location": "Munich, Germany"
+    },
+    "bogazici": {
+      "date": "2013 - 2018",
+      "university": "Bogazici University",
+      "degree": "Bachelor of Science (BSc) - Computer Engineering",
+      "location": "Istanbul, Turkey"
+    }
+  },
+  "footer": {
+    "all_rights_reserved": "All rights reserved."
+  },
+  "chat": {
+    "header": "Ask About Burak",
+    "initial_message": "Hi! I'm Burak's AI assistant. Ask me anything about his experience or skills!",
+    "placeholder": "Ask a question...",
+    "tooltip": "Chat with AI"
+  }
+}
