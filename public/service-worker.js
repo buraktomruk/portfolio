@@ -1,10 +1,7 @@
-const CACHE_NAME = 'buraktomruk-v1';
+const CACHE_NAME = 'buraktomruk-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
-  '/service-worker.js',
-  '/resume.pdf',
-  '/thesis.pdf',
 ];
 
 self.addEventListener('install', event => {
@@ -19,6 +16,12 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Skip caching for API requests and large files
+  if (event.request.url.includes('generativelanguage.googleapis.com') ||
+      event.request.url.endsWith('.pdf')) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {

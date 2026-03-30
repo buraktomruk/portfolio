@@ -47,24 +47,26 @@ const AIChatWidget = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {isOpen && (
-        <div className="mb-4 w-80 md:w-96 h-96 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col overflow-hidden animate-in slide-in-from-bottom-10 fade-in duration-300">
-          <div className="p-4 bg-blue-600 text-white flex justify-between items-center">
-            <div className="flex items-center gap-2 font-medium">
-              <Bot className="w-5 h-5" />
+        <div className="mb-5 w-80 md:w-96 h-[450px] bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/50 flex flex-col overflow-hidden animate-fade-in-up origin-bottom-right">
+          <div className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex justify-between items-center shadow-sm z-10">
+            <div className="flex items-center gap-2.5 font-semibold tracking-wide">
+              <div className="p-1.5 bg-white/20 rounded-full backdrop-blur-sm">
+                <Bot className="w-5 h-5 drop-shadow-md" />
+              </div>
               {t('chat.header')}
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-blue-700 p-1 rounded-full transition-colors">
+            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1.5 rounded-full transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
           
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 dark:bg-slate-900/50">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-900/40 scroll-smooth">
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm ${
+                <div className={`max-w-[80%] px-4 py-2.5 text-[15px] leading-relaxed ${
                   msg.sender === 'user' 
-                    ? 'bg-blue-600 text-white rounded-br-none' 
-                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-bl-none shadow-sm'
+                    ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white rounded-2xl rounded-tr-sm shadow-md shadow-indigo-500/20' 
+                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-sm shadow-sm'
                 }`}>
                   {msg.text}
                 </div>
@@ -72,44 +74,55 @@ const AIChatWidget = () => {
             ))}
             {isTyping && (
               <div className="flex justify-start">
-                <div className="bg-white dark:bg-slate-800 p-3 rounded-2xl rounded-bl-none border border-slate-200 dark:border-slate-700 shadow-sm">
-                  <Loader2 className="w-4 h-4 animate-spin text-blue-500" />
+                <div className="bg-white dark:bg-slate-800 px-4 py-3.5 rounded-2xl rounded-tl-sm border border-slate-100 dark:border-slate-700 shadow-sm flex gap-1.5 items-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce-dot [animation-delay:-0.3s]"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce-dot [animation-delay:-0.15s]"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-slate-400 animate-bounce-dot"></span>
                 </div>
               </div>
             )}
             <div ref={messagesEndRef} />
           </div>
           
-          <form onSubmit={handleSend} className="p-3 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 flex gap-2">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder={t('chat.placeholder')}
-              className="flex-1 px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-900 border-none focus:ring-2 focus:ring-blue-500 outline-none text-sm dark:text-white"
-            />
-            <button 
-              type="submit"
-              disabled={!input.trim() || isTyping}
-              className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
+          <div className="p-3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-t border-slate-100 dark:border-slate-700/50">
+            <form onSubmit={handleSend} className="relative flex items-center">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder={t('chat.placeholder')}
+                className="w-full pl-4 pr-12 py-3 rounded-full bg-slate-100 outline-none dark:bg-slate-900/50 border border-transparent focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 text-[15px] dark:text-white transition-all shadow-inner"
+              />
+              <button 
+                type="submit"
+                disabled={!input.trim() || isTyping}
+                className="absolute right-1.5 p-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-indigo-500/30"
+              >
+                <Send className="w-4 h-4 ml-0.5" />
+              </button>
+            </form>
+          </div>
         </div>
       )}
       
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center justify-center w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 hover:scale-105 transition-all duration-300"
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6" />}
+      <div className="relative">
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="peer relative flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-full shadow-lg shadow-indigo-500/40 hover:shadow-indigo-500/60 hover:scale-105 transition-all duration-300 z-10"
+        >
+          {isOpen ? <X className="w-7 h-7 rotate-90 transition-transform duration-300" /> : <MessageSquare className="w-7 h-7 transition-transform duration-300" />}
+          {!isOpen && (
+            <span className="absolute inset-0 rounded-full bg-indigo-500/40 animate-ping -z-10"></span>
+          )}
+        </button>
+        
         {!isOpen && (
-          <span className="absolute right-16 bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-3 py-1.5 rounded-lg text-sm font-medium shadow-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-slate-100 dark:border-slate-700 pointer-events-none">
+          <span className="absolute right-20 top-1/2 -translate-y-1/2 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 px-4 py-2 rounded-xl text-sm font-medium shadow-xl opacity-0 peer-hover:opacity-100 transition-all duration-300 whitespace-nowrap border border-slate-100 dark:border-slate-700 pointer-events-none translate-x-2 peer-hover:translate-x-0">
             {t('chat.tooltip')}
+            <div className="absolute right-[-5px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white dark:bg-slate-800 border-t border-r border-slate-100 dark:border-slate-700 rotate-45"></div>
           </span>
         )}
-      </button>
+      </div>
     </div>
   );
 };

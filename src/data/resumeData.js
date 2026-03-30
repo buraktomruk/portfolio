@@ -2,7 +2,6 @@ export const RESUME_CONTEXT = `
 Name: Burak Tomruk
 Role: Software Engineer
 Location: Munich, Germany
-Phone: +49 163 2409464
 Email: burak.tomruk95@gmail.com
 Experience:
 - SES Satellites (Feb 2023-Present): Redesigned HbbTV-compliant TV app with React, TypeScript, Nest.js. Boosted engagement by 30%. Optimized Azure DevOps CI/CD. Mentored on Zustand and Tailwind.

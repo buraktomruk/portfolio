@@ -1,6 +1,6 @@
 export const generateGeminiResponse = async (prompt, systemInstruction = "") => {
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  
+
   if (!apiKey) {
     console.error("API Key missing! Please set VITE_GEMINI_API_KEY in your .env file or Netlify Environment Variables.");
     return "API key is missing! Please check your VITE_GEMINI_API_KEY environment variable in Netlify settings or your local .env file.";

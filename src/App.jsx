@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Education from './components/Education';
 import Footer from './components/Footer';
-import AIChatWidget from './components/AIChatWidget';
+const AIChatWidget = lazy(() => import('./components/AIChatWidget'));
 import BackToTopButton from './components/BackToTopButton';
 import { useTranslation } from 'react-i18next';
 
@@ -72,7 +72,9 @@ const App = () => {
       <Skills />
       <Education />
       <Footer />
-      <AIChatWidget />
+      <Suspense fallback={null}>
+        <AIChatWidget />
+      </Suspense>
       <BackToTopButton />
     </div>
   );

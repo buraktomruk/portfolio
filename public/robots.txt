@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: /sitemap.xml
+# Block bots from downloading large files
+Disallow: /resume.pdf
+Disallow: /thesis.pdf
+
+Sitemap: https://buraktomruk.dev/sitemap.xml
