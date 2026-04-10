@@ -1,48 +1,96 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { MessageSquare, X, Send, Bot, Loader2 } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/geminiApi';
 import { RESUME_CONTEXT } from '../data/resumeData';
 import { useTranslation } from 'react-i18next';
 
+// (/pilot) Memoized component to prevent cascading re-renders
+const MessageItem = memo(({ msg }) => (
+  <div className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+    <div className={`max-w-[80%] px-4 py-2.5 text-[15px] leading-relaxed ${
+      msg.sender === 'user' 
+        ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white rounded-2xl rounded-tr-sm shadow-md shadow-indigo-500/20' 
+        : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-sm shadow-sm'
+    }`}>
+      {msg.text}
+    </div>
+  </div>
+));
+
+MessageItem.displayName = 'MessageItem';
+
 const AIChatWidget = () => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { text: t('chat.initial_message'), sender: 'ai' }
-  ]);
+  const [messages, setMessages] = useState(() => {
+    // (/sync) Expert Protocol: Load chat history with corruption fallback
+    try {
+      const saved = localStorage.getItem('maximus_chat_history');
+      return saved ? JSON.parse(saved) : [{ text: t('chat.initial_message'), sender: 'ai' }];
+    } catch (e) {
+      console.warn("[Sync Warning]: Local data corrupted. Resetting chat.");
+      return [{ text: t('chat.initial_message'), sender: 'ai' }];
+    }
+  });
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isOpen]);
+  }, [messages, isOpen, scrollToBottom]);
 
-  const handleSend = async (e) => {
+  // (/sync) Mastery Protocol: Consonlidated & Debounced Persistence
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      try {
+        localStorage.setItem('maximus_chat_history', JSON.stringify(messages));
+        localStorage.setItem('maximus_sync_seq', Date.now().toString());
+      } catch (e) {
+        console.error("[Sync Fatal]: Storage quota exceeded.");
+      }
+    }, 500); // 500ms debounce to protect Main Thread
+
+    return () => clearTimeout(timeout);
+  }, [messages]);
+
+  const handleSend = useCallback(async (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isTyping) return;
+
+    // (/monetize-strategy) Expert Factor: Session Rate Limit (15 msgs)
+    const currentCount = parseInt(sessionStorage.getItem('chat_count') || "0");
+    if (currentCount >= 15) {
+      setMessages(prev => [...prev, { text: "Session limit reached. Please try tomorrow!", sender: 'ai' }]);
+      return;
+    }
+    sessionStorage.setItem('chat_count', (currentCount + 1).toString());
 
     const userMessage = input;
+    // (/offline-first) Optimistic UI: Immediate feedback
     setMessages(prev => [...prev, { text: userMessage, sender: 'user' }]);
     setInput("");
     setIsTyping(true);
 
-    const systemPrompt = `You are a helpful AI assistant for a portfolio website belonging to Burak Tomruk. 
-    Here is his resume context: ${RESUME_CONTEXT}. 
-    Answer questions based strictly on this context. 
-    If asked about contact info, provide his email (burak.tomruk95@gmail.tom).
-    Be professional, friendly, and concise. 
-    If the user speaks Turkish, reply in Turkish. If English, reply in English.`;
+    const systemPrompt = `[IDENTITY]: You are the dedicated personal AI for Burak Tomruk, a Software Engineer based in Munich, Germany. You represent ONLY the person described in the context below. 
+    [ANTI-HALLUCINATION]: NEVER suggest Burak is an actor or any other celebrity. He is a high-level Software Engineer with expertise in React, TypeScript, and Satellite TV systems.
+    [CONTEXT]: ${RESUME_CONTEXT}. 
+    [RULE]: Speak ONLY about the Software Engineer. ALWAYS reply in English. Keep answers extremely short and professional.
+    [RESPOND STYLE]: Enthusiastic, helpful, and concise.`;
 
-    const aiResponse = await generateGeminiResponse(userMessage, systemPrompt);
-    
-    setMessages(prev => [...prev, { text: aiResponse, sender: 'ai' }]);
-    setIsTyping(false);
-  };
+    try {
+      const response = await generateGeminiResponse(userMessage, systemPrompt);
+      setIsTyping(false); 
+      setMessages(prev => [...prev, { text: response, sender: 'ai' }]);
+    } catch (err) {
+      setIsTyping(false);
+      setMessages(prev => [...prev, { text: "The AI gateway is briefly offline. Please try again soon.", sender: 'ai' }]);
+    }
+  }, [input, isTyping, t, RESUME_CONTEXT]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
@@ -62,15 +110,7 @@ const AIChatWidget = () => {
           
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50 dark:bg-slate-900/40 scroll-smooth">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[80%] px-4 py-2.5 text-[15px] leading-relaxed ${
-                  msg.sender === 'user' 
-                    ? 'bg-gradient-to-br from-indigo-500 to-purple-500 text-white rounded-2xl rounded-tr-sm shadow-md shadow-indigo-500/20' 
-                    : 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-100 dark:border-slate-700 rounded-2xl rounded-tl-sm shadow-sm'
-                }`}>
-                  {msg.text}
-                </div>
-              </div>
+              <MessageItem key={idx} msg={msg} />
             ))}
             {isTyping && (
               <div className="flex justify-start">

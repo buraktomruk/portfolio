@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Download, BookOpen, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
+const greetings = [
+  "Hello World,",
+  "Merhaba Dünya,",
+  "Hola Mundo,",
+  "Bonjour le monde,",
+  "Hallo Welt,",
+  "Ciao Mondo,"
+];
+
 const Hero = () => {
   const { t } = useTranslation();
+  const [greetingIndex, setGreetingIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGreetingIndex((prev) => (prev + 1) % greetings.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <header id="home" className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
@@ -20,8 +37,25 @@ const Hero = () => {
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6">
             {t('hero.role')}
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-slate-900 dark:text-white">
-            {t('hero.greeting')} <span className="text-blue-600 dark:text-blue-400">Burak Tomruk</span>.
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-8 text-slate-900 dark:text-white leading-[1.1]">
+            <span className="block h-[1.2em] relative overflow-hidden text-blue-600 dark:text-blue-400 mb-1 lg:mb-2">
+              <span className="invisible pointer-events-none aria-hidden whitespace-nowrap">Bonjour le monde,</span>
+              {greetings.map((greeting, idx) => (
+                <span
+                  key={idx}
+                  className={`absolute top-0 left-0 right-0 whitespace-nowrap transition-all duration-700 ease-in-out ${
+                    idx === greetingIndex
+                      ? 'translate-y-0 opacity-100'
+                      : idx < greetingIndex
+                      ? '-translate-y-full opacity-0'
+                      : 'translate-y-full opacity-0'
+                  }`}
+                >
+                  {greeting}
+                </span>
+              ))}
+            </span>
+            <span className="block translate-y-[-0.05em]">I am Burak Tomruk.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mb-10">
             {t('hero.tagline1')} <span className="text-slate-900 dark:text-slate-200 font-medium">{t('hero.tagline2')}</span>.
@@ -60,9 +94,9 @@ const Hero = () => {
                 <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span className="font-medium">LinkedIn</span>
               </a>
-              <a href="mailto:burak.tomruk95@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-[#EA4335] hover:text-[#EA4335] dark:hover:text-[#EA4335] dark:hover:border-[#EA4335] transition-all shadow-sm group">
+              <a href="mailto:burak.tomruk95@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-500 dark:hover:text-red-400 dark:hover:border-red-400 transition-all shadow-sm group">
                 <Mail className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                <span className="font-medium">Email</span>
+                <span className="font-medium">Send Message</span>
               </a>
             </div>
           </div>

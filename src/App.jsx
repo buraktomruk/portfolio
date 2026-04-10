@@ -14,6 +14,7 @@ const App = () => {
   const [currentLang, setCurrentLang] = useState(i18n.language);
   
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -26,6 +27,10 @@ const App = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = `${totalScroll / windowHeight}`;
+      setScrollProgress(Number(scroll) * 100);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -59,6 +64,10 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 dark:bg-slate-900 dark:text-slate-100 dark:selection:bg-blue-900 transition-colors duration-300">
+      <div 
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 z-[100] transition-all duration-150 ease-out"
+        style={{ width: `${scrollProgress}%` }}
+      />
       <Navbar 
         isScrolled={isScrolled} 
         scrollToSection={scrollToSection} 
