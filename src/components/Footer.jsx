@@ -16,6 +16,7 @@ const SocialLink = ({ href, icon, label }) => (
 
 const Footer = () => {
   const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="py-12 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
@@ -23,7 +24,7 @@ const Footer = () => {
         <div className="text-center md:text-left">
           <div className="text-2xl font-bold tracking-tighter text-slate-900 dark:text-white mb-2">Burak Tomruk</div>
           <p className="text-slate-500 dark:text-slate-400 text-sm">
-            © 2025 {t('footer.all_rights_reserved')}
+            © {currentYear} {t('footer.all_rights_reserved')}
           </p>
         </div>
         
