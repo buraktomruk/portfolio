@@ -1,6 +1,7 @@
 import React from 'react';
 import { User, MapPin, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import GithubStats from './GithubStats';
 
 const About = () => {
   const { t } = useTranslation();
@@ -48,6 +49,11 @@ const About = () => {
                   <div className="font-medium">{t('about.languages')}</div>
                 </div>
               </div>
+            </div>
+
+            {/* GitHub Stats widget — live data via Netlify serverless function */}
+            <div className="mt-6">
+              <GithubStats />
             </div>
           </div>
         </div>
