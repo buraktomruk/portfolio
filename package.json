@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:netlify": "HOME=\"$PWD/.netlify/home\" XDG_CONFIG_HOME=\"$PWD/.netlify/config-home\" netlify dev --offline --offline-env --no-open --skip-wait-port",
+    "dev:netlify": "node -e \"const { spawn } = require('node:child_process'); const path = require('node:path'); const env = { ...process.env, HOME: path.join(process.cwd(), '.netlify/home'), XDG_CONFIG_HOME: path.join(process.cwd(), '.netlify/config-home') }; const cmd = process.platform === 'win32' ? 'npx.cmd' : 'npx'; const child = spawn(cmd, ['netlify', 'dev', '--offline', '--offline-env', '--no-open', '--skip-wait-port'], { stdio: 'inherit', env }); child.on('exit', (code) => process.exit(code ?? 0));\"",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
