@@ -55,5 +55,14 @@
     "initial_message": "Hi! I'm Burak's AI assistant. Ask me anything about his experience or skills!",
     "placeholder": "Ask a question...",
     "tooltip": "Chat with AI"
+  },
+  "githubStats": {
+    "title": "GitHub Activity",
+    "unavailable": "GitHub activity is currently unavailable.",
+    "retry": "Retry",
+    "viewProfile": "View Profile",
+    "viewProfileAria": "View the GitHub profile in a new tab",
+    "offline": "Offline",
+    "summary": "{{publicRepos}} public repos · {{followers}} followers"
   }
 }

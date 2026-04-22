@@ -55,5 +55,14 @@
     "initial_message": "Hallo! Ich bin Buraks KI-Assistent. Fragen Sie beni alles über seine Erfahrung oder Fähigkeiten!",
     "placeholder": "Stellen Sie eine Frage...",
     "tooltip": "Chat mit KI"
+  },
+  "githubStats": {
+    "title": "GitHub Aktivität",
+    "unavailable": "GitHub-Aktivitäten sind momentan nicht verfügbar.",
+    "retry": "Erneut versuchen",
+    "viewProfile": "Profil ansehen",
+    "viewProfileAria": "GitHub-Profil in einem neuen Tab öffnen",
+    "offline": "Offline",
+    "summary": "{{publicRepos}} öffentliche Repositories · {{followers}} Follower"
   }
 }

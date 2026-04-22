@@ -1,135 +1,222 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import * as Sentry from "@sentry/node";
+import {
+  createAbortError,
+  createGithubStatsEnvelope,
+  getGithubStatsCacheKey,
+  GITHUB_STATS_BACKUP_TTL_SECONDS,
+  GITHUB_STATS_FRESH_TTL_SECONDS,
+  GITHUB_STATS_RATE_LIMIT_MAX_REQUESTS,
+  GITHUB_STATS_RATE_LIMIT_WINDOW_SECONDS,
+  GITHUB_STATS_TIMEOUT_MS,
+  hasValidHttpUrl,
+  hasValidSentryDsn,
+  normalizeGithubUser,
+  resolveGithubUsername,
+} from "../../src/shared/githubStats.js";
 
-// ─── Sentry ────────────────────────────────────────────────────────────────
+const backendSentryDsn = hasValidSentryDsn(process.env.SENTRY_DSN)
+  ? process.env.SENTRY_DSN
+  : undefined;
+
+if (!backendSentryDsn) {
+  delete process.env.SENTRY_DSN;
+}
+
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
+  dsn: backendSentryDsn,
   tracesSampleRate: 0.1,
+  enabled: Boolean(backendSentryDsn),
 });
 
-// ─── Upstash Redis ─────────────────────────────────────────────────────────
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
+const redisUrl = hasValidHttpUrl(process.env.UPSTASH_REDIS_REST_URL)
+  ? process.env.UPSTASH_REDIS_REST_URL
+  : undefined;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim() || undefined;
+const redisEnabled = Boolean(redisUrl && redisToken);
 
-// ─── Rate Limiter: 20 requests per IP per minute (sliding window) ───────────
-const ratelimit = new Ratelimit({
-  redis,
-  limiter: Ratelimit.slidingWindow(20, "1 m"),
-  analytics: true,
-  prefix: "rl_portfolio",
-});
+const redis = redisEnabled
+  ? new Redis({
+      url: redisUrl,
+      token: redisToken,
+    })
+  : null;
 
-// ─── Cache Keys & TTLs ─────────────────────────────────────────────────────
-const FRESH_KEY   = "github_stats_fresh";   // 5-min freshness window
-const BACKUP_KEY  = "github_stats_backup";  // 24-hour stale fallback
-const FRESH_TTL   = 300;    // seconds
-const BACKUP_TTL  = 86400;  // seconds
+const ratelimit = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(
+        GITHUB_STATS_RATE_LIMIT_MAX_REQUESTS,
+        `${GITHUB_STATS_RATE_LIMIT_WINDOW_SECONDS} s`,
+      ),
+      analytics: true,
+      prefix: "rl_portfolio",
+    })
+  : null;
 
-// ─── CORS / default headers ────────────────────────────────────────────────
+if (!redisEnabled) {
+  console.warn(
+    "GitHub stats: Upstash Redis config missing or invalid; cache and rate limiting are disabled.",
+  );
+}
+
 const BASE_HEADERS = {
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
+  "Content-Type": "application/json; charset=utf-8",
+  "Cache-Control": "no-store",
 };
 
-/** Normalize raw GitHub user JSON into only the fields we expose */
-function normalize(ghData) {
+function jsonResponse(statusCode, body, headers = BASE_HEADERS) {
   return {
-    followers:   ghData.followers,
-    publicRepos: ghData.public_repos,
-    profileUrl:  ghData.html_url,
+    statusCode,
+    headers,
+    body: JSON.stringify(body),
   };
 }
 
-/** Build a GithubStatsResponse envelope */
-function envelope(data, { cached, stale = false }) {
-  return { source: "github", cached, stale, data };
+function getHeaderValue(headers, name) {
+  if (!headers || typeof headers !== "object") {
+    return undefined;
+  }
+
+  const targetHeader = Object.keys(headers).find(
+    (headerName) => headerName.toLowerCase() === name.toLowerCase(),
+  );
+
+  return targetHeader ? headers[targetHeader] : undefined;
+}
+
+function getClientIp(event) {
+  const netlifyIp = getHeaderValue(event.headers, "x-nf-client-connection-ip");
+  if (typeof netlifyIp === "string" && netlifyIp.trim() !== "") {
+    return netlifyIp.trim();
+  }
+
+  const forwardedFor = getHeaderValue(event.headers, "x-forwarded-for");
+  if (typeof forwardedFor === "string" && forwardedFor.trim() !== "") {
+    return forwardedFor.split(",")[0].trim();
+  }
+
+  return "127.0.0.1";
+}
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = GITHUB_STATS_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(createAbortError("GitHub API request timed out.")), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
 }
 
 export const handler = async (event) => {
-  // ── Rate Limiting ──────────────────────────────────────────────────────
-  const ip = event.headers["x-nf-client-connection-ip"] || "127.0.0.1";
+  let shouldFlushSentry = false;
 
-  try {
-    const { success } = await ratelimit.limit(`ip_${ip}`);
-    if (!success) {
-      return {
-        statusCode: 429,
-        headers: BASE_HEADERS,
-        body: JSON.stringify({ error: "Rate limit exceeded. Try again in a minute." }),
-      };
+  const username = resolveGithubUsername(process.env.GITHUB_USERNAME);
+  const ip = getClientIp(event);
+  const freshCacheKey = getGithubStatsCacheKey("fresh", username);
+  const backupCacheKey = getGithubStatsCacheKey("backup", username);
+
+  const captureServerError = (error) => {
+    if (!backendSentryDsn) {
+      return;
     }
-  } catch (rlError) {
-    // If Redis is down we don't want to block every user – log and continue.
-    Sentry.captureException(rlError);
+
+    shouldFlushSentry = true;
+    Sentry.captureException(error);
+  };
+
+  const respond = async (response) => {
+    if (shouldFlushSentry) {
+      await Sentry.flush(2000).catch(() => undefined);
+    }
+
+    return response;
+  };
+
+  if (ratelimit) {
+    try {
+      const { success } = await ratelimit.limit(`ip_${ip}`);
+      if (!success) {
+        return respond(
+          jsonResponse(
+            429,
+            { error: "Rate limit exceeded. Try again in a minute." },
+            {
+              ...BASE_HEADERS,
+              "Retry-After": String(GITHUB_STATS_RATE_LIMIT_WINDOW_SECONDS),
+            },
+          ),
+        );
+      }
+    } catch (rlError) {
+      captureServerError(rlError);
+    }
   }
 
-  // ── Fresh Cache Check ──────────────────────────────────────────────────
-  try {
-    const freshData = await redis.get(FRESH_KEY);
-    if (freshData) {
-      return {
-        statusCode: 200,
-        headers: BASE_HEADERS,
-        body: JSON.stringify(envelope(freshData, { cached: true })),
-      };
+  if (redis) {
+    try {
+      const freshData = await redis.get(freshCacheKey);
+      if (freshData) {
+        return respond(jsonResponse(200, createGithubStatsEnvelope(freshData, { cached: true })));
+      }
+    } catch (cacheError) {
+      captureServerError(cacheError);
     }
-  } catch (cacheError) {
-    Sentry.captureException(cacheError);
   }
 
-  // ── GitHub API Fetch ───────────────────────────────────────────────────
   try {
-    const username = process.env.GITHUB_USERNAME || "buraktomruk";
-    const headers  = { "User-Agent": "portfolio-serverless/1.0" };
+    const headers = { "User-Agent": "portfolio-serverless/1.0" };
     if (process.env.GITHUB_TOKEN) {
       headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
     }
 
-    const res = await fetch(`https://api.github.com/users/${username}`, { headers });
+    const res = await fetchWithTimeout(
+      `https://api.github.com/users/${username}`,
+      { headers },
+      GITHUB_STATS_TIMEOUT_MS,
+    );
 
     if (!res.ok) {
       throw new Error(`GitHub API returned ${res.status}`);
     }
 
-    const ghData       = await res.json();
-    const normalizedData = normalize(ghData);
+    const ghData = await res.json();
+    const normalizedData = normalizeGithubUser(ghData, username);
 
-    // Write both caches in parallel – don't block the response on a write failure
-    Promise.all([
-      redis.set(FRESH_KEY,  normalizedData, { ex: FRESH_TTL }),
-      redis.set(BACKUP_KEY, normalizedData, { ex: BACKUP_TTL }),
-    ]).catch((writeError) => Sentry.captureException(writeError));
-
-    return {
-      statusCode: 200,
-      headers: BASE_HEADERS,
-      body: JSON.stringify(envelope(normalizedData, { cached: false })),
-    };
-  } catch (fetchError) {
-    Sentry.captureException(fetchError);
-
-    // ── Stale Backup Fallback ────────────────────────────────────────────
-    try {
-      const staleData = await redis.get(BACKUP_KEY);
-      if (staleData) {
-        return {
-          statusCode: 200,
-          headers: BASE_HEADERS,
-          body: JSON.stringify(envelope(staleData, { cached: true, stale: true })),
-        };
+    if (redis) {
+      try {
+        await Promise.all([
+          redis.set(freshCacheKey, normalizedData, { ex: GITHUB_STATS_FRESH_TTL_SECONDS }),
+          redis.set(backupCacheKey, normalizedData, { ex: GITHUB_STATS_BACKUP_TTL_SECONDS }),
+        ]);
+      } catch (writeError) {
+        captureServerError(writeError);
       }
-    } catch (backupError) {
-      Sentry.captureException(backupError);
     }
 
-    // Only hit this path when GitHub AND the 24-hour backup cache are both dead
-    return {
-      statusCode: 500,
-      headers: BASE_HEADERS,
-      body: JSON.stringify({ error: "GitHub activity temporarily unavailable." }),
-    };
+    return respond(jsonResponse(200, createGithubStatsEnvelope(normalizedData, { cached: false })));
+  } catch (fetchError) {
+    captureServerError(fetchError);
+
+    if (redis) {
+      try {
+        const staleData = await redis.get(backupCacheKey);
+        if (staleData) {
+          return respond(
+            jsonResponse(200, createGithubStatsEnvelope(staleData, { cached: true, stale: true })),
+          );
+        }
+      } catch (backupError) {
+        captureServerError(backupError);
+      }
+    }
+
+    return respond(jsonResponse(500, { error: "GitHub activity temporarily unavailable." }));
   }
 };

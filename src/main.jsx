@@ -6,13 +6,16 @@ import './i18n/i18n';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import * as Sentry from '@sentry/react';
+import { hasValidSentryDsn } from './shared/githubStats.js';
 
-// Lean Sentry setup – no Session Replay to keep free-tier quota comfortable.
-// tracesSampleRate 0.1 is enough to prove observability without wasting quota.
+const frontendSentryDsn = hasValidSentryDsn(import.meta.env.VITE_SENTRY_DSN)
+  ? import.meta.env.VITE_SENTRY_DSN
+  : undefined;
+
 Sentry.init({
-  dsn: import.meta.env.VITE_SENTRY_DSN,
+  dsn: frontendSentryDsn,
   tracesSampleRate: 0.1,
-  enabled: !!import.meta.env.VITE_SENTRY_DSN, // silently disabled in local dev if DSN not set
+  enabled: Boolean(frontendSentryDsn),
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
