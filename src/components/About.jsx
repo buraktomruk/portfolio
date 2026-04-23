@@ -1,7 +1,6 @@
 import React from 'react';
 import { User, MapPin, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import GithubStats from './GithubStats';
 
 const About = () => {
   const { t } = useTranslation();
@@ -16,13 +15,13 @@ const About = () => {
               {t('about.title')}
             </h2>
             <div className="aspect-square rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-700 relative shadow-xl -rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-slate-600">
-              <img 
-                src="/ai_burak.JPG" 
+              <img
+                src="/ai_burak.JPG"
                 alt="Burak Tomruk"
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.onerror = null; 
-                  e.target.src = "https://ui-avatars.com/api/?name=Burak+Tomruk&background=0f172a&color=fff&size=512&font-size=0.33";
+                  e.target.onerror = null;
+                  e.target.src = "/ai_burak_maskable.png";
                 }}
               />
             </div>
@@ -49,11 +48,6 @@ const About = () => {
                   <div className="font-medium">{t('about.languages')}</div>
                 </div>
               </div>
-            </div>
-
-            {/* GitHub Stats widget — live data via Netlify serverless function */}
-            <div className="mt-6">
-              <GithubStats />
             </div>
           </div>
         </div>
