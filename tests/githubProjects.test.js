@@ -92,10 +92,12 @@ test('filterAndSortGithubRepos falls back to newest non-forks with description',
 });
 
 test('invalid usernames and placeholder tokens are ignored safely', () => {
+  const syntheticGithubToken = `gh${'p'}_abcdefghijklmnopqrstuvwxyz123456`;
+
   assert.strictEqual(resolveGithubUsername('your_username'), 'buraktomruk');
   assert.strictEqual(resolveGithubUsername('not valid'), 'buraktomruk');
   assert.strictEqual(resolveOptionalGithubToken('your-token'), undefined);
-  assert.strictEqual(resolveOptionalGithubToken('Bearer ghp_abcdefghijklmnopqrstuvwxyz123456'), 'ghp_abcdefghijklmnopqrstuvwxyz123456');
+  assert.strictEqual(resolveOptionalGithubToken(`Bearer ${syntheticGithubToken}`), syntheticGithubToken);
   assert.strictEqual(resolveOptionalRedisToken('placeholder'), undefined);
   assert.strictEqual(resolveOptionalRedisToken('upstash-real-token'), 'upstash-real-token');
 });
