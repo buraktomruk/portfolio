@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Activity, ArrowUpRight, Circle, Clock3, FolderGit2, Sparkles, Star } from 'lucide-react';
+import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Star } from 'lucide-react';
 import { featuredWorkItems } from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
@@ -59,30 +59,6 @@ const ACCENT_STYLES = {
 
 function getAccentStyles(accent) {
   return ACCENT_STYLES[accent] ?? ACCENT_STYLES.emerald;
-}
-
-function getHostname(url) {
-  try {
-    return new URL(url).hostname.replace(/^www\./, '');
-  } catch {
-    return '';
-  }
-}
-
-function formatRepoDate(dateString, locale) {
-  if (!dateString) {
-    return '';
-  }
-
-  const value = new Date(dateString);
-  if (Number.isNaN(value.getTime())) {
-    return '';
-  }
-
-  return new Intl.DateTimeFormat(locale, {
-    month: 'short',
-    year: 'numeric',
-  }).format(value);
 }
 
 function ShowcaseCard({ item, t }) {
@@ -145,7 +121,39 @@ function ShowcaseCard({ item, t }) {
   );
 }
 
-function RepoCard({ project, t }) {
+function SectionHeader({ 
+  title, 
+  isExpanded, 
+  onToggle, 
+  summary, 
+  id,
+  t 
+}) {
+  return (
+    <div className="border-b border-white/5 pb-6">
+      <div className="flex items-center justify-between gap-4">
+        <h3 className="text-xl font-bold text-white">{title}</h3>
+        <button
+          type="button"
+          aria-expanded={isExpanded}
+          aria-controls={id}
+          onClick={onToggle}
+          className="flex items-center gap-2 text-sm font-bold text-slate-500 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500"
+        >
+          {isExpanded ? t('projects.collapse') : t('projects.expand')}
+          <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+        </button>
+      </div>
+      {!isExpanded && summary && (
+        <p className="mt-3 text-sm text-slate-500 animate-in fade-in duration-500">
+          {summary}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function RepoCard({ project }) {
   const languageColorClass = project.language
     ? (LANGUAGE_COLORS[project.language] || 'text-slate-500')
     : 'text-slate-600';
@@ -192,10 +200,12 @@ function RepoCard({ project, t }) {
   );
 }
 
-function GithubSignal({ t, statsState, activityState, profileUrl }) {
+function GithubSignal({ t, statsState, activityState, projectsState, profileUrl }) {
   const stats = statsState.response?.data;
   const activity = activityState.response?.data;
+  const repoItems = projectsState.response?.data?.slice(0, 3) || [];
   const isLoading = statsState.status === 'loading' || activityState.status === 'loading';
+  const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
   const isError = statsState.status === 'unavailable' || activityState.status === 'unavailable';
 
   if (isError) {
@@ -211,104 +221,137 @@ function GithubSignal({ t, statsState, activityState, profileUrl }) {
   const entries = activity?.entries?.slice(0, 3) || [];
 
   return (
-    <div className="mt-16 rounded-3xl border border-white/5 bg-white/[0.01] p-6 sm:p-8">
-      <div className="flex flex-col gap-8 lg:flex-row">
-        {/* Stats Strip */}
-        <div className="flex flex-1 flex-col justify-center border-white/5 lg:border-r lg:pr-12">
-          <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-            <Activity className="h-3 w-3" />
-            {t('projects.githubSummaryTitle')}
-          </div>
-          
-          <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 lg:grid-cols-2">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                {t('projects.githubMetricEvents')}
-              </p>
-              <p className="mt-1 text-2xl font-bold text-white">
-                {isLoading ? '...' : (activity?.totals?.eventsLast30Days || 0)}
-              </p>
+    <div className="mt-12 animate-in fade-in slide-in-from-top-4 duration-500">
+      <div className="rounded-3xl border border-white/5 bg-white/[0.01] p-6 sm:p-8">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* Stats Strip */}
+          <div className="flex flex-1 flex-col justify-center border-white/5 lg:border-r lg:pr-12">
+            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+              <Activity className="h-3 w-3" />
+              {t('projects.githubSummaryTitle')}
             </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                {t('projects.githubMetricActiveDays')}
-              </p>
-              <p className="mt-1 text-2xl font-bold text-white">
-                {isLoading ? '...' : (activity?.totals?.activeDaysLast30Days || 0)}
-              </p>
+            
+            <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 lg:grid-cols-2">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                  {t('projects.githubMetricEvents')}
+                </p>
+                <p className="mt-1 text-2xl font-bold text-white">
+                  {isLoading ? '...' : (activity?.totals?.eventsLast30Days || 0)}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                  {t('projects.githubMetricActiveDays')}
+                </p>
+                <p className="mt-1 text-2xl font-bold text-white">
+                  {isLoading ? '...' : (activity?.totals?.activeDaysLast30Days || 0)}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                  {t('projects.githubMetricContributions')}
+                </p>
+                <p className="mt-1 text-2xl font-bold text-white">
+                  {isLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
+                </p>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                  {t('projects.githubMetricTopRepo')}
+                </p>
+                <p className="mt-1 truncate text-sm font-bold text-slate-300">
+                  {isLoading ? '...' : (activity?.totals?.topRepoName || '—')}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                {t('projects.githubMetricContributions')}
-              </p>
-              <p className="mt-1 text-2xl font-bold text-white">
-                {isLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
-              </p>
-            </div>
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                {t('projects.githubMetricTopRepo')}
-              </p>
-              <p className="mt-1 truncate text-sm font-bold text-slate-300">
-                {isLoading ? '...' : (activity?.totals?.topRepoName || '—')}
-              </p>
+
+            <div className="mt-8">
+              <a
+                href={profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-cyan-500 transition-colors hover:text-cyan-400"
+              >
+                {t('projects.githubOpenProfile')}
+                <ArrowUpRight className="h-3 w-3" />
+              </a>
             </div>
           </div>
 
-          <div className="mt-8">
-            <a
-              href={profileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-cyan-500 transition-colors hover:text-cyan-400"
-            >
-              {t('projects.githubOpenProfile')}
-              <ArrowUpRight className="h-3 w-3" />
-            </a>
+          {/* Mini Timeline */}
+          <div className="flex-[1.5]">
+            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+              {t('projects.githubRecentActivity')}
+            </div>
+            <div className="mt-6 space-y-4">
+              {isLoading ? (
+                [...Array(3)].map((_, i) => (
+                  <div key={i} className="h-10 w-full animate-pulse rounded-lg bg-white/5" />
+                ))
+              ) : entries.length === 0 ? (
+                <p className="text-sm text-slate-600">{t('projects.githubTimelineEmpty')}</p>
+              ) : (
+                entries.map((entry) => (
+                  <div key={entry.id} className="flex items-center justify-between gap-4 py-1 border-b border-white/[0.03] last:border-0">
+                    <span className="truncate text-sm text-slate-400">
+                      {entry.summary}
+                    </span>
+                    <span className="shrink-0 text-[10px] font-bold text-slate-600">
+                      {entry.repoName.split('/')[1]}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Mini Timeline */}
-        <div className="flex-[1.5]">
-          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-            {t('projects.githubRecentActivity')}
+      {/* Selected Repositories - Now inside GitHub Signal */}
+      { (repoItems.length > 0 || isRepoLoading) && (
+        <div className="mt-8">
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+              {t('projects.repoTitle')}
+            </p>
           </div>
-          <div className="mt-6 space-y-4">
-            {isLoading ? (
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {isRepoLoading ? (
               [...Array(3)].map((_, i) => (
-                <div key={i} className="h-10 w-full animate-pulse rounded-lg bg-white/5" />
+                <div key={i} className="h-32 animate-pulse rounded-2xl bg-white/[0.02]" />
               ))
-            ) : entries.length === 0 ? (
-              <p className="text-sm text-slate-600">{t('projects.githubTimelineEmpty')}</p>
             ) : (
-              entries.map((entry) => (
-                <div key={entry.id} className="flex items-center justify-between gap-4 py-1 border-b border-white/[0.03] last:border-0">
-                  <span className="truncate text-sm text-slate-400">
-                    {entry.summary}
-                  </span>
-                  <span className="shrink-0 text-[10px] font-bold text-slate-600">
-                    {entry.repoName.split('/')[1]}
-                  </span>
-                </div>
+              repoItems.map((project) => (
+                <RepoCard key={project.id} project={project} />
               ))
             )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
 export default function Projects() {
   const { t } = useTranslation();
+  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
+  const [isGithubExpanded, setIsGithubExpanded] = useState(true);
 
   const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope);
   const activityState = useGithubResource(GITHUB_ACTIVITY_ENDPOINT, isGithubActivityEnvelope);
   const projectsState = useGithubResource(GITHUB_PROJECTS_ENDPOINT, isGithubProjectsEnvelope);
 
   const profileUrl = statsState.response?.data?.profileUrl || getGithubProfileUrl();
-  const repoItems = projectsState.response?.data?.slice(0, 3) || [];
-  const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
+  const activity = activityState.response?.data;
+
+  // Summaries
+  const productsSummary = `${featuredWorkItems.length} ${t('projects.summaryProducts')} · ${featuredWorkItems.map(i => i.title).join(', ')}`;
+  
+  const githubSummary = activity?.totals ? (
+    `${activity.totals.eventsLast30Days} ${t('projects.summaryEvents')} · ${activity.totals.activeDaysLast30Days} ${t('projects.summaryActiveDays')} · ${activity.totals.topRepoName || 'portfolio'} ${t('projects.summaryMostActive')}`
+  ) : t('projects.githubSummaryTitle');
 
   return (
     <section id="projects" className="relative border-t border-white/5 bg-[#030712] py-24 text-white sm:py-32">
@@ -325,59 +368,55 @@ export default function Projects() {
 
         {/* Subsection 1: Live Products */}
         <div className="mt-20">
-          <div className="flex items-center gap-3 border-b border-white/5 pb-6">
-            <h3 className="text-xl font-bold text-white">{t('projects.showcaseTitle')}</h3>
-          </div>
+          <SectionHeader
+            title={t('projects.showcaseTitle')}
+            isExpanded={isProductsExpanded}
+            onToggle={() => setIsProductsExpanded(!isProductsExpanded)}
+            summary={productsSummary}
+            id="live-products-section"
+            t={t}
+          />
           
-          <div className="mt-10 grid gap-8 md:grid-cols-2">
-            {featuredWorkItems.map((item) => (
-              <ShowcaseCard key={item.id} item={item} t={t} />
-            ))}
+          <div
+            id="live-products-section"
+            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-10' : 'grid-rows-[0fr] opacity-0'}`}
+          >
+            <div className="overflow-hidden">
+              <div className="grid gap-8 md:grid-cols-2">
+                {featuredWorkItems.map((item) => (
+                  <ShowcaseCard key={item.id} item={item} t={t} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Subsection 2: GitHub Signal */}
-        <div className="mt-32">
-          <div className="flex items-center gap-3 border-b border-white/5 pb-6">
-            <h3 className="text-xl font-bold text-white">{t('projects.githubSignalTitle')}</h3>
-          </div>
-          
-          <GithubSignal 
-            t={t} 
-            statsState={statsState} 
-            activityState={activityState} 
-            profileUrl={profileUrl} 
+        <div className="mt-24">
+          <SectionHeader
+            title={t('projects.githubSignalTitle')}
+            isExpanded={isGithubExpanded}
+            onToggle={() => setIsGithubExpanded(!isGithubExpanded)}
+            summary={githubSummary}
+            id="github-signal-section"
+            t={t}
           />
-        </div>
-
-        {/* Subsection 3: Selected Repositories */}
-        { (repoItems.length > 0 || isRepoLoading) && (
-          <div className="mt-32">
-            <div className="flex items-center justify-between border-b border-white/5 pb-6">
-              <h3 className="text-xl font-bold text-white">{t('projects.repoTitle')}</h3>
-              <a 
-                href={profileUrl} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-sm font-bold text-slate-500 hover:text-white"
-              >
-                {t('projects.viewAllRepos')}
-              </a>
-            </div>
-
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {isRepoLoading ? (
-                [...Array(3)].map((_, i) => (
-                  <div key={i} className="h-40 animate-pulse rounded-2xl bg-white/[0.02]" />
-                ))
-              ) : (
-                repoItems.map((project) => (
-                  <RepoCard key={project.id} project={project} t={t} />
-                ))
-              )}
+          
+          <div
+            id="github-signal-section"
+            className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-10' : 'grid-rows-[0fr] opacity-0'}`}
+          >
+            <div className="overflow-hidden">
+              <GithubSignal 
+                t={t} 
+                statsState={statsState} 
+                activityState={activityState} 
+                projectsState={projectsState}
+                profileUrl={profileUrl} 
+              />
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
