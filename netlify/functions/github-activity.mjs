@@ -11,7 +11,7 @@ import {
 export const handler = async (event) => {
   const context = createGithubContext(event, {
     kind: "activity",
-    cacheKeyPrefix: "activity",
+    cacheKeyPrefix: "activity_v2",
     rateLimitPrefix: "rl_portfolio_activity",
   });
 

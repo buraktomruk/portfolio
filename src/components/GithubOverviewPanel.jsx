@@ -1,5 +1,5 @@
 import React from 'react';
-import { Activity, ArrowUpRight, Clock3, FolderGit2, MapPin } from 'lucide-react';
+import { Activity, ArrowUpRight, Clock3, FolderGit2, MapPin, RefreshCw } from 'lucide-react';
 import {
   GITHUB_ACTIVITY_RECENT_DAYS,
   GITHUB_ACTIVITY_WINDOW_DAYS,
@@ -111,6 +111,22 @@ function SummaryRow({ icon: Icon, label, value, emphasize = false }) {
   );
 }
 
+function getSnapshotLabelKey(states) {
+  if (states.some((state) => state.status === 'loading' || state.status === 'refreshing')) {
+    return 'projects.githubSnapshotRefreshing';
+  }
+
+  if (states.some((state) => state.status === 'stale' || state.response?.stale || state.response?.cached)) {
+    return 'projects.githubSnapshotCached';
+  }
+
+  if (states.some((state) => state.status === 'unavailable')) {
+    return 'projects.githubSnapshotUnavailable';
+  }
+
+  return 'projects.githubSnapshotLive';
+}
+
 function ActivityCadenceStrip({ cadence, locale, t }) {
   const resolvedCadence = cadence?.length ? cadence : buildEmptyCadence();
   const startDate = resolvedCadence[0]?.date;
@@ -167,13 +183,29 @@ export default function GithubOverviewPanel({
       eventsLast30Days: 0,
       activeDaysLast30Days: 0,
       lastActiveAt: null,
+      topRepoName: null,
+      topRepoEventsLast30Days: 0,
     },
   };
 
-  const isSnapshotCached = Boolean(
-    statsState.response?.stale || activityState.response?.stale || projectsState.response?.stale,
-  );
+  const resourceStates = [statsState, activityState, projectsState];
+  const snapshotLabelKey = getSnapshotLabelKey(resourceStates);
+  const isRefreshing = resourceStates.some((state) => state.status === 'loading' || state.status === 'refreshing');
+  const hasUnavailableResource = resourceStates.some((state) => state.status === 'unavailable');
+  const hasSoftFailure = resourceStates.some((state) => state.status === 'stale');
   const isActivityLoading = activityState.status === 'loading' && activity.entries.length === 0;
+  const topRepoValue = activity.totals.topRepoName
+    ? t('projects.githubProfileSummary', {
+        repoName: activity.totals.topRepoName,
+        count: activity.totals.topRepoEventsLast30Days,
+      })
+    : t('projects.githubCadenceQuiet');
+
+  const refreshGithubData = () => {
+    statsState.refresh();
+    activityState.refresh();
+    projectsState.refresh();
+  };
 
   return (
     <section className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/88 p-6 text-white shadow-[0_30px_120px_rgba(2,6,23,0.5)] ring-1 ring-white/5 sm:p-8">
@@ -197,10 +229,17 @@ export default function GithubOverviewPanel({
 
           <div className="flex flex-wrap items-center gap-3">
             <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-300">
-              {isSnapshotCached
-                ? t('projects.githubSnapshotCached')
-                : t('projects.githubSnapshotLive')}
+              {t(snapshotLabelKey)}
             </span>
+            <button
+              type="button"
+              onClick={refreshGithubData}
+              disabled={isRefreshing}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-3 py-2 text-sm font-medium text-slate-100 transition-colors hover:bg-white/10 disabled:cursor-wait disabled:opacity-60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {t('projects.githubRefresh')}
+            </button>
             <a
               href={profileUrl}
               target="_blank"
@@ -212,6 +251,14 @@ export default function GithubOverviewPanel({
             </a>
           </div>
         </div>
+
+        {(hasUnavailableResource || hasSoftFailure) && (
+          <div className="mt-5 rounded-[1.2rem] border border-amber-300/20 bg-amber-300/10 px-4 py-3 text-sm leading-6 text-amber-100">
+            {hasSoftFailure
+              ? t('projects.githubSnapshotUsingPrevious')
+              : t('projects.githubSnapshotUnavailableBody')}
+          </div>
+        )}
 
         <div className="mt-8 grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_minmax(300px,0.8fr)]">
           <div className="rounded-[1.75rem] border border-white/10 bg-white/[0.035] p-5 sm:p-6">
@@ -239,7 +286,7 @@ export default function GithubOverviewPanel({
               />
             </div>
 
-            <div className="mt-6 grid gap-4 border-b border-white/8 pb-6 sm:grid-cols-3">
+            <div className="mt-6 grid gap-4 border-b border-white/8 pb-6 sm:grid-cols-2 lg:grid-cols-4">
               <div>
                 <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
                   {t('projects.githubCadenceEvents')}
@@ -254,6 +301,17 @@ export default function GithubOverviewPanel({
                 </p>
                 <p className="mt-2 text-2xl font-semibold tracking-tight text-white">
                   {activity.totals.activeDaysLast30Days}
+                </p>
+              </div>
+              <div>
+                <p className="text-[11px] uppercase tracking-[0.22em] text-slate-500">
+                  {t('projects.githubCadenceTopRepo')}
+                </p>
+                <p
+                  className="mt-2 break-words text-base font-semibold text-white"
+                  title={activity.totals.topRepoName || undefined}
+                >
+                  {activity.totals.topRepoName || t('projects.githubCadenceQuiet')}
                 </p>
               </div>
               <div>
@@ -291,8 +349,8 @@ export default function GithubOverviewPanel({
                       >
                         <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                           <div className="min-w-0">
-                            <p className="text-base font-medium text-white">{item.summary}</p>
-                            <p className="mt-1 text-sm text-slate-400">{item.repoName}</p>
+                            <p className="break-words text-base font-medium text-white">{item.summary}</p>
+                            <p className="mt-1 break-words text-sm text-slate-400">{item.repoName}</p>
                           </div>
                           <span className="shrink-0 text-xs uppercase tracking-[0.18em] text-slate-500">
                             {formatRelativeDate(item.createdAt, locale)}
@@ -327,7 +385,7 @@ export default function GithubOverviewPanel({
             </div>
 
             <p className="mt-4 text-sm leading-7 text-slate-300">
-              {stats?.bio || t('projects.githubProfileFallbackDescription')}
+              {topRepoValue}
             </p>
 
             <dl className="mt-6">
@@ -350,6 +408,11 @@ export default function GithubOverviewPanel({
                   : t('projects.githubCadenceQuiet')}
               />
               <SummaryRow
+                icon={Activity}
+                label={t('projects.githubCadenceTopRepo')}
+                value={activity.totals.topRepoName || t('projects.githubCadenceQuiet')}
+              />
+              <SummaryRow
                 icon={MapPin}
                 label={t('projects.githubLocationLabel')}
                 value={stats?.location || t('projects.githubProfileFallbackBody')}
@@ -367,9 +430,7 @@ export default function GithubOverviewPanel({
             </a>
 
             <p className="mt-4 text-xs uppercase tracking-[0.18em] text-slate-500">
-              {isSnapshotCached
-                ? t('projects.githubSnapshotCached')
-                : t('projects.githubSnapshotLive')}
+              {t(snapshotLabelKey)}
             </p>
           </aside>
         </div>

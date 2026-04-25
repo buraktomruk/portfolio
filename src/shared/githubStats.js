@@ -465,6 +465,7 @@ export function summarizeGithubActivity(events) {
   const recentEvents = normalizedEvents.filter((event) => isEventInsideRecentWindow(event?.createdAt));
 
   const activeDays = new Set(recentEvents.map((event) => getUtcDayKey(event.createdAt)));
+  const topRepo = getTopGithubActivityRepo(recentEvents);
 
   return {
     entries: normalizedEvents.slice(0, GITHUB_ACTIVITY_MAX_DISPLAY),
@@ -473,6 +474,8 @@ export function summarizeGithubActivity(events) {
       eventsLast30Days: recentEvents.length,
       activeDaysLast30Days: activeDays.size,
       lastActiveAt: normalizedEvents[0]?.createdAt ?? null,
+      topRepoName: topRepo?.repoName ?? null,
+      topRepoEventsLast30Days: topRepo?.count ?? 0,
     },
   };
 }
@@ -506,7 +509,9 @@ export function isGithubActivityEnvelope(value) {
       typeof value.data.totals === "object" &&
       typeof value.data.totals.eventsLast30Days === "number" &&
       typeof value.data.totals.activeDaysLast30Days === "number" &&
-      (value.data.totals.lastActiveAt === null || typeof value.data.totals.lastActiveAt === "string"),
+      (value.data.totals.lastActiveAt === null || typeof value.data.totals.lastActiveAt === "string") &&
+      (value.data.totals.topRepoName === null || typeof value.data.totals.topRepoName === "string") &&
+      typeof value.data.totals.topRepoEventsLast30Days === "number",
   );
 }
 
@@ -590,6 +595,28 @@ function buildGithubActivityCadence(events) {
     ...entry,
     level: getCadenceLevel(entry.count, maxCount),
   }));
+}
+
+function getTopGithubActivityRepo(events) {
+  const countsByRepo = new Map();
+
+  for (const event of events) {
+    const repoName = toSafeString(event?.repoName);
+    if (!repoName) {
+      continue;
+    }
+
+    countsByRepo.set(repoName, (countsByRepo.get(repoName) ?? 0) + 1);
+  }
+
+  let topRepo = null;
+  for (const [repoName, count] of countsByRepo.entries()) {
+    if (!topRepo || count > topRepo.count) {
+      topRepo = { repoName, count };
+    }
+  }
+
+  return topRepo;
 }
 
 function getCadenceLevel(count, maxCount) {

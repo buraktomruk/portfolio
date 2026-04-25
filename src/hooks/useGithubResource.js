@@ -37,10 +37,10 @@ export function useGithubResource(endpoint, validateResponse) {
 
         if (!response.ok) {
           if (!cancelled) {
-            setState({
-              status: 'unavailable',
-              response: null,
-            });
+            setState((currentState) => ({
+              status: currentState.response ? 'stale' : 'unavailable',
+              response: currentState.response,
+            }));
           }
           return;
         }
@@ -61,10 +61,10 @@ export function useGithubResource(endpoint, validateResponse) {
         }
 
         if (!cancelled) {
-          setState({
-            status: 'unavailable',
-            response: null,
-          });
+          setState((currentState) => ({
+            status: currentState.response ? 'stale' : 'unavailable',
+            response: currentState.response,
+          }));
         }
       } finally {
         window.clearTimeout(timeoutId);
