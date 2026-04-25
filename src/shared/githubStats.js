@@ -264,7 +264,9 @@ export function normalizeGithubUser(ghData, username = DEFAULT_GITHUB_USERNAME) 
     following: toSafeNonNegativeNumber(ghData?.following),
     publicRepos: toSafeNonNegativeNumber(ghData?.public_repos),
     publicGists: toSafeNonNegativeNumber(ghData?.public_gists),
-    totalContributionsThisYear: toSafeNonNegativeNumber(ghData?.totalContributionsThisYear),
+    totalContributionsThisYear: ghData?.totalContributionsThisYear != null
+      ? toSafeNonNegativeNumber(ghData.totalContributionsThisYear)
+      : null,
     profileUrl,
   };
 }
@@ -312,7 +314,7 @@ export function isGithubStatsEnvelope(value) {
       typeof data.following === "number" &&
       typeof data.publicRepos === "number" &&
       typeof data.publicGists === "number" &&
-      typeof data.totalContributionsThisYear === "number" &&
+      (data.totalContributionsThisYear === null || typeof data.totalContributionsThisYear === "number") &&
       hasValidHttpUrl(data.profileUrl),
   );
 }

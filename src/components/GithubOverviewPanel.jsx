@@ -374,7 +374,9 @@ export default function GithubOverviewPanel({
                 {t('projects.githubMetricYearTotal')}
               </p>
               <p className="mt-2 text-3xl font-semibold tracking-tight text-white">
-                {stats ? stats.totalContributionsThisYear : '...'}
+                {stats
+                  ? (stats.totalContributionsThisYear !== null ? stats.totalContributionsThisYear : '—')
+                  : '...'}
               </p>
               <p className="mt-3 text-sm text-slate-300">
                 {stats?.name || t('projects.githubProfileFallbackTitle')}

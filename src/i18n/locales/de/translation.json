@@ -139,6 +139,8 @@
     "repoFallbackBody": "Das Portfolio verlinkt weiterhin direkt auf das öffentliche GitHub-Profil, während sich der kuratierte Repository-Feed im Hintergrund aktualisiert.",
     "showcaseTitle": "Live-Produkte",
     "showcaseDescription": "Die stärksten Belege bleiben im Vordergrund: hochwertige, markenstarke Produktkarten für die Live-Apps selbst.",
+    "showcaseExpand": "Live-Produkte anzeigen",
+    "showcaseCollapse": "Produkte einklappen",
     "noDescription": "Noch keine Beschreibung verfügbar.",
     "repoDescriptionFallback": "Die Repository-Notiz bleibt hier bewusst knapp, damit die Karte auch ohne öffentliche Beschreibung ruhig und hochwertig lesbar bleibt.",
     "publicRepo": "Öffentliches Repo",

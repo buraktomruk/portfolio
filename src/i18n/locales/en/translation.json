@@ -139,6 +139,8 @@
     "repoFallbackBody": "The portfolio still links directly to the public GitHub profile while the curated repository feed refreshes in the background.",
     "showcaseTitle": "Live Products",
     "showcaseDescription": "The strongest proof points stay front and center: polished, branded product cards for the live apps themselves.",
+    "showcaseExpand": "Show live products",
+    "showcaseCollapse": "Collapse products",
     "noDescription": "No description available yet.",
     "repoDescriptionFallback": "Repository notes are intentionally minimal here, so the card can still read clearly when a public description is missing.",
     "publicRepo": "Public repo",

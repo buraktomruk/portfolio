@@ -356,7 +356,7 @@ function GithubTeaserBar({ t, statsState, activityState, isExpanded, onToggle })
               <span className="h-5 w-32 animate-pulse rounded-full bg-white/10" />
             ) : (
               <>
-                {contributions !== null && (
+                {contributions !== null && contributions > 0 && (
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">
                     <GitCommit className="h-3 w-3 text-cyan-300" />
                     {t('projects.githubTeaserContributions', { count: contributions })}
@@ -399,7 +399,9 @@ function GithubTeaserBar({ t, statsState, activityState, isExpanded, onToggle })
 export default function Projects() {
   const { t, i18n } = useTranslation();
   const [isGithubExpanded, setIsGithubExpanded] = useState(false);
+  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
   const expandableRef = useRef(null);
+  const productsRef = useRef(null);
 
   const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope);
   const activityState = useGithubResource(GITHUB_ACTIVITY_ENDPOINT, isGithubActivityEnvelope);
@@ -415,6 +417,16 @@ export default function Projects() {
       const next = !prev;
       if (!next && expandableRef.current) {
         expandableRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      return next;
+    });
+  };
+
+  const handleProductsToggle = () => {
+    setIsProductsExpanded((prev) => {
+      const next = !prev;
+      if (!next && productsRef.current) {
+        productsRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
       return next;
     });
@@ -441,24 +453,52 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="mt-12">
-          <div className="mb-6 max-w-3xl">
-            <h3 className="text-2xl font-semibold text-white">
-              {t('projects.showcaseTitle')}
-            </h3>
-            <p className="mt-2 text-sm leading-7 text-slate-400">
-              {t('projects.showcaseDescription')}
-            </p>
+        <div className="mt-12" ref={productsRef}>
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="max-w-3xl">
+              <h3 className="text-2xl font-semibold text-white">
+                {t('projects.showcaseTitle')}
+              </h3>
+              <p className="mt-2 text-sm leading-7 text-slate-400">
+                {t('projects.showcaseDescription')}
+              </p>
+            </div>
+            <button
+              type="button"
+              id="products-teaser-toggle"
+              aria-expanded={isProductsExpanded}
+              aria-controls="products-expandable-section"
+              onClick={handleProductsToggle}
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+            >
+              <ChevronDown
+                className={`h-4 w-4 transition-transform duration-300 ${isProductsExpanded ? 'rotate-180' : ''}`}
+              />
+              {isProductsExpanded ? t('projects.showcaseCollapse') : t('projects.showcaseExpand')}
+            </button>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-2">
-            {featuredWorkItems.map((item) => (
-              <ShowcaseCard
-                key={item.id}
-                item={item}
-                t={t}
-              />
-            ))}
+          <div
+            id="products-expandable-section"
+            role="region"
+            aria-labelledby="products-teaser-toggle"
+            style={{
+              display: 'grid',
+              gridTemplateRows: isProductsExpanded ? '1fr' : '0fr',
+              transition: 'grid-template-rows 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+            }}
+          >
+            <div style={{ overflow: 'hidden' }}>
+              <div className="grid gap-6 lg:grid-cols-2 pb-2">
+                {featuredWorkItems.map((item) => (
+                  <ShowcaseCard
+                    key={item.id}
+                    item={item}
+                    t={t}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
