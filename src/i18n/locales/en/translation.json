@@ -141,6 +141,7 @@
     "showcaseDescription": "The strongest proof points stay front and center: polished, branded product cards for the live apps themselves.",
     "showcaseExpand": "Show live products",
     "showcaseCollapse": "Collapse products",
+    "showcaseProductCount": "{{count}} live products",
     "noDescription": "No description available yet.",
     "repoDescriptionFallback": "Repository notes are intentionally minimal here, so the card can still read clearly when a public description is missing.",
     "publicRepo": "Public repo",

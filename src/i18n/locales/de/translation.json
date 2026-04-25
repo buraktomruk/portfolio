@@ -141,6 +141,7 @@
     "showcaseDescription": "Die stärksten Belege bleiben im Vordergrund: hochwertige, markenstarke Produktkarten für die Live-Apps selbst.",
     "showcaseExpand": "Live-Produkte anzeigen",
     "showcaseCollapse": "Produkte einklappen",
+    "showcaseProductCount": "{{count}} Live-Produkte",
     "noDescription": "Noch keine Beschreibung verfügbar.",
     "repoDescriptionFallback": "Die Repository-Notiz bleibt hier bewusst knapp, damit die Karte auch ohne öffentliche Beschreibung ruhig und hochwertig lesbar bleibt.",
     "publicRepo": "Öffentliches Repo",

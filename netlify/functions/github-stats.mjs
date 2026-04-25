@@ -58,9 +58,11 @@ export const handler = async (event) => {
         : Promise.resolve(null),
     ]);
 
-    const rawContributions = githubContributionData
-      ?.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions;
-    const totalContributionsThisYear = rawContributions != null ? Number(rawContributions) : null;
+    const rawData = githubContributionData?.data || githubContributionData;
+    const rawContributions = rawData?.user?.contributionsCollection?.contributionCalendar?.totalContributions;
+    const totalContributionsThisYear = (rawContributions !== undefined && rawContributions !== null)
+      ? Number(rawContributions)
+      : null;
 
     return respondWithGithubData(
       context,

@@ -227,7 +227,7 @@ export function resolveOptionalGithubToken(value) {
     return normalized;
   }
 
-  return normalized.length >= 24 ? normalized : undefined;
+  return normalized;
 }
 
 export function resolveOptionalRedisToken(value) {

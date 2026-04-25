@@ -320,6 +320,48 @@ function RepoCard({ project, t, locale }) {
   );
 }
 
+function ProductsTeaserBar({ t, isExpanded, onToggle, count }) {
+  return (
+    <button
+      type="button"
+      id="products-teaser-toggle"
+      aria-expanded={isExpanded}
+      aria-controls="products-expandable-section"
+      onClick={onToggle}
+      className="group mt-12 w-full rounded-[1.75rem] border border-white/10 bg-slate-900/80 px-5 py-4 text-left shadow-[0_16px_64px_rgba(2,6,23,0.3)] ring-1 ring-white/5 transition-all duration-300 hover:border-white/20 hover:bg-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 sm:px-6 sm:py-5"
+    >
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-300">
+            <Sparkles className="h-3 w-3" />
+            {t('projects.kicker')}
+          </span>
+
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">
+              <FolderGit2 className="h-3 w-3 text-amber-300" />
+              {t('projects.showcaseProductCount', { count })}
+            </span>
+          </div>
+        </div>
+
+        <span className="flex shrink-0 items-center gap-2 text-sm font-medium text-amber-300 transition-colors group-hover:text-amber-200">
+          {isExpanded ? t('projects.showcaseCollapse') : t('projects.showcaseExpand')}
+          <ChevronDown
+            className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+          />
+        </span>
+      </div>
+
+      {!isExpanded && (
+        <p className="mt-3 text-[13px] leading-6 text-slate-400">
+          {t('projects.showcaseDescription')}
+        </p>
+      )}
+    </button>
+  );
+}
+
 function RepoCardSkeleton() {
   return (
     <div className="h-80 animate-pulse rounded-[1.85rem] border border-white/10 bg-slate-900/70" />
@@ -453,42 +495,29 @@ export default function Projects() {
           </p>
         </div>
 
-        <div className="mt-12" ref={productsRef}>
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-3xl">
-              <h3 className="text-2xl font-semibold text-white">
-                {t('projects.showcaseTitle')}
-              </h3>
-              <p className="mt-2 text-sm leading-7 text-slate-400">
-                {t('projects.showcaseDescription')}
-              </p>
-            </div>
-            <button
-              type="button"
-              id="products-teaser-toggle"
-              aria-expanded={isProductsExpanded}
-              aria-controls="products-expandable-section"
-              onClick={handleProductsToggle}
-              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
-            >
-              <ChevronDown
-                className={`h-4 w-4 transition-transform duration-300 ${isProductsExpanded ? 'rotate-180' : ''}`}
-              />
-              {isProductsExpanded ? t('projects.showcaseCollapse') : t('projects.showcaseExpand')}
-            </button>
-          </div>
+        {/* Products teaser toggle bar */}
+        <div ref={productsRef}>
+          <ProductsTeaserBar
+            t={t}
+            isExpanded={isProductsExpanded}
+            onToggle={handleProductsToggle}
+            count={featuredWorkItems.length}
+          />
+        </div>
 
-          <div
-            id="products-expandable-section"
-            role="region"
-            aria-labelledby="products-teaser-toggle"
-            style={{
-              display: 'grid',
-              gridTemplateRows: isProductsExpanded ? '1fr' : '0fr',
-              transition: 'grid-template-rows 420ms cubic-bezier(0.4, 0, 0.2, 1)',
-            }}
-          >
-            <div style={{ overflow: 'hidden' }}>
+        {/* Collapsible Live Products detail section */}
+        <div
+          id="products-expandable-section"
+          role="region"
+          aria-labelledby="products-teaser-toggle"
+          style={{
+            display: 'grid',
+            gridTemplateRows: isProductsExpanded ? '1fr' : '0fr',
+            transition: 'grid-template-rows 420ms cubic-bezier(0.4, 0, 0.2, 1)',
+          }}
+        >
+          <div style={{ overflow: 'hidden' }}>
+            <div className="pt-8">
               <div className="grid gap-6 lg:grid-cols-2 pb-2">
                 {featuredWorkItems.map((item) => (
                   <ShowcaseCard
