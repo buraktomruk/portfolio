@@ -165,7 +165,7 @@ export async function fetchGithubGraphql(query, variables, token, timeoutMs = GI
 
   const headers = {
     "User-Agent": "portfolio-serverless/1.0",
-    Accept: "application/vnd.github+json",
+    Accept: "application/json",
     "Content-Type": "application/json",
   };
 

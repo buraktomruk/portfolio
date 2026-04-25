@@ -356,7 +356,7 @@ function GithubTeaserBar({ t, statsState, activityState, isExpanded, onToggle })
               <span className="h-5 w-32 animate-pulse rounded-full bg-white/10" />
             ) : (
               <>
-                {contributions !== null && contributions > 0 && (
+                {contributions !== null && (
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">
                     <GitCommit className="h-3 w-3 text-cyan-300" />
                     {t('projects.githubTeaserContributions', { count: contributions })}
@@ -399,7 +399,7 @@ function GithubTeaserBar({ t, statsState, activityState, isExpanded, onToggle })
 export default function Projects() {
   const { t, i18n } = useTranslation();
   const [isGithubExpanded, setIsGithubExpanded] = useState(false);
-  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
+  const [isProductsExpanded, setIsProductsExpanded] = useState(false);
   const expandableRef = useRef(null);
   const productsRef = useRef(null);
 
