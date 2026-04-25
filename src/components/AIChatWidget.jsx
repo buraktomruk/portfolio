@@ -90,7 +90,7 @@ const AIChatWidget = () => {
       setIsTyping(false);
       setMessages(prev => [...prev, { text: "The AI gateway is briefly offline. Please try again soon.", sender: 'ai' }]);
     }
-  }, [input, isTyping, generateGeminiResponse, RESUME_CONTEXT]);
+  }, [input, isTyping]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
