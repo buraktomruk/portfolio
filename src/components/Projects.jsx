@@ -127,7 +127,8 @@ function SectionHeader({
   onToggle, 
   summary, 
   id,
-  t 
+  showLabel,
+  hideLabel
 }) {
   return (
     <div className="border-b border-white/5 pb-6">
@@ -140,7 +141,7 @@ function SectionHeader({
           onClick={onToggle}
           className="flex items-center gap-2 text-sm font-bold text-slate-500 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500"
         >
-          {isExpanded ? t('projects.collapse') : t('projects.expand')}
+          {isExpanded ? hideLabel : showLabel}
           <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
         </button>
       </div>
@@ -336,22 +337,14 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
 
 export default function Projects() {
   const { t } = useTranslation();
-  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
-  const [isGithubExpanded, setIsGithubExpanded] = useState(true);
+  const [isProductsExpanded, setIsProductsExpanded] = useState(false);
+  const [isGithubExpanded, setIsGithubExpanded] = useState(false);
 
   const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope);
   const activityState = useGithubResource(GITHUB_ACTIVITY_ENDPOINT, isGithubActivityEnvelope);
   const projectsState = useGithubResource(GITHUB_PROJECTS_ENDPOINT, isGithubProjectsEnvelope);
 
   const profileUrl = statsState.response?.data?.profileUrl || getGithubProfileUrl();
-  const activity = activityState.response?.data;
-
-  // Summaries
-  const productsSummary = `${featuredWorkItems.length} ${t('projects.summaryProducts')} · ${featuredWorkItems.map(i => i.title).join(', ')}`;
-  
-  const githubSummary = activity?.totals ? (
-    `${activity.totals.eventsLast30Days} ${t('projects.summaryEvents')} · ${activity.totals.activeDaysLast30Days} ${t('projects.summaryActiveDays')} · ${activity.totals.topRepoName || 'portfolio'} ${t('projects.summaryMostActive')}`
-  ) : t('projects.githubSummaryTitle');
 
   return (
     <section id="projects" className="relative border-t border-white/5 bg-[#030712] py-24 text-white sm:py-32">
@@ -372,9 +365,10 @@ export default function Projects() {
             title={t('projects.showcaseTitle')}
             isExpanded={isProductsExpanded}
             onToggle={() => setIsProductsExpanded(!isProductsExpanded)}
-            summary={productsSummary}
+            summary={t('projects.summaryProducts')}
             id="live-products-section"
-            t={t}
+            showLabel={t('projects.showProducts')}
+            hideLabel={t('projects.hideProducts')}
           />
           
           <div
@@ -391,19 +385,20 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* Subsection 2: GitHub Signal */}
-        <div className="mt-24">
+        {/* Subsection 2: GitHub Activity */}
+        <div className="mt-12">
           <SectionHeader
             title={t('projects.githubSignalTitle')}
             isExpanded={isGithubExpanded}
             onToggle={() => setIsGithubExpanded(!isGithubExpanded)}
-            summary={githubSummary}
-            id="github-signal-section"
-            t={t}
+            summary={t('projects.summaryGithub')}
+            id="github-activity-section"
+            showLabel={t('projects.showGithub')}
+            hideLabel={t('projects.hideGithub')}
           />
           
           <div
-            id="github-signal-section"
+            id="github-activity-section"
             className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-10' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
