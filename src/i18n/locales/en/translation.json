@@ -57,42 +57,6 @@
     "placeholder": "Ask a question...",
     "tooltip": "Chat with AI"
   },
-  "githubStats": {
-    "title": "GitHub Activity",
-    "unavailable": "GitHub activity is currently unavailable.",
-    "retry": "Retry",
-    "viewProfile": "View Profile",
-    "viewProfileAria": "View the GitHub profile in a new tab",
-    "offline": "Offline",
-    "summary": "{{publicRepos}} public repos · {{followers}} followers"
-  },
-  "githubActivity": {
-    "title": "Recent Contributions",
-    "description": "Public GitHub contribution highlights only. Stars and low-signal noise are filtered out.",
-    "contributions": "Public contributions",
-    "unavailable": "Recent contribution history is currently unavailable.",
-    "empty": "No recent public contributions to show right now.",
-    "retry": "Retry",
-    "viewAll": "View GitHub profile",
-    "labels": {
-      "PushEvent": "Code Push",
-      "PullRequestEvent": "Pull Request",
-      "PullRequestReviewEvent": "Code Review",
-      "IssuesEvent": "Issue Update",
-      "IssueCommentEvent": "Discussion",
-      "ReleaseEvent": "Release",
-      "ActivityEvent": "Contribution"
-    },
-    "types": {
-      "PushEvent": "Pushed code to {{repoName}}",
-      "PullRequestEvent": "Updated a pull request in {{repoName}}",
-      "PullRequestReviewEvent": "Reviewed a pull request in {{repoName}}",
-      "IssuesEvent": "Updated an issue in {{repoName}}",
-      "IssueCommentEvent": "Commented in {{repoName}}",
-      "ReleaseEvent": "Published a release in {{repoName}}",
-      "ActivityEvent": "Contributed publicly in {{repoName}}"
-    }
-  },
   "projects": {
     "title": "Products & Public Build Work",
     "subtitle": "Shipped products first, with a lightweight GitHub signal for recent public engineering activity.",
