@@ -95,7 +95,7 @@
   },
   "projects": {
     "title": "Products & Public Build Work",
-    "subtitle": "Shipped products first, with a lightweight GitHub signal for recent public engineering activity.",
+    "subtitle": "Explore shipped products first, then open the GitHub layer for recent engineering activity and selected public repositories.",
     "showcaseTitle": "Live Products",
     "showcaseDescription": "The strongest proof points stay front and center: polished, branded product cards for the live apps themselves.",
     "liveDemo": "Live Demo",

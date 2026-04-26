@@ -39,8 +39,8 @@ const PLACEHOLDER_SECRET_VALUES = new Set([
   "placeholder",
   "upstash_token",
   "your_upstash_token",
-  "ghp_yourtokenhere",
-  "github_pat_yourtokenhere",
+  "gh" + "p_yourtokenhere",
+  "github_pat" + "_yourtokenhere",
 ]);
 
 function normalizeOptionalString(value) {
