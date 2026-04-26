@@ -57,42 +57,6 @@
     "placeholder": "Stellen Sie eine Frage...",
     "tooltip": "Chat mit KI"
   },
-  "githubStats": {
-    "title": "GitHub Aktivität",
-    "unavailable": "GitHub-Aktivitäten sind momentan nicht verfügbar.",
-    "retry": "Erneut versuchen",
-    "viewProfile": "Profil ansehen",
-    "viewProfileAria": "GitHub-Profil in einem neuen Tab öffnen",
-    "offline": "Offline",
-    "summary": "{{publicRepos}} öffentliche Repositories · {{followers}} Follower"
-  },
-  "githubActivity": {
-    "title": "Letzte Beiträge",
-    "description": "Nur öffentliche GitHub-Beiträge. Sterne und andere wenig aussagekräftige Signale werden herausgefiltert.",
-    "contributions": "Öffentliche Beiträge",
-    "unavailable": "Die letzte Beitragshistorie ist momentan nicht verfügbar.",
-    "empty": "Zurzeit gibt es keine öffentlichen Beiträge zum Anzeigen.",
-    "retry": "Erneut versuchen",
-    "viewAll": "GitHub-Profil ansehen",
-    "labels": {
-      "PushEvent": "Code-Push",
-      "PullRequestEvent": "Pull Request",
-      "PullRequestReviewEvent": "Code-Review",
-      "IssuesEvent": "Issue-Update",
-      "IssueCommentEvent": "Diskussion",
-      "ReleaseEvent": "Release",
-      "ActivityEvent": "Beitrag"
-    },
-    "types": {
-      "PushEvent": "Code nach {{repoName}} gepusht",
-      "PullRequestEvent": "Einen Pull Request in {{repoName}} aktualisiert",
-      "PullRequestReviewEvent": "Einen Pull Request in {{repoName}} überprüft",
-      "IssuesEvent": "Ein Issue in {{repoName}} aktualisiert",
-      "IssueCommentEvent": "In {{repoName}} kommentiert",
-      "ReleaseEvent": "Ein Release in {{repoName}} veröffentlicht",
-      "ActivityEvent": "Öffentlich zu {{repoName}} beigetragen"
-    }
-  },
   "projects": {
     "title": "Produkte & öffentliche Build-Arbeit",
     "subtitle": "Zuerst die fertigen Produkte, ergänzt um aktuelle GitHub-Aktivitäten als technisches Signal.",
