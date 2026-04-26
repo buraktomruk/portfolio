@@ -4,12 +4,18 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run dev:netlify",
+    "dev:netlify": "HOME=\"$PWD/.netlify/home\" XDG_CONFIG_HOME=\"$PWD/.netlify/config-home\" netlify dev --offline --offline-env --no-open --skip-wait-port",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "test": "node --test tests/*.test.js",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sentry/node": "^10.49.0",
+    "@sentry/react": "^10.49.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.37.0",
     "i18next": "^23.10.0",
     "i18next-browser-languagedetector": "^7.2.1",
     "lucide-react": "^0.263.1",
@@ -18,14 +24,17 @@
     "react-i18next": "^14.0.5"
   },
   "devDependencies": {
+    "@netlify/functions": "^5.2.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
+    "ajv": "^8.18.0",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.45.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "netlify-cli": "^25.1.1",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.5"

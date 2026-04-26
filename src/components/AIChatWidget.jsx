@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
-import { MessageSquare, X, Send, Bot, Loader2 } from 'lucide-react';
+import { MessageSquare, X, Send, Bot } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/geminiApi';
 import { RESUME_CONTEXT } from '../data/resumeData';
 import { useTranslation } from 'react-i18next';
@@ -90,7 +90,7 @@ const AIChatWidget = () => {
       setIsTyping(false);
       setMessages(prev => [...prev, { text: "The AI gateway is briefly offline. Please try again soon.", sender: 'ai' }]);
     }
-  }, [input, isTyping, t, RESUME_CONTEXT]);
+  }, [input, isTyping]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">

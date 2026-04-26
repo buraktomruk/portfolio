@@ -14,7 +14,7 @@ const Navbar = ({ isScrolled, scrollToSection, darkMode, toggleDarkMode, changeL
         
         <div className="flex items-center gap-6">
           <div className="hidden md:flex space-x-8 text-sm font-medium">
-            {['about', 'skills', 'education'].map((id) => (
+            {['about', 'skills', 'education', 'projects'].map((id) => (
               <button 
                 key={id}
                 onClick={() => scrollToSection(id)}

@@ -11,9 +11,15 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
+        "npm:@netlify/functions@^5.2.0",
+        "npm:@sentry/node@^10.49.0",
+        "npm:@sentry/react@^10.49.0",
         "npm:@types/react-dom@^18.2.7",
         "npm:@types/react@^18.2.15",
+        "npm:@upstash/ratelimit@^2.0.8",
+        "npm:@upstash/redis@^1.37.0",
         "npm:@vitejs/plugin-react@^4.0.3",
+        "npm:ajv@^8.18.0",
         "npm:autoprefixer@^10.4.14",
         "npm:eslint-plugin-react-hooks@^4.6.0",
         "npm:eslint-plugin-react-refresh@~0.4.3",
@@ -22,6 +28,7 @@
         "npm:i18next-browser-languagedetector@^7.2.1",
         "npm:i18next@^23.10.0",
         "npm:lucide-react@~0.263.1",
+        "npm:netlify-cli@^25.1.1",
         "npm:postcss@^8.4.27",
         "npm:react-dom@^18.2.0",
         "npm:react-i18next@^14.0.5",

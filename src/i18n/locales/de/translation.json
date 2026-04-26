@@ -2,6 +2,7 @@
   "navbar": {
     "about": "Über mich",
     "skills": "Fähigkeiten",
+    "projects": "Projekte",
     "education": "Ausbildung"
   },
   "hero": {
@@ -55,5 +56,70 @@
     "initial_message": "Hallo! Ich bin Buraks KI-Assistent. Fragen Sie beni alles über seine Erfahrung oder Fähigkeiten!",
     "placeholder": "Stellen Sie eine Frage...",
     "tooltip": "Chat mit KI"
+  },
+  "githubStats": {
+    "title": "GitHub Aktivität",
+    "unavailable": "GitHub-Aktivitäten sind momentan nicht verfügbar.",
+    "retry": "Erneut versuchen",
+    "viewProfile": "Profil ansehen",
+    "viewProfileAria": "GitHub-Profil in einem neuen Tab öffnen",
+    "offline": "Offline",
+    "summary": "{{publicRepos}} öffentliche Repositories · {{followers}} Follower"
+  },
+  "githubActivity": {
+    "title": "Letzte Beiträge",
+    "description": "Nur öffentliche GitHub-Beiträge. Sterne und andere wenig aussagekräftige Signale werden herausgefiltert.",
+    "contributions": "Öffentliche Beiträge",
+    "unavailable": "Die letzte Beitragshistorie ist momentan nicht verfügbar.",
+    "empty": "Zurzeit gibt es keine öffentlichen Beiträge zum Anzeigen.",
+    "retry": "Erneut versuchen",
+    "viewAll": "GitHub-Profil ansehen",
+    "labels": {
+      "PushEvent": "Code-Push",
+      "PullRequestEvent": "Pull Request",
+      "PullRequestReviewEvent": "Code-Review",
+      "IssuesEvent": "Issue-Update",
+      "IssueCommentEvent": "Diskussion",
+      "ReleaseEvent": "Release",
+      "ActivityEvent": "Beitrag"
+    },
+    "types": {
+      "PushEvent": "Code nach {{repoName}} gepusht",
+      "PullRequestEvent": "Einen Pull Request in {{repoName}} aktualisiert",
+      "PullRequestReviewEvent": "Einen Pull Request in {{repoName}} überprüft",
+      "IssuesEvent": "Ein Issue in {{repoName}} aktualisiert",
+      "IssueCommentEvent": "In {{repoName}} kommentiert",
+      "ReleaseEvent": "Ein Release in {{repoName}} veröffentlicht",
+      "ActivityEvent": "Öffentlich zu {{repoName}} beigetragen"
+    }
+  },
+  "projects": {
+    "title": "Produkte & öffentliche Build-Arbeit",
+    "subtitle": "Zuerst die fertigen Produkte, ergänzt um aktuelle GitHub-Aktivitäten als technisches Signal.",
+    "showcaseTitle": "Live-Produkte",
+    "showcaseDescription": "Die stärksten Belege bleiben im Vordergrund: hochwertige, markenstarke Produktkarten für die Live-Apps selbst.",
+    "liveDemo": "Live-Demo",
+    "githubSignalTitle": "GitHub-Aktivität",
+    "githubSummaryTitle": "Entwicklungsaktivität",
+    "githubMetricEvents": "Öffentliche Ereignisse",
+    "githubMetricActiveDays": "Aktive Tage",
+    "githubMetricContributions": "Beiträge (Jahr)",
+    "githubMetricTopRepo": "Aktivstes Repo",
+    "githubRecentActivity": "Letzte Aktivität",
+    "githubOpenProfile": "GitHub-Profil öffnen",
+    "githubTimelineEmpty": "Die GitHub-Aktivität ist gerade ruhig.",
+    "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
+    "showProducts": "Produkte anzeigen",
+    "hideProducts": "Produkte ausblenden",
+    "showGithub": "GitHub anzeigen",
+    "hideGithub": "GitHub ausblenden",
+    "summaryProducts": "4 fertige Produkte mit Live-Demos",
+    "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
+    "repoTitle": "Ausgewählte Repositories",
+    "viewAllRepos": "Alle Repositories ansehen",
+    "repoFeatured": "Ausgewählt",
+    "repoPinned": "Angeheftet",
+    "repoUpdated": "Aktualisiert {{date}}",
+    "kicker": "Build-Arbeit"
   }
 }
