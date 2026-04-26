@@ -69,19 +69,19 @@ function ShowcaseCard({ item, t }) {
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-all duration-300 hover:border-white/20 hover:bg-slate-900/60">
       <div className={`absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
       
-      <div className="relative z-10 flex flex-1 flex-col p-6 sm:p-8">
+      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-7">
         <div className="flex items-start justify-between gap-4">
-          <div>
-            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ring-1 ${accentStyles.badge}`}>
+          <div className="min-w-0">
+            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ring-1 ${accentStyles.badge}`}>
               {item.status}
             </span>
-            <h3 className="mt-4 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+            <h3 className="mt-3 truncate text-xl font-bold tracking-tight text-white sm:text-2xl">
               {item.title}
             </h3>
           </div>
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 p-2.5">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2">
             {!item.previewImage || hasError ? (
-              <span className="text-xl font-bold text-white/40">{item.title.charAt(0)}</span>
+              <span className="text-lg font-bold text-white/40">{item.title.charAt(0)}</span>
             ) : (
               <img
                 src={item.previewImage}
@@ -93,27 +93,27 @@ function ShowcaseCard({ item, t }) {
           </div>
         </div>
 
-        <p className="mt-4 text-[15px] leading-relaxed text-slate-400">
+        <p className="mt-3 text-[14px] leading-snug text-slate-400">
           {item.description}
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2">
           {item.stack.slice(0, 3).map((label) => (
-            <span key={label} className="text-xs font-medium text-slate-500">
+            <span key={label} className="text-[11px] font-medium text-slate-500">
               #{label}
             </span>
           ))}
         </div>
 
-        <div className="mt-auto pt-8">
+        <div className="mt-auto pt-6">
           <a
             href={item.demoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-bold transition-all ${accentStyles.button}`}
+            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${accentStyles.button}`}
           >
             {t('projects.liveDemo')}
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
       </div>
@@ -162,18 +162,22 @@ function RepoCard({ project }) {
   if (!project) return null;
 
   return (
-    <article className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-all hover:border-white/10 hover:bg-white/[0.04]">
+    <article className="group relative rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-white/10 hover:bg-white/[0.04]">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <FolderGit2 className="h-4 w-4 shrink-0 text-slate-500" />
+            <FolderGit2 className="h-3.5 w-3.5 shrink-0 text-slate-500" />
             <h4 className="truncate text-sm font-bold text-white">
               {project.name}
             </h4>
           </div>
-          {project.description && (
-            <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-slate-500">
+          {project.description ? (
+            <p className="mt-2 line-clamp-2 text-xs leading-snug text-slate-500">
               {project.description}
+            </p>
+          ) : (
+            <p className="mt-2 text-xs italic text-slate-600">
+              Selected public repository.
             </p>
           )}
         </div>
@@ -183,17 +187,17 @@ function RepoCard({ project }) {
           rel="noopener noreferrer"
           className="shrink-0 text-slate-600 hover:text-white"
         >
-          <ArrowUpRight className="h-4 w-4" />
+          <ArrowUpRight className="h-3.5 w-3.5" />
         </a>
       </div>
       
-      <div className="mt-4 flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider text-slate-600">
-        <span className="flex items-center gap-1.5">
+      <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-wider text-slate-600">
+        <span className="flex items-center gap-1">
           <Circle className={`h-2 w-2 fill-current ${languageColorClass}`} />
           {project.language || 'Code'}
         </span>
         <span className="flex items-center gap-1">
-          <Star className="h-3 w-3" />
+          <Star className="h-2.5 w-2.5" />
           {project.stargazersCount}
         </span>
       </div>
@@ -209,9 +213,24 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
   const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
   const isError = statsState.status === 'unavailable' || activityState.status === 'unavailable';
 
+  // Deduplicate and group activity rows - Move before early returns to follow Hooks rules
+  const groupedEntries = React.useMemo(() => {
+    if (!activity?.entries) return [];
+    
+    const seen = new Set();
+    return activity.entries
+      .filter(entry => {
+        const key = `${entry.repoName}-${entry.summary}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .slice(0, 3);
+  }, [activity?.entries]);
+
   if (isError) {
     return (
-      <div className="mt-12 text-center py-8 border-t border-white/5">
+      <div className="mt-8 text-center py-6 border-t border-white/5">
         <p className="text-sm text-slate-600">
           {t('projects.githubUnavailableMuted')}
         </p>
@@ -219,86 +238,81 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
     );
   }
 
-  const entries = activity?.entries?.slice(0, 3) || [];
-
   return (
-    <div className="mt-12 animate-in fade-in slide-in-from-top-4 duration-500">
-      <div className="rounded-3xl border border-white/5 bg-white/[0.01] p-6 sm:p-8">
-        <div className="flex flex-col gap-8 lg:flex-row">
+    <div className="mt-8 animate-in fade-in slide-in-from-top-3 duration-500">
+      <div className="rounded-2xl border border-white/5 bg-white/[0.01] p-5 sm:p-7">
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
           {/* Stats Strip */}
-          <div className="flex flex-1 flex-col justify-center border-white/5 lg:border-r lg:pr-12">
-            <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+          <div className="flex-1 border-white/5 lg:border-r lg:pr-10">
+            <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-600">
               <Activity className="h-3 w-3" />
               {t('projects.githubSummaryTitle')}
             </div>
             
-            <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4 lg:grid-cols-2">
+            <div className="mt-5 grid grid-cols-3 gap-4">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-600">
                   {t('projects.githubMetricEvents')}
                 </p>
-                <p className="mt-1 text-2xl font-bold text-white">
+                <p className="mt-1 text-xl font-bold text-white">
                   {isLoading ? '...' : (activity?.totals?.eventsLast30Days || 0)}
                 </p>
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-600">
                   {t('projects.githubMetricActiveDays')}
                 </p>
-                <p className="mt-1 text-2xl font-bold text-white">
+                <p className="mt-1 text-xl font-bold text-white">
                   {isLoading ? '...' : (activity?.totals?.activeDaysLast30Days || 0)}
                 </p>
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
-                  {t('projects.githubMetricContributions')}
-                </p>
-                <p className="mt-1 text-2xl font-bold text-white">
-                  {isLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
-                </p>
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-600">
+                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-600">
                   {t('projects.githubMetricTopRepo')}
                 </p>
-                <p className="mt-1 truncate text-sm font-bold text-slate-300">
+                <p className="mt-1 truncate text-xs font-bold text-slate-300">
                   {isLoading ? '...' : (activity?.totals?.topRepoName || '—')}
                 </p>
               </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-6 flex items-center gap-4">
               <a
                 href={profileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-cyan-500 transition-colors hover:text-cyan-400"
+                className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 transition-colors hover:text-cyan-400"
               >
                 {t('projects.githubOpenProfile')}
                 <ArrowUpRight className="h-3 w-3" />
               </a>
+              {stats?.totalContributionsThisYear && (
+                <span className="text-[10px] font-medium text-slate-600">
+                  {stats.totalContributionsThisYear} commits in {new Date().getFullYear()}
+                </span>
+              )}
             </div>
           </div>
 
           {/* Mini Timeline */}
-          <div className="flex-[1.5]">
-            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+          <div className="flex-[1.2]">
+            <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-600">
               {t('projects.githubRecentActivity')}
             </div>
-            <div className="mt-6 space-y-4">
+            <div className="mt-5 space-y-3">
               {isLoading ? (
                 [...Array(3)].map((_, i) => (
-                  <div key={i} className="h-10 w-full animate-pulse rounded-lg bg-white/5" />
+                  <div key={i} className="h-8 w-full animate-pulse rounded-lg bg-white/5" />
                 ))
-              ) : entries.length === 0 ? (
-                <p className="text-sm text-slate-600">{t('projects.githubTimelineEmpty')}</p>
+              ) : groupedEntries.length === 0 ? (
+                <p className="text-xs text-slate-600">{t('projects.githubTimelineEmpty')}</p>
               ) : (
-                entries.map((entry) => (
-                  <div key={entry.id} className="flex items-center justify-between gap-4 py-1 border-b border-white/[0.03] last:border-0">
-                    <span className="truncate text-sm text-slate-400">
+                groupedEntries.map((entry) => (
+                  <div key={entry.id} className="flex items-center justify-between gap-3 py-1 border-b border-white/[0.03] last:border-0">
+                    <span className="truncate text-xs text-slate-400">
                       {entry.summary}
                     </span>
-                    <span className="shrink-0 text-[10px] font-bold text-slate-600">
+                    <span className="shrink-0 text-[9px] font-bold text-slate-600">
                       {entry.repoName.split('/')[1]}
                     </span>
                   </div>
@@ -309,19 +323,19 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
         </div>
       </div>
 
-      {/* Selected Repositories - Now inside GitHub Signal */}
+      {/* Selected Repositories */}
       { (repoItems.length > 0 || isRepoLoading) && (
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-6">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
+        <div className="mt-6">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-600">
               {t('projects.repoTitle')}
             </p>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {isRepoLoading ? (
               [...Array(3)].map((_, i) => (
-                <div key={i} className="h-32 animate-pulse rounded-2xl bg-white/[0.02]" />
+                <div key={i} className="h-28 animate-pulse rounded-xl bg-white/[0.02]" />
               ))
             ) : (
               repoItems.map((project) => (
@@ -347,20 +361,20 @@ export default function Projects() {
   const profileUrl = statsState.response?.data?.profileUrl || getGithubProfileUrl();
 
   return (
-    <section id="projects" className="relative border-t border-white/5 bg-[#030712] py-24 text-white sm:py-32">
+    <section id="projects" className="relative border-t border-white/5 bg-[#030712] py-16 text-white sm:py-24">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="max-w-3xl">
-          <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             {t('projects.title')}
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-slate-400">
+          <p className="mt-4 text-base leading-relaxed text-slate-400">
             {t('projects.subtitle')}
           </p>
         </div>
 
         {/* Subsection 1: Live Products */}
-        <div className="mt-20">
+        <div className="mt-12">
           <SectionHeader
             title={t('projects.showcaseTitle')}
             isExpanded={isProductsExpanded}
@@ -373,10 +387,10 @@ export default function Projects() {
           
           <div
             id="live-products-section"
-            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-10' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
-              <div className="grid gap-8 md:grid-cols-2">
+              <div className="grid gap-6 md:grid-cols-2">
                 {featuredWorkItems.map((item) => (
                   <ShowcaseCard key={item.id} item={item} t={t} />
                 ))}
@@ -386,7 +400,7 @@ export default function Projects() {
         </div>
 
         {/* Subsection 2: GitHub Activity */}
-        <div className="mt-12">
+        <div className="mt-8">
           <SectionHeader
             title={t('projects.githubSignalTitle')}
             isExpanded={isGithubExpanded}
@@ -399,7 +413,7 @@ export default function Projects() {
           
           <div
             id="github-activity-section"
-            className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-10' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
               <GithubSignal 
