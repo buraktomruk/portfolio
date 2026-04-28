@@ -60,9 +60,57 @@
   "projects": {
     "title": "Produkte & öffentliche Build-Arbeit",
     "subtitle": "Zuerst die fertigen Produkte, ergänzt um aktuelle GitHub-Aktivitäten als technisches Signal.",
-    "showcaseTitle": "Live-Produkte",
-    "showcaseDescription": "Die stärksten Belege bleiben im Vordergrund: hochwertige, markenstarke Produktkarten für die Live-Apps selbst.",
+    "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
+    "showcaseDescription": "Eigenständige Produktentwicklungen, präsentiert als Fallstudien zu Production-Readiness, System-Design, Sicherheit und Release-Hardening.",
     "liveDemo": "Live-Demo",
+    "livePreview": "Live-Vorschau",
+    "viewRepository": "Repository ansehen",
+    "viewCaseStudy": "Fallstudie ansehen",
+    "engineeringFocus": "Engineering-Fokus",
+    "statusLabels": {
+      "releaseHardening": "Release-Hardening",
+      "productionReadiness": "Production-Readiness-Audit",
+      "mvpDeployed": "MVP deployed",
+      "activeIteration": "Aktive System-Design-Iteration"
+    },
+    "caseStudies": {
+      "ritualgymtracker": {
+        "summary": "Mobile-first Workout-Tracking-App mit Fokus auf Offline-Verhalten, Migration von Gast- zu authentifizierten Konten, Streak-Korrektheit, zeitzonensichere Analytik und Release-Readiness-Validierung.",
+        "focus": [
+          "Offline-first Sync mit konfliktbewusster Abstimmung",
+          "Migration von Gast- zu Auth-Konten ohne Datenverlust",
+          "Streak- und Zeitzonen-Korrektheit über Sommerzeit und Reisen",
+          "Triage von Release-Blockern und Pre-Launch-Hardening"
+        ]
+      },
+      "bookmarkanalyzer": {
+        "summary": "Local-first Bookmark-Intelligence-App mit Fokus auf Organisation, KI-gestützte Anreicherung, Lese-Erlebnis und Sicherheits-Hardening.",
+        "focus": [
+          "Local-first Speicherung mit progressiver KI-Anreicherung",
+          "SSRF-gehärteter Fetch-Pfad für Remote-Metadaten",
+          "Reader-Mode-Sanitisierung gegen nicht vertrauenswürdiges HTML",
+          "Security-Header und Rate-Limiting für öffentliche Endpunkte"
+        ]
+      },
+      "subtrackerrr": {
+        "summary": "Abonnement- und Ausgaben-Tracker mit Fokus auf finanzielle Korrektheit, Währungsbehandlung, Firebase Auth-/Session-Sicherheit und Datenintegrität.",
+        "focus": [
+          "Finanzielle Korrektheit über Währungen und Abrechnungszyklen",
+          "Firebase-Auth- und Session-Revocation-Sicherheit",
+          "Firestore-Schema- und Persistenz-Integritätsprüfungen",
+          "Aufräumen von Release-Blockern vor öffentlicher Exposition"
+        ]
+      },
+      "fintrackerrr": {
+        "summary": "Portfolio-Analytics-Dashboard mit Fokus auf Asset-Insights, Dividendenkalender, Datennormalisierung, UI-Performance und investmentorientierte Übersichten.",
+        "focus": [
+          "Normalisiertes Datenmodell über heterogene Asset-Quellen",
+          "Investmentorientierte Insight-Panels und Dividendenkalender",
+          "UI-Performance-Arbeit an großen Portfolio-Tabellen",
+          "Observability für analytische Korrektheit"
+        ]
+      }
+    },
     "githubSignalTitle": "GitHub-Aktivität",
     "githubSummaryTitle": "Entwicklungsaktivität",
     "githubMetricEvents": "Öffentliche Ereignisse",
@@ -73,11 +121,11 @@
     "githubOpenProfile": "GitHub-Profil öffnen",
     "githubTimelineEmpty": "Die GitHub-Aktivität ist gerade ruhig.",
     "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
-    "showProducts": "Produkte anzeigen",
-    "hideProducts": "Produkte ausblenden",
+    "showProducts": "Fallstudien anzeigen",
+    "hideProducts": "Fallstudien ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "4 fertige Produkte mit Live-Demos",
+    "summaryProducts": "4 eigenständige Produkt-Builds — Production-Readiness- und System-Design-Fallstudien",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",
