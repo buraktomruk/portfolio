@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Activity, ArrowUpRight, Check, ChevronDown, Circle, FolderGit2, Github, Star } from 'lucide-react';
+import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Star } from 'lucide-react';
 import { featuredWorkItems } from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
@@ -34,26 +34,34 @@ const ACCENT_STYLES = {
   emerald: {
     card: 'from-emerald-500/10 via-transparent to-transparent',
     badge: 'bg-emerald-500/10 text-emerald-300 ring-emerald-500/20',
-    button: 'bg-emerald-500 text-emerald-950 hover:bg-emerald-400',
     accentText: 'text-emerald-400',
+    topLine: 'from-transparent via-emerald-400/40 to-transparent',
+    hoverText: 'hover:text-emerald-300',
+    hoverBorder: 'group-hover/link:border-emerald-300/60',
   },
   violet: {
     card: 'from-violet-500/10 via-transparent to-transparent',
     badge: 'bg-violet-500/10 text-violet-300 ring-violet-500/20',
-    button: 'bg-violet-500 text-violet-950 hover:bg-violet-400',
     accentText: 'text-violet-400',
+    topLine: 'from-transparent via-violet-400/40 to-transparent',
+    hoverText: 'hover:text-violet-300',
+    hoverBorder: 'group-hover/link:border-violet-300/60',
   },
   cyan: {
     card: 'from-cyan-500/10 via-transparent to-transparent',
     badge: 'bg-cyan-500/10 text-cyan-300 ring-cyan-500/20',
-    button: 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400',
     accentText: 'text-cyan-400',
+    topLine: 'from-transparent via-cyan-400/40 to-transparent',
+    hoverText: 'hover:text-cyan-300',
+    hoverBorder: 'group-hover/link:border-cyan-300/60',
   },
   amber: {
     card: 'from-amber-500/10 via-transparent to-transparent',
     badge: 'bg-amber-500/10 text-amber-300 ring-amber-500/20',
-    button: 'bg-amber-500 text-amber-950 hover:bg-amber-400',
     accentText: 'text-amber-400',
+    topLine: 'from-transparent via-amber-400/40 to-transparent',
+    hoverText: 'hover:text-amber-300',
+    hoverBorder: 'group-hover/link:border-amber-300/60',
   },
 };
 
@@ -61,118 +69,72 @@ function getAccentStyles(accent) {
   return ACCENT_STYLES[accent] ?? ACCENT_STYLES.emerald;
 }
 
-function ShowcaseCard({ item, t }) {
+function ShowcaseCard({ item, index, t }) {
   const accentStyles = getAccentStyles(item.accent);
-  const [hasError, setHasError] = useState(false);
 
   const statusLabel = t(`projects.statusLabels.${item.statusKey}`, { defaultValue: '' });
-  const typeLabel = t(`projects.caseStudies.${item.id}.type`, { defaultValue: '' });
   const summary = t(`projects.caseStudies.${item.id}.summary`, { defaultValue: '' });
-  const focusItems = t(`projects.caseStudies.${item.id}.focus`, {
-    returnObjects: true,
-    defaultValue: [],
-  });
-  const focusList = Array.isArray(focusItems) ? focusItems : [];
-  const tags = Array.isArray(item.tags) ? item.tags : [];
-  const visibleTags = tags.slice(0, 5);
-  const showImage = Boolean(item.previewImage) && !hasError;
-  const initial = item.title?.charAt(0)?.toUpperCase() || '•';
+  const impactAreas = t(`projects.caseStudies.${item.id}.impactAreas`, { defaultValue: '' });
+  const indexLabel = String(index + 1).padStart(2, '0');
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-all duration-300 hover:border-white/20 hover:bg-slate-900/60">
-      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
+    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-colors duration-300 hover:border-white/20">
+      <div className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${accentStyles.topLine}`} />
+      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-40 ${accentStyles.card}`} />
 
-      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6">
+      <div className="relative z-10 flex flex-1 flex-col p-7 sm:p-9">
         <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            {statusLabel && (
-              <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ring-1 ${accentStyles.badge}`}>
-                {statusLabel}
-              </span>
-            )}
-            <h3 className="mt-3 truncate text-xl font-bold tracking-tight text-white sm:text-2xl">
-              {item.title}
-            </h3>
-            {typeLabel && (
-              <p className={`mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${accentStyles.accentText}`}>
-                {typeLabel}
-              </p>
-            )}
-          </div>
-          <div
+          {statusLabel ? (
+            <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ring-1 ${accentStyles.badge}`}>
+              {statusLabel}
+            </span>
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          <span
             aria-hidden="true"
-            className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 ${showImage ? 'p-2' : ''}`}
+            className={`shrink-0 font-mono text-[11px] font-bold tracking-[0.2em] ${accentStyles.accentText}`}
           >
-            {showImage ? (
-              <img
-                src={item.previewImage}
-                alt=""
-                className="h-full w-full object-contain"
-                loading="lazy"
-                onError={() => setHasError(true)}
-              />
-            ) : (
-              <span className={`text-base font-bold ${accentStyles.accentText}`}>{initial}</span>
-            )}
-          </div>
+            {indexLabel}
+          </span>
         </div>
 
+        <h3 className="mt-7 text-xl font-bold tracking-tight text-white sm:text-[1.45rem]">
+          {item.title}
+        </h3>
+
         {summary && (
-          <p className="mt-4 text-[13.5px] leading-relaxed text-slate-300">
+          <p className="mt-3 text-sm leading-relaxed text-slate-300">
             {summary}
           </p>
         )}
 
-        {focusList.length > 0 && (
-          <div className="mt-4">
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500">
-              {t('projects.engineeringFocus')}
+        {impactAreas && (
+          <div className="mt-7">
+            <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500">
+              {t('projects.impactAreas')}
             </p>
-            <ul className="mt-2 space-y-1.5">
-              {focusList.slice(0, 4).map((point) => (
-                <li key={point} className="flex items-start gap-2 text-[13px] leading-snug text-slate-400">
-                  <Check className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${accentStyles.accentText}`} aria-hidden="true" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
+            <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
+              {impactAreas}
+            </p>
           </div>
         )}
 
-        {visibleTags.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {visibleTags.map((label) => (
-              <span
-                key={label}
-                className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-white/10"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
-        )}
-
-        <div className="mt-5 flex flex-wrap gap-2 pt-1">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-9">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+            {t('projects.caseStudyInProgress')}
+          </span>
           {item.demoUrl && (
             <a
               href={item.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-xs font-bold leading-none transition-colors ${accentStyles.button}`}
+              className={`group/link inline-flex items-center gap-1 text-xs font-medium text-slate-400 transition-colors ${accentStyles.hoverText}`}
             >
-              <span>{t('projects.livePreview')}</span>
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          )}
-          {item.repoUrl && (
-            <a
-              href={item.repoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3.5 text-xs font-bold leading-none text-slate-200 transition-colors hover:border-white/25 hover:bg-white/10"
-            >
-              <Github className="h-3.5 w-3.5" aria-hidden="true" />
-              <span>{t('projects.viewRepository')}</span>
+              <span className={`border-b border-dashed border-slate-600 pb-px transition-colors ${accentStyles.hoverBorder}`}>
+                {t('projects.previewBuild')}
+              </span>
+              <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
             </a>
           )}
         </div>
@@ -451,8 +413,8 @@ export default function Projects() {
           >
             <div className="overflow-hidden">
               <div className="grid gap-6 md:grid-cols-2">
-                {featuredWorkItems.map((item) => (
-                  <ShowcaseCard key={item.id} item={item} t={t} />
+                {featuredWorkItems.map((item, idx) => (
+                  <ShowcaseCard key={item.id} item={item} index={idx} t={t} />
                 ))}
               </div>
             </div>

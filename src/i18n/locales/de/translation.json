@@ -62,11 +62,9 @@
     "subtitle": "Ausgewählte Side-Projects, neu gerahmt rund um Production-Readiness, Sicherheit, Datenkorrektheit und System-Design.",
     "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
     "showcaseDescription": "Eigenständige Produktentwicklungen, präsentiert als Fallstudien zu Production-Readiness, System-Design, Sicherheit und Release-Hardening.",
-    "liveDemo": "Live-Demo",
-    "livePreview": "Vorschau öffnen",
-    "viewRepository": "Repository ansehen",
-    "viewCaseStudy": "Fallstudie ansehen",
-    "engineeringFocus": "Engineering-Fokus",
+    "impactAreas": "Schwerpunkte",
+    "caseStudyInProgress": "Fallstudie in Arbeit",
+    "previewBuild": "Preview-Build",
     "statusLabels": {
       "releaseHardening": "Release-Hardening",
       "productionReadiness": "Production-Readiness-Audit",
@@ -75,44 +73,20 @@
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "type": "Mobile-Release-Hardening",
-        "summary": "Mobile-first Workout-Tracking-App mit Fokus auf Offline-Verhalten, Migration von Gast- zu authentifizierten Konten, Streak-Korrektheit, zeitzonensichere Analytik und Release-Readiness-Validierung.",
-        "focus": [
-          "Offline-first Sync mit konfliktbewusster Abstimmung",
-          "Migration von Gast- zu Auth-Konten ohne Datenverlust",
-          "Streak- und Zeitzonen-Korrektheit über Sommerzeit und Reisen",
-          "Triage von Release-Blockern und Pre-Launch-Hardening"
-        ]
+        "summary": "Workout-Tracking-Fallstudie rund um Offline-first-Sync, Gast-Migration und zeitzonensichere Streak-Logik.",
+        "impactAreas": "Offline-Sync · Auth-Migration · DST-sichere Analytik"
       },
       "bookmarkanalyzer": {
-        "type": "Sicherheit & Local-first-Architektur",
-        "summary": "Local-first Bookmark-Intelligence-App mit Fokus auf Organisation, KI-gestützte Anreicherung, Lese-Erlebnis und Sicherheits-Hardening.",
-        "focus": [
-          "Local-first Speicherung mit progressiver KI-Anreicherung",
-          "SSRF-gehärteter Fetch-Pfad für Remote-Metadaten",
-          "Reader-Mode-Sanitisierung gegen nicht vertrauenswürdiges HTML",
-          "Security-Header und Rate-Limiting für öffentliche Endpunkte"
-        ]
+        "summary": "Bookmark-Intelligence-Fallstudie zu Local-first-Daten, KI-Anreicherung, SSRF-Abwehr und Reader-Sanitisierung.",
+        "impactAreas": "Local-first-Daten · KI-Anreicherung · SSRF-Abwehr · Sanitisierung"
       },
       "subtrackerrr": {
-        "type": "Finanzielle Korrektheit & Auth-Sicherheit",
-        "summary": "Abonnement- und Ausgaben-Tracker mit Fokus auf finanzielle Korrektheit, Währungsbehandlung, Firebase Auth-/Session-Sicherheit und Datenintegrität.",
-        "focus": [
-          "Finanzielle Korrektheit über Währungen und Abrechnungszyklen",
-          "Firebase-Auth- und Session-Revocation-Sicherheit",
-          "Firestore-Schema- und Persistenz-Integritätsprüfungen",
-          "Aufräumen von Release-Blockern vor öffentlicher Exposition"
-        ]
+        "summary": "Abonnement-Tracking-Fallstudie mit Fokus auf finanzielle Korrektheit, Firebase-Auth-Sicherheit und Persistenz-Integrität.",
+        "impactAreas": "Währungs­korrektheit · Session-Sicherheit · Firestore-Integrität"
       },
       "fintrackerrr": {
-        "type": "Datennormalisierung & Analytics-UX",
-        "summary": "Portfolio-Analytics-Dashboard mit Fokus auf Asset-Insights, Dividendenkalender, Datennormalisierung, UI-Performance und investmentorientierte Übersichten.",
-        "focus": [
-          "Normalisiertes Datenmodell über heterogene Asset-Quellen",
-          "Investmentorientierte Insight-Panels und Dividendenkalender",
-          "UI-Performance-Arbeit an großen Portfolio-Tabellen",
-          "Observability für analytische Korrektheit"
-        ]
+        "summary": "Portfolio-Analytics-Fallstudie rund um normalisierte Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
+        "impactAreas": "Datennormalisierung · Portfolio-UX · Dividenden-Insights"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",

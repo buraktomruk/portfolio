@@ -62,11 +62,9 @@
     "subtitle": "Selected side projects reframed around production readiness, security, data correctness, and system design.",
     "showcaseTitle": "Selected Engineering Case Studies",
     "showcaseDescription": "Independent product builds positioned as production-readiness, system-design, security, and release-hardening case studies.",
-    "liveDemo": "Live Demo",
-    "livePreview": "Open preview",
-    "viewRepository": "View repository",
-    "viewCaseStudy": "View case study",
-    "engineeringFocus": "Engineering focus",
+    "impactAreas": "Impact areas",
+    "caseStudyInProgress": "Case study in progress",
+    "previewBuild": "Preview build",
     "statusLabels": {
       "releaseHardening": "Release hardening",
       "productionReadiness": "Production-readiness audit",
@@ -75,44 +73,20 @@
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "type": "Mobile release hardening",
-        "summary": "Mobile-first workout tracking app focused on offline behavior, guest-to-auth migration, streak correctness, timezone-safe analytics, and release-readiness validation.",
-        "focus": [
-          "Offline-first sync with conflict-aware reconciliation",
-          "Guest-to-authenticated account migration without data loss",
-          "Streak and timezone correctness across DST and travel",
-          "Release-blocker triage and pre-launch hardening"
-        ]
+        "summary": "Workout tracking case study around offline-first sync, guest migration, and timezone-safe streak logic.",
+        "impactAreas": "Offline sync · Auth migration · DST-safe analytics"
       },
       "bookmarkanalyzer": {
-        "type": "Security & local-first architecture",
-        "summary": "Local-first bookmark intelligence app focused on bookmark organization, AI-assisted enrichment, reader experience, and security hardening.",
-        "focus": [
-          "Local-first storage with progressive AI enrichment",
-          "SSRF-hardened fetch path for remote metadata",
-          "Reader-mode sanitization against untrusted HTML",
-          "Security headers and rate-limiting for public endpoints"
-        ]
+        "summary": "Bookmark intelligence case study covering local-first data, AI enrichment, SSRF defense, and reader sanitization.",
+        "impactAreas": "Local-first data · AI enrichment · SSRF defense · Sanitization"
       },
       "subtrackerrr": {
-        "type": "Financial correctness & auth safety",
-        "summary": "Subscription and spending tracker focused on financial correctness, currency handling, Firebase auth/session safety, and data persistence integrity.",
-        "focus": [
-          "Financial correctness across currencies and billing cycles",
-          "Firebase auth and session-revocation safety",
-          "Firestore schema and persistence integrity checks",
-          "Release-blocker cleanup before public exposure"
-        ]
+        "summary": "Subscription tracking case study focused on financial correctness, Firebase auth safety, and persistence integrity.",
+        "impactAreas": "Currency correctness · Session safety · Firestore integrity"
       },
       "fintrackerrr": {
-        "type": "Data normalization & analytics UX",
-        "summary": "Portfolio analytics dashboard focused on asset insights, dividend calendar, data normalization, UI performance, and investment-focused summaries.",
-        "focus": [
-          "Normalized data model across heterogeneous asset feeds",
-          "Investment-focused insight panels and dividend calendar",
-          "UI performance work for large portfolio tables",
-          "Observability for analytics correctness"
-        ]
+        "summary": "Portfolio analytics case study around normalized asset data, dividend insights, and large-table UI performance.",
+        "impactAreas": "Data normalization · Portfolio UX · Dividend insights"
       }
     },
     "githubSignalTitle": "GitHub Activity",
