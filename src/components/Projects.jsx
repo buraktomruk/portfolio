@@ -34,26 +34,34 @@ const ACCENT_STYLES = {
   emerald: {
     card: 'from-emerald-500/10 via-transparent to-transparent',
     badge: 'bg-emerald-500/10 text-emerald-300 ring-emerald-500/20',
-    button: 'bg-emerald-500 text-emerald-950 hover:bg-emerald-400',
     accentText: 'text-emerald-400',
+    topLine: 'from-transparent via-emerald-400/40 to-transparent',
+    hoverText: 'hover:text-emerald-300',
+    hoverBorder: 'group-hover/link:border-emerald-300/60',
   },
   violet: {
     card: 'from-violet-500/10 via-transparent to-transparent',
     badge: 'bg-violet-500/10 text-violet-300 ring-violet-500/20',
-    button: 'bg-violet-500 text-violet-950 hover:bg-violet-400',
     accentText: 'text-violet-400',
+    topLine: 'from-transparent via-violet-400/40 to-transparent',
+    hoverText: 'hover:text-violet-300',
+    hoverBorder: 'group-hover/link:border-violet-300/60',
   },
   cyan: {
     card: 'from-cyan-500/10 via-transparent to-transparent',
     badge: 'bg-cyan-500/10 text-cyan-300 ring-cyan-500/20',
-    button: 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400',
     accentText: 'text-cyan-400',
+    topLine: 'from-transparent via-cyan-400/40 to-transparent',
+    hoverText: 'hover:text-cyan-300',
+    hoverBorder: 'group-hover/link:border-cyan-300/60',
   },
   amber: {
     card: 'from-amber-500/10 via-transparent to-transparent',
     badge: 'bg-amber-500/10 text-amber-300 ring-amber-500/20',
-    button: 'bg-amber-500 text-amber-950 hover:bg-amber-400',
     accentText: 'text-amber-400',
+    topLine: 'from-transparent via-amber-400/40 to-transparent',
+    hoverText: 'hover:text-amber-300',
+    hoverBorder: 'group-hover/link:border-amber-300/60',
   },
 };
 
@@ -61,60 +69,74 @@ function getAccentStyles(accent) {
   return ACCENT_STYLES[accent] ?? ACCENT_STYLES.emerald;
 }
 
-function ShowcaseCard({ item, t }) {
+function ShowcaseCard({ item, index, t }) {
   const accentStyles = getAccentStyles(item.accent);
-  const [hasError, setHasError] = useState(false);
+
+  const statusLabel = t(`projects.statusLabels.${item.statusKey}`, { defaultValue: '' });
+  const summary = t(`projects.caseStudies.${item.id}.summary`, { defaultValue: '' });
+  const impactAreas = t(`projects.caseStudies.${item.id}.impactAreas`, { defaultValue: '' });
+  const indexLabel = String(index + 1).padStart(2, '0');
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-all duration-300 hover:border-white/20 hover:bg-slate-900/60">
-      <div className={`absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
-      
-      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-7">
+    <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-colors duration-300 hover:border-white/20">
+      <div className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${accentStyles.topLine}`} />
+      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-40 ${accentStyles.card}`} />
+
+      <div className="relative z-10 flex flex-1 flex-col p-7 sm:p-9">
         <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider ring-1 ${accentStyles.badge}`}>
-              {item.status}
+          {statusLabel ? (
+            <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ring-1 ${accentStyles.badge}`}>
+              {statusLabel}
             </span>
-            <h3 className="mt-3 truncate text-xl font-bold tracking-tight text-white sm:text-2xl">
-              {item.title}
-            </h3>
-          </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2">
-            {!item.previewImage || hasError ? (
-              <span className="text-lg font-bold text-white/40">{item.title.charAt(0)}</span>
-            ) : (
-              <img
-                src={item.previewImage}
-                alt=""
-                className="h-full w-full object-contain"
-                onError={() => setHasError(true)}
-              />
-            )}
-          </div>
-        </div>
-
-        <p className="mt-3 text-[14px] leading-snug text-slate-400">
-          {item.description}
-        </p>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {item.stack.slice(0, 3).map((label) => (
-            <span key={label} className="text-[11px] font-medium text-slate-500">
-              #{label}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-auto pt-6">
-          <a
-            href={item.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${accentStyles.button}`}
+          ) : (
+            <span aria-hidden="true" />
+          )}
+          <span
+            aria-hidden="true"
+            className={`shrink-0 font-mono text-[11px] font-bold tracking-[0.2em] ${accentStyles.accentText}`}
           >
-            {t('projects.liveDemo')}
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </a>
+            {indexLabel}
+          </span>
+        </div>
+
+        <h3 className="mt-7 text-xl font-bold tracking-tight text-white sm:text-[1.45rem]">
+          {item.title}
+        </h3>
+
+        {summary && (
+          <p className="mt-3 text-sm leading-relaxed text-slate-300">
+            {summary}
+          </p>
+        )}
+
+        {impactAreas && (
+          <div className="mt-7">
+            <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500">
+              {t('projects.impactAreas')}
+            </p>
+            <p className="mt-2 text-[13px] leading-relaxed text-slate-400">
+              {impactAreas}
+            </p>
+          </div>
+        )}
+
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-9">
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+            {t('projects.caseStudyInProgress')}
+          </span>
+          {item.demoUrl && (
+            <a
+              href={item.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`group/link inline-flex items-center gap-1 text-xs font-medium text-slate-400 transition-colors ${accentStyles.hoverText}`}
+            >
+              <span className={`border-b border-dashed border-slate-600 pb-px transition-colors ${accentStyles.hoverBorder}`}>
+                {t('projects.previewBuild')}
+              </span>
+              <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+            </a>
+          )}
         </div>
       </div>
     </article>
@@ -391,8 +413,8 @@ export default function Projects() {
           >
             <div className="overflow-hidden">
               <div className="grid gap-6 md:grid-cols-2">
-                {featuredWorkItems.map((item) => (
-                  <ShowcaseCard key={item.id} item={item} t={t} />
+                {featuredWorkItems.map((item, idx) => (
+                  <ShowcaseCard key={item.id} item={item} index={idx} t={t} />
                 ))}
               </div>
             </div>

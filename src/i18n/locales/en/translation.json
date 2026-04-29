@@ -58,11 +58,37 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Products & Public Build Work",
-    "subtitle": "Shipped products first, with a lightweight GitHub signal for recent public engineering activity.",
-    "showcaseTitle": "Live Products",
-    "showcaseDescription": "The strongest proof points stay front and center: polished, branded product cards for the live apps themselves.",
-    "liveDemo": "Live Demo",
+    "title": "Engineering Case Studies & Public Build Work",
+    "subtitle": "Selected side projects reframed around production readiness, security, data correctness, and system design.",
+    "showcaseTitle": "Selected Engineering Case Studies",
+    "showcaseDescription": "Independent product builds positioned as production-readiness, system-design, security, and release-hardening case studies.",
+    "impactAreas": "Impact areas",
+    "caseStudyInProgress": "Case study in progress",
+    "previewBuild": "Preview build",
+    "statusLabels": {
+      "releaseHardening": "Release hardening",
+      "productionReadiness": "Production-readiness audit",
+      "mvpDeployed": "MVP deployed",
+      "activeIteration": "Active system-design iteration"
+    },
+    "caseStudies": {
+      "ritualgymtracker": {
+        "summary": "Workout tracking case study around offline-first sync, guest migration, and timezone-safe streak logic.",
+        "impactAreas": "Offline sync · Auth migration · DST-safe analytics"
+      },
+      "bookmarkanalyzer": {
+        "summary": "Bookmark intelligence case study covering local-first data, AI enrichment, SSRF defense, and reader sanitization.",
+        "impactAreas": "Local-first data · AI enrichment · SSRF defense · Sanitization"
+      },
+      "subtrackerrr": {
+        "summary": "Subscription tracking case study focused on financial correctness, Firebase auth safety, and persistence integrity.",
+        "impactAreas": "Currency correctness · Session safety · Firestore integrity"
+      },
+      "fintrackerrr": {
+        "summary": "Portfolio analytics case study around normalized asset data, dividend insights, and large-table UI performance.",
+        "impactAreas": "Data normalization · Portfolio UX · Dividend insights"
+      }
+    },
     "githubSignalTitle": "GitHub Activity",
     "githubSummaryTitle": "Engineering Activity",
     "githubMetricEvents": "Recent public events",
@@ -73,11 +99,11 @@
     "githubOpenProfile": "Open GitHub profile",
     "githubTimelineEmpty": "GitHub activity is quiet right now.",
     "githubUnavailableMuted": "GitHub activity temporarily unavailable.",
-    "showProducts": "Show products",
-    "hideProducts": "Hide products",
+    "showProducts": "Show case studies",
+    "hideProducts": "Hide case studies",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "4 shipped products with working demos",
+    "summaryProducts": "4 independent product builds — production-readiness & system-design case studies",
     "summaryGithub": "Recent public activity and selected repositories",
     "repoTitle": "Selected Repositories",
     "viewAllRepos": "View all repositories",

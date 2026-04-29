@@ -1,58 +1,39 @@
+// Each entry models an independent product build presented as an engineering
+// case study. Translatable copy (summary, impact areas, status label) lives
+// under `projects.caseStudies.<id>` in the i18n files; structural fields stay
+// here. `demoUrl` and `repoUrl` must be either a known safe absolute URL or
+// explicitly `null` when no safe URL is available — never a placeholder.
 export const featuredWorkItems = [
   {
-    id: "fintrackerrr",
-    title: "FinanceTracker",
-    tagline: "Portfolio intelligence for high-signal market monitoring.",
-    description:
-      "A finance dashboard focused on portfolio visibility, market context, and fast decision support for active investors.",
-    demoUrl: "https://fintrackerrr.netlify.app/",
+    id: "ritualgymtracker",
+    title: "Ritual Gym Tracker",
+    statusKey: "releaseHardening",
+    accent: "amber",
+    demoUrl: "https://ritualgymtracker.netlify.app/",
     repoUrl: null,
-    visibility: "public",
-    previewImage: "/project-previews/fintrackerrr-logo.svg",
-    stack: ["React", "Analytics UI", "Market Data"],
-    accent: "emerald",
-    status: "Live",
   },
   {
     id: "bookmarkanalyzer",
     title: "BookmarkAI",
-    tagline: "Local-first knowledge capture with cleaner retrieval.",
-    description:
-      "A bookmark workflow that turns saved links into a searchable personal knowledge system with optional AI enrichment.",
+    statusKey: "productionReadiness",
+    accent: "violet",
     demoUrl: "https://bookmarkanalyzer.netlify.app/",
     repoUrl: null,
-    visibility: "public",
-    previewImage: "/project-previews/bookmarkanalyzer-logo.svg",
-    stack: ["React", "Local-First UX", "AI Search"],
-    accent: "violet",
-    status: "Live",
   },
   {
     id: "subtrackerrr",
     title: "SubTracker",
-    tagline: "Subscription tracking built for calm operational control.",
-    description:
-      "A focused dashboard for monitoring subscriptions, spend patterns, and usage signals without turning budgeting into friction.",
+    statusKey: "mvpDeployed",
+    accent: "cyan",
     demoUrl: "https://subtrackerrr.netlify.app/",
     repoUrl: null,
-    visibility: "public",
-    previewImage: "/project-previews/subtrackerrr-logo.png",
-    stack: ["React", "Product Design", "Billing UX"],
-    accent: "cyan",
-    status: "Live",
   },
   {
-    id: "ritualgymtracker",
-    title: "Ritual Gym Tracker",
-    tagline: "Training routines designed around consistency and momentum.",
-    description:
-      "A fitness tracking experience centered on repeatable routines, workout history, and an interface that stays lightweight during training.",
-    demoUrl: "https://ritualgymtracker.netlify.app/",
+    id: "fintrackerrr",
+    title: "FinanceTracker",
+    statusKey: "activeIteration",
+    accent: "emerald",
+    demoUrl: "https://fintrackerrr.netlify.app/",
     repoUrl: null,
-    visibility: "public",
-    previewImage: "/project-previews/ritualgymtracker-icon.png",
-    stack: ["React", "Habit Systems", "Mobile UX"],
-    accent: "amber",
-    status: "Live",
   },
 ];

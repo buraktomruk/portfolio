@@ -58,11 +58,37 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Produkte & öffentliche Build-Arbeit",
-    "subtitle": "Zuerst die fertigen Produkte, ergänzt um aktuelle GitHub-Aktivitäten als technisches Signal.",
-    "showcaseTitle": "Live-Produkte",
-    "showcaseDescription": "Die stärksten Belege bleiben im Vordergrund: hochwertige, markenstarke Produktkarten für die Live-Apps selbst.",
-    "liveDemo": "Live-Demo",
+    "title": "Engineering-Fallstudien & öffentliche Build-Arbeit",
+    "subtitle": "Ausgewählte Side-Projects, neu gerahmt rund um Production-Readiness, Sicherheit, Datenkorrektheit und System-Design.",
+    "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
+    "showcaseDescription": "Eigenständige Produktentwicklungen, präsentiert als Fallstudien zu Production-Readiness, System-Design, Sicherheit und Release-Hardening.",
+    "impactAreas": "Schwerpunkte",
+    "caseStudyInProgress": "Fallstudie in Arbeit",
+    "previewBuild": "Preview-Build",
+    "statusLabels": {
+      "releaseHardening": "Release-Hardening",
+      "productionReadiness": "Production-Readiness-Audit",
+      "mvpDeployed": "MVP veröffentlicht",
+      "activeIteration": "Aktive System-Design-Iteration"
+    },
+    "caseStudies": {
+      "ritualgymtracker": {
+        "summary": "Workout-Tracking-Fallstudie rund um Offline-first-Sync, Gast-Migration und zeitzonensichere Streak-Logik.",
+        "impactAreas": "Offline-Sync · Auth-Migration · DST-sichere Analytik"
+      },
+      "bookmarkanalyzer": {
+        "summary": "Bookmark-Intelligence-Fallstudie zu Local-first-Daten, KI-Anreicherung, SSRF-Abwehr und Reader-Sanitisierung.",
+        "impactAreas": "Local-first-Daten · KI-Anreicherung · SSRF-Abwehr · Sanitisierung"
+      },
+      "subtrackerrr": {
+        "summary": "Abonnement-Tracking-Fallstudie mit Fokus auf finanzielle Korrektheit, Firebase-Auth-Sicherheit und Persistenz-Integrität.",
+        "impactAreas": "Währungs­korrektheit · Session-Sicherheit · Firestore-Integrität"
+      },
+      "fintrackerrr": {
+        "summary": "Portfolio-Analytics-Fallstudie rund um normalisierte Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
+        "impactAreas": "Datennormalisierung · Portfolio-UX · Dividenden-Insights"
+      }
+    },
     "githubSignalTitle": "GitHub-Aktivität",
     "githubSummaryTitle": "Entwicklungsaktivität",
     "githubMetricEvents": "Öffentliche Ereignisse",
@@ -73,11 +99,11 @@
     "githubOpenProfile": "GitHub-Profil öffnen",
     "githubTimelineEmpty": "Die GitHub-Aktivität ist gerade ruhig.",
     "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
-    "showProducts": "Produkte anzeigen",
-    "hideProducts": "Produkte ausblenden",
+    "showProducts": "Fallstudien anzeigen",
+    "hideProducts": "Fallstudien ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "4 fertige Produkte mit Live-Demos",
+    "summaryProducts": "4 eigenständige Produkt-Builds — Production-Readiness- und System-Design-Fallstudien",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",
