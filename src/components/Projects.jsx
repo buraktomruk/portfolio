@@ -66,6 +66,7 @@ function ShowcaseCard({ item, t }) {
   const [hasError, setHasError] = useState(false);
 
   const statusLabel = t(`projects.statusLabels.${item.statusKey}`, { defaultValue: '' });
+  const typeLabel = t(`projects.caseStudies.${item.id}.type`, { defaultValue: '' });
   const summary = t(`projects.caseStudies.${item.id}.summary`, { defaultValue: '' });
   const focusItems = t(`projects.caseStudies.${item.id}.focus`, {
     returnObjects: true,
@@ -73,12 +74,15 @@ function ShowcaseCard({ item, t }) {
   });
   const focusList = Array.isArray(focusItems) ? focusItems : [];
   const tags = Array.isArray(item.tags) ? item.tags : [];
+  const visibleTags = tags.slice(0, 5);
+  const showImage = Boolean(item.previewImage) && !hasError;
+  const initial = item.title?.charAt(0)?.toUpperCase() || '•';
 
   return (
     <article className="group relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-slate-900/40 transition-all duration-300 hover:border-white/20 hover:bg-slate-900/60">
-      <div className={`absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
+      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
 
-      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-7">
+      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             {statusLabel && (
@@ -89,33 +93,42 @@ function ShowcaseCard({ item, t }) {
             <h3 className="mt-3 truncate text-xl font-bold tracking-tight text-white sm:text-2xl">
               {item.title}
             </h3>
+            {typeLabel && (
+              <p className={`mt-1 text-[11px] font-semibold uppercase tracking-[0.18em] ${accentStyles.accentText}`}>
+                {typeLabel}
+              </p>
+            )}
           </div>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2">
-            {!item.previewImage || hasError ? (
-              <span className="text-lg font-bold text-white/40">{item.title.charAt(0)}</span>
-            ) : (
+          <div
+            aria-hidden="true"
+            className={`flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-white/5 ${showImage ? 'p-2' : ''}`}
+          >
+            {showImage ? (
               <img
                 src={item.previewImage}
                 alt=""
                 className="h-full w-full object-contain"
+                loading="lazy"
                 onError={() => setHasError(true)}
               />
+            ) : (
+              <span className={`text-base font-bold ${accentStyles.accentText}`}>{initial}</span>
             )}
           </div>
         </div>
 
         {summary && (
-          <p className="mt-4 text-[14px] leading-relaxed text-slate-300">
+          <p className="mt-4 text-[13.5px] leading-relaxed text-slate-300">
             {summary}
           </p>
         )}
 
         {focusList.length > 0 && (
-          <div className="mt-5">
+          <div className="mt-4">
             <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500">
               {t('projects.engineeringFocus')}
             </p>
-            <ul className="mt-3 space-y-2">
+            <ul className="mt-2 space-y-1.5">
               {focusList.slice(0, 4).map((point) => (
                 <li key={point} className="flex items-start gap-2 text-[13px] leading-snug text-slate-400">
                   <Check className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${accentStyles.accentText}`} aria-hidden="true" />
@@ -126,12 +139,12 @@ function ShowcaseCard({ item, t }) {
           </div>
         )}
 
-        {tags.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
-            {tags.map((label) => (
+        {visibleTags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {visibleTags.map((label) => (
               <span
                 key={label}
-                className={`rounded-full px-2.5 py-0.5 text-[10px] font-medium ring-1 ${accentStyles.badge}`}
+                className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-white/10"
               >
                 {label}
               </span>
@@ -139,16 +152,16 @@ function ShowcaseCard({ item, t }) {
           </div>
         )}
 
-        <div className="mt-auto flex flex-wrap gap-3 pt-6">
+        <div className="mt-5 flex flex-wrap gap-2 pt-1">
           {item.demoUrl && (
             <a
               href={item.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${accentStyles.button}`}
+              className={`inline-flex h-9 items-center gap-1.5 rounded-lg px-3.5 text-xs font-bold leading-none transition-colors ${accentStyles.button}`}
             >
-              {t('projects.livePreview')}
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <span>{t('projects.livePreview')}</span>
+              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           )}
           {item.repoUrl && (
@@ -156,10 +169,10 @@ function ShowcaseCard({ item, t }) {
               href={item.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/15 bg-white/5 px-4 py-2 text-xs font-bold text-slate-200 transition-all hover:border-white/25 hover:bg-white/10"
+              className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-white/15 bg-white/5 px-3.5 text-xs font-bold leading-none text-slate-200 transition-colors hover:border-white/25 hover:bg-white/10"
             >
-              <Github className="h-3.5 w-3.5" />
-              {t('projects.viewRepository')}
+              <Github className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>{t('projects.viewRepository')}</span>
             </a>
           )}
         </div>

@@ -58,12 +58,12 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Produkte & öffentliche Build-Arbeit",
-    "subtitle": "Zuerst die fertigen Produkte, ergänzt um aktuelle GitHub-Aktivitäten als technisches Signal.",
+    "title": "Engineering-Fallstudien & öffentliche Build-Arbeit",
+    "subtitle": "Ausgewählte Side-Projects, neu gerahmt rund um Production-Readiness, Sicherheit, Datenkorrektheit und System-Design.",
     "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
     "showcaseDescription": "Eigenständige Produktentwicklungen, präsentiert als Fallstudien zu Production-Readiness, System-Design, Sicherheit und Release-Hardening.",
     "liveDemo": "Live-Demo",
-    "livePreview": "Live-Vorschau",
+    "livePreview": "Vorschau öffnen",
     "viewRepository": "Repository ansehen",
     "viewCaseStudy": "Fallstudie ansehen",
     "engineeringFocus": "Engineering-Fokus",
@@ -75,6 +75,7 @@
     },
     "caseStudies": {
       "ritualgymtracker": {
+        "type": "Mobile-Release-Hardening",
         "summary": "Mobile-first Workout-Tracking-App mit Fokus auf Offline-Verhalten, Migration von Gast- zu authentifizierten Konten, Streak-Korrektheit, zeitzonensichere Analytik und Release-Readiness-Validierung.",
         "focus": [
           "Offline-first Sync mit konfliktbewusster Abstimmung",
@@ -84,6 +85,7 @@
         ]
       },
       "bookmarkanalyzer": {
+        "type": "Sicherheit & Local-first-Architektur",
         "summary": "Local-first Bookmark-Intelligence-App mit Fokus auf Organisation, KI-gestützte Anreicherung, Lese-Erlebnis und Sicherheits-Hardening.",
         "focus": [
           "Local-first Speicherung mit progressiver KI-Anreicherung",
@@ -93,6 +95,7 @@
         ]
       },
       "subtrackerrr": {
+        "type": "Finanzielle Korrektheit & Auth-Sicherheit",
         "summary": "Abonnement- und Ausgaben-Tracker mit Fokus auf finanzielle Korrektheit, Währungsbehandlung, Firebase Auth-/Session-Sicherheit und Datenintegrität.",
         "focus": [
           "Finanzielle Korrektheit über Währungen und Abrechnungszyklen",
@@ -102,6 +105,7 @@
         ]
       },
       "fintrackerrr": {
+        "type": "Datennormalisierung & Analytics-UX",
         "summary": "Portfolio-Analytics-Dashboard mit Fokus auf Asset-Insights, Dividendenkalender, Datennormalisierung, UI-Performance und investmentorientierte Übersichten.",
         "focus": [
           "Normalisiertes Datenmodell über heterogene Asset-Quellen",
