@@ -68,7 +68,7 @@
     "statusLabels": {
       "releaseHardening": "Release-Hardening",
       "productionReadiness": "Production-Readiness-Audit",
-      "mvpDeployed": "MVP deployed",
+      "mvpDeployed": "MVP veröffentlicht",
       "activeIteration": "Aktive System-Design-Iteration"
     },
     "caseStudies": {

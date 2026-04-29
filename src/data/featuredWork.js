@@ -1,7 +1,8 @@
 // Each entry models an independent product build presented as an engineering
 // case study. Translatable copy (summary, impact areas, status label) lives
 // under `projects.caseStudies.<id>` in the i18n files; structural fields stay
-// here. Only include `demoUrl` / `repoUrl` when a known safe URL exists.
+// here. `demoUrl` and `repoUrl` must be either a known safe absolute URL or
+// explicitly `null` when no safe URL is available — never a placeholder.
 export const featuredWorkItems = [
   {
     id: "ritualgymtracker",
