@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Star } from 'lucide-react';
+import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Github, ShieldCheck, Sparkles, Star } from 'lucide-react';
 import { featuredWorkItems } from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
@@ -207,54 +207,56 @@ function SectionHeader({
   );
 }
 
-function RepoCard({ project }) {
-  const languageColorClass = project.language
-    ? (LANGUAGE_COLORS[project.language] || 'text-slate-500')
-    : 'text-slate-600';
-  
-  if (!project) return null;
+// Curated public-engineering highlights surfaced when live GitHub data is
+// unavailable (no token, rate-limited, network error, cold cache, etc.). These
+// are intentionally framed as engineering signals — not shipped products.
+const CURATED_FALLBACK_HIGHLIGHTS = [
+  {
+    id: 'subtrackerrr',
+    titleKey: 'projects.githubFallback.subtrackerrr.title',
+    captionKey: 'projects.githubFallback.subtrackerrr.caption',
+    logoSrc: '/project-previews/subtrackerrr-logo.png',
+  },
+  {
+    id: 'bookmarkanalyzer',
+    titleKey: 'projects.githubFallback.bookmarkanalyzer.title',
+    captionKey: 'projects.githubFallback.bookmarkanalyzer.caption',
+    logoSrc: '/project-previews/bookmarkanalyzer-logo.svg',
+  },
+  {
+    id: 'ritualgymtracker',
+    titleKey: 'projects.githubFallback.ritualgymtracker.title',
+    captionKey: 'projects.githubFallback.ritualgymtracker.caption',
+    logoSrc: '/project-previews/ritualgymtracker-icon.png',
+  },
+];
+
+function FallbackHighlightRow({ item, t }) {
+  const [imageFailed, setImageFailed] = React.useState(false);
+  const title = t(item.titleKey);
+  const caption = t(item.captionKey);
+  const initial = (title || '?').trim().charAt(0).toUpperCase();
 
   return (
-    <article className="group relative rounded-xl border border-slate-200 bg-white p-4 transition-all hover:border-slate-300 hover:bg-slate-50 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <FolderGit2 className="h-3.5 w-3.5 shrink-0 text-slate-500" />
-            <h4 className="truncate text-sm font-bold text-slate-950 dark:text-white">
-              {project.name}
-            </h4>
-          </div>
-          {project.description ? (
-            <p className="mt-2 line-clamp-2 text-xs leading-snug text-slate-500 dark:text-slate-500">
-              {project.description}
-            </p>
-          ) : (
-            <p className="mt-2 text-xs italic text-slate-500 dark:text-slate-600">
-              Selected public repository.
-            </p>
-          )}
-        </div>
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="shrink-0 text-slate-500 hover:text-slate-950 dark:text-slate-600 dark:hover:text-white"
-        >
-          <ArrowUpRight className="h-3.5 w-3.5" />
-        </a>
+    <li className="flex items-start gap-3 py-2.5 first:pt-0 last:pb-0 border-b border-slate-200/70 last:border-0 dark:border-white/[0.04]">
+      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 ring-1 ring-slate-200 dark:bg-white/[0.04] dark:ring-white/10">
+        {item.logoSrc && !imageFailed ? (
+          <img
+            src={item.logoSrc}
+            alt=""
+            loading="lazy"
+            onError={() => setImageFailed(true)}
+            className="h-7 w-7 rounded-md object-contain"
+          />
+        ) : (
+          <span aria-hidden="true" className="text-[11px] font-bold text-slate-500 dark:text-slate-400">{initial}</span>
+        )}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-[13px] font-semibold text-slate-900 dark:text-slate-100">{title}</p>
+        <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-slate-500 dark:text-slate-500">{caption}</p>
       </div>
-      
-      <div className="mt-4 flex items-center gap-3 text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-600">
-        <span className="flex items-center gap-1">
-          <Circle className={`h-2 w-2 fill-current ${languageColorClass}`} />
-          {project.language || 'Code'}
-        </span>
-        <span className="flex items-center gap-1">
-          <Star className="h-2.5 w-2.5" />
-          {project.stargazersCount}
-        </span>
-      </div>
-    </article>
+    </li>
   );
 }
 
@@ -262,17 +264,24 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
   const stats = statsState.response?.data;
   const activity = activityState.response?.data;
   const repoItems = projectsState.response?.data?.slice(0, 3) || [];
-  const isLoading = statsState.status === 'loading' || activityState.status === 'loading';
-  const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
-  const isError = statsState.status === 'unavailable' || activityState.status === 'unavailable';
 
-  // Deduplicate and group activity rows - Move before early returns to follow Hooks rules
+  const isActivityLoading = activityState.status === 'loading';
+  const isStatsLoading = statsState.status === 'loading';
+  const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
+
+  // Treat the section holistically: the page should still feel intentional
+  // even if one or more endpoints fail. We only fall back to curated content
+  // when the live activity data is not usable.
+  const hasLiveActivity = Boolean(activity?.entries?.length);
+  const hasLiveRepos = repoItems.length > 0;
+  const isCachedOrStale = Boolean(activity && (activityState.response?.cached || activityState.response?.stale));
+  const showCuratedFallback = !isActivityLoading && !hasLiveActivity;
+
   const groupedEntries = React.useMemo(() => {
     if (!activity?.entries) return [];
-    
     const seen = new Set();
     return activity.entries
-      .filter(entry => {
+      .filter((entry) => {
         const key = `${entry.repoName}-${entry.summary}`;
         if (seen.has(key)) return false;
         seen.add(key);
@@ -281,126 +290,251 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
       .slice(0, 3);
   }, [activity?.entries]);
 
-  if (isError) {
-    return (
-      <div className="mt-8 text-center py-6 border-t border-white/5">
-        <p className="text-sm text-slate-600">
-          {t('projects.githubUnavailableMuted')}
-        </p>
-      </div>
-    );
+  let badgeLabel;
+  let badgeTone;
+  if (isActivityLoading) {
+    badgeLabel = t('projects.githubBadgeLoading');
+    badgeTone = 'loading';
+  } else if (showCuratedFallback) {
+    badgeLabel = t('projects.githubBadgeFallback');
+    badgeTone = 'fallback';
+  } else if (isCachedOrStale) {
+    badgeLabel = t('projects.githubBadgeCached');
+    badgeTone = 'cached';
+  } else {
+    badgeLabel = t('projects.githubBadgeLive');
+    badgeTone = 'live';
   }
+
+  const badgeClass =
+    badgeTone === 'live'
+      ? 'bg-emerald-500/10 text-emerald-700 ring-emerald-500/20 dark:text-emerald-300'
+      : badgeTone === 'cached'
+      ? 'bg-amber-500/10 text-amber-700 ring-amber-500/20 dark:text-amber-300'
+      : badgeTone === 'fallback'
+      ? 'bg-slate-500/10 text-slate-600 ring-slate-500/15 dark:bg-white/[0.04] dark:text-slate-300 dark:ring-white/10'
+      : 'bg-slate-500/10 text-slate-500 ring-slate-500/15 dark:text-slate-400';
+
+  const badgeDot =
+    badgeTone === 'live'
+      ? 'bg-emerald-500 dark:bg-emerald-400'
+      : badgeTone === 'cached'
+      ? 'bg-amber-500 dark:bg-amber-400'
+      : 'bg-slate-400 dark:bg-slate-500';
 
   return (
     <div className="mt-8 animate-in fade-in slide-in-from-top-3 duration-500">
-      <div className="rounded-2xl border border-slate-200 bg-white/80 p-5 sm:p-7 dark:border-white/5 dark:bg-white/[0.01]">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-          {/* Stats Strip */}
-          <div className="flex-1 lg:border-r lg:border-slate-200 lg:pr-10 dark:lg:border-white/5">
-            <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-600">
-              <Activity className="h-3 w-3" />
-              {t('projects.githubSummaryTitle')}
-            </div>
-            
-            <div className="mt-5 grid grid-cols-3 gap-4">
-              <div>
-                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600">
-                  {t('projects.githubMetricEvents')}
-                </p>
-                <p className="mt-1 text-xl font-bold text-slate-950 dark:text-white">
-                  {isLoading ? '...' : (activity?.totals?.eventsLast30Days || 0)}
-                </p>
-              </div>
-              <div>
-                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600">
-                  {t('projects.githubMetricActiveDays')}
-                </p>
-                <p className="mt-1 text-xl font-bold text-slate-950 dark:text-white">
-                  {isLoading ? '...' : (activity?.totals?.activeDaysLast30Days || 0)}
-                </p>
-              </div>
-              <div>
-                <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-600">
-                  {t('projects.githubMetricTopRepo')}
-                </p>
-                <p className="mt-1 truncate text-xs font-bold text-slate-700 dark:text-slate-300">
-                  {isLoading ? '...' : (activity?.totals?.topRepoName || '—')}
-                </p>
-              </div>
-            </div>
+      {/* Compact heading row */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-5">
+        <div className="flex items-center gap-2.5">
+          <span className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-100 ring-1 ring-slate-200 dark:bg-white/[0.04] dark:ring-white/10">
+            <Github className="h-3.5 w-3.5 text-slate-700 dark:text-slate-200" aria-hidden="true" />
+          </span>
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+            {t('projects.githubSignalKicker')}
+          </p>
+        </div>
+        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold ring-1 ${badgeClass}`}>
+          <span className={`h-1.5 w-1.5 rounded-full ${badgeDot}`} aria-hidden="true" />
+          {badgeLabel}
+        </span>
+      </div>
 
-            <div className="mt-6 flex items-center gap-4">
-              <a
-                href={profileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 transition-colors hover:text-cyan-700 dark:hover:text-cyan-400"
-              >
-                {t('projects.githubOpenProfile')}
-                <ArrowUpRight className="h-3 w-3" />
-              </a>
-              {stats?.totalContributionsThisYear && (
-                <span className="text-[10px] font-medium text-slate-500 dark:text-slate-600">
-                  {stats.totalContributionsThisYear} commits in {new Date().getFullYear()}
-                </span>
-              )}
-            </div>
+      {/* Three compact signal cards */}
+      <div className="grid gap-4 md:grid-cols-3">
+        {/* Card 1 — Recent activity */}
+        <div className="rounded-2xl border border-slate-200 bg-white/85 p-4 dark:border-white/5 dark:bg-white/[0.015]">
+          <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+            <Activity className="h-3 w-3" aria-hidden="true" />
+            {t('projects.githubCardActivity')}
           </div>
+          <div className="mt-3.5">
+            {isActivityLoading ? (
+              <div className="space-y-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-6 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
+                ))}
+              </div>
+            ) : showCuratedFallback ? (
+              <ul>
+                {CURATED_FALLBACK_HIGHLIGHTS.map((item) => (
+                  <FallbackHighlightRow key={item.id} item={item} t={t} />
+                ))}
+              </ul>
+            ) : (
+              <ul className="space-y-1.5">
+                {groupedEntries.map((entry) => (
+                  <li key={entry.id} className="flex items-center justify-between gap-3 border-b border-slate-200/70 py-1.5 last:border-0 dark:border-white/[0.04]">
+                    <span className="truncate text-[12px] text-slate-700 dark:text-slate-300">{entry.summary}</span>
+                    <span className="shrink-0 text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">
+                      {entry.repoName.split('/')[1] || entry.repoName}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
 
-          {/* Mini Timeline */}
-          <div className="flex-[1.2]">
-            <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-600">
-              {t('projects.githubRecentActivity')}
-            </div>
-            <div className="mt-5 space-y-3">
-              {isLoading ? (
-                [...Array(3)].map((_, i) => (
-                  <div key={i} className="h-8 w-full animate-pulse rounded-lg bg-slate-200/80 dark:bg-white/5" />
-                ))
-              ) : groupedEntries.length === 0 ? (
-                <p className="text-xs text-slate-500 dark:text-slate-600">{t('projects.githubTimelineEmpty')}</p>
-              ) : (
-                groupedEntries.map((entry) => (
-                  <div key={entry.id} className="flex items-center justify-between gap-3 border-b border-slate-200 py-1 last:border-0 dark:border-white/[0.03]">
-                    <span className="truncate text-xs text-slate-600 dark:text-slate-400">
-                      {entry.summary}
-                    </span>
-                    <span className="shrink-0 text-[9px] font-bold text-slate-500 dark:text-slate-600">
-                      {entry.repoName.split('/')[1]}
-                    </span>
+        {/* Card 2 — Selected repositories */}
+        <div className="rounded-2xl border border-slate-200 bg-white/85 p-4 dark:border-white/5 dark:bg-white/[0.015]">
+          <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+            <FolderGit2 className="h-3 w-3" aria-hidden="true" />
+            {t('projects.githubCardRepos')}
+          </div>
+          <div className="mt-3.5">
+            {isRepoLoading ? (
+              <div className="space-y-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-12 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
+                ))}
+              </div>
+            ) : hasLiveRepos ? (
+              <ul className="space-y-2">
+                {repoItems.map((project) => {
+                  const languageColorClass = project.language
+                    ? (LANGUAGE_COLORS[project.language] || 'text-slate-500')
+                    : 'text-slate-500';
+                  return (
+                    <li key={project.id}>
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-start justify-between gap-3 rounded-lg px-2 py-1.5 -mx-2 transition-colors hover:bg-slate-50 dark:hover:bg-white/[0.03]"
+                      >
+                        <div className="min-w-0">
+                          <p className="truncate text-[13px] font-semibold text-slate-900 dark:text-slate-100">
+                            {project.name}
+                          </p>
+                          <div className="mt-1 flex items-center gap-3 text-[10px] text-slate-500 dark:text-slate-500">
+                            {project.language && (
+                              <span className="flex items-center gap-1">
+                                <Circle className={`h-2 w-2 fill-current ${languageColorClass}`} aria-hidden="true" />
+                                {project.language}
+                              </span>
+                            )}
+                            <span className="flex items-center gap-1">
+                              <Star className="h-2.5 w-2.5" aria-hidden="true" />
+                              {project.stargazersCount}
+                            </span>
+                          </div>
+                        </div>
+                        <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-slate-400 transition-colors group-hover:text-slate-900 dark:group-hover:text-white" aria-hidden="true" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <ul>
+                {CURATED_FALLBACK_HIGHLIGHTS.map((item) => (
+                  <FallbackHighlightRow key={item.id} item={item} t={t} />
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Card 3 — Build momentum */}
+        <div className="rounded-2xl border border-slate-200 bg-white/85 p-4 dark:border-white/5 dark:bg-white/[0.015]">
+          <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+            <Sparkles className="h-3 w-3" aria-hidden="true" />
+            {t('projects.githubCardMomentum')}
+          </div>
+          <div className="mt-3.5">
+            {isActivityLoading ? (
+              <div className="space-y-2">
+                <div className="h-10 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
+                <div className="h-10 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
+              </div>
+            ) : showCuratedFallback ? (
+              <ul className="space-y-2.5">
+                <li className="flex items-start gap-2.5">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
+                  <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
+                    {t('projects.githubMomentumFallback.releaseHardening')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
+                  <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
+                    {t('projects.githubMomentumFallback.dataCorrectness')}
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
+                  <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
+                    {t('projects.githubMomentumFallback.systemDesign')}
+                  </span>
+                </li>
+              </ul>
+            ) : (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                    {t('projects.githubMetricEvents')}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
+                    {activity?.totals?.eventsLast30Days || 0}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                    {t('projects.githubMetricActiveDays')}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
+                    {activity?.totals?.activeDaysLast30Days || 0}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                    {t('projects.githubMetricContributions')}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
+                    {isStatsLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
+                  </p>
+                </div>
+                {activity?.totals?.topRepoName && (
+                  <div className="mt-1">
+                    <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                      {t('projects.githubMetricTopRepo')}
+                    </p>
+                    <p className="mt-1 truncate text-[12px] font-semibold text-slate-700 dark:text-slate-300">
+                      {activity.totals.topRepoName}
+                    </p>
                   </div>
-                ))
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Selected Repositories */}
-      { (repoItems.length > 0 || isRepoLoading) && (
-        <div className="mt-6">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-600">
-              {t('projects.repoTitle')}
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {isRepoLoading ? (
-              [...Array(3)].map((_, i) => (
-                <div key={i} className="h-28 animate-pulse rounded-xl bg-slate-200/80 dark:bg-white/[0.02]" />
-              ))
-            ) : (
-              repoItems.map((project) => (
-                <RepoCard key={project.id} project={project} />
-              ))
-            )}
-          </div>
-        </div>
-      )}
+      {/* Footer row */}
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[11px] text-slate-500 dark:text-slate-500">
+          {showCuratedFallback
+            ? t('projects.githubFallbackNote')
+            : isCachedOrStale
+            ? t('projects.githubCachedNote')
+            : t('projects.githubLiveNote')}
+        </p>
+        <a
+          href={profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500 transition-colors hover:text-cyan-700 dark:hover:text-cyan-400"
+        >
+          {t('projects.githubOpenProfile')}
+          <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+        </a>
+      </div>
     </div>
   );
 }
+
+
 
 export default function Projects() {
   const { t } = useTranslation();

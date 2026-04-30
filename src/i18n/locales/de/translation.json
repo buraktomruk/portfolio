@@ -116,12 +116,42 @@
     "githubSummaryTitle": "Entwicklungsaktivität",
     "githubMetricEvents": "Öffentliche Ereignisse",
     "githubMetricActiveDays": "Aktive Tage",
-    "githubMetricContributions": "Beiträge (Jahr)",
+    "githubMetricContributions": "Beiträge dieses Jahr",
     "githubMetricTopRepo": "Aktivstes Repo",
     "githubRecentActivity": "Letzte Aktivität",
     "githubOpenProfile": "GitHub-Profil öffnen",
     "githubTimelineEmpty": "Die GitHub-Aktivität ist gerade ruhig.",
     "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
+    "githubSignalKicker": "Öffentliches Engineering-Signal",
+    "githubBadgeLive": "Live GitHub-Daten",
+    "githubBadgeCached": "Cache-Snapshot",
+    "githubBadgeFallback": "Kuratierte Highlights",
+    "githubBadgeLoading": "Lädt",
+    "githubCardActivity": "Aktuelle Aktivität",
+    "githubCardRepos": "Ausgewählte Repositories",
+    "githubCardMomentum": "Build-Momentum",
+    "githubLiveNote": "Live-Engineering-Signal aus öffentlichen GitHub-Ereignissen.",
+    "githubCachedNote": "Aktuellster zwischengespeicherter Stand der öffentlichen GitHub-Aktivität.",
+    "githubFallbackNote": "Live-GitHub-Daten sind vorübergehend nicht verfügbar. Stattdessen werden kuratierte öffentliche Engineering-Highlights gezeigt.",
+    "githubFallback": {
+      "subtrackerrr": {
+        "title": "SubTracker — Release-Readiness-Audit",
+        "caption": "Subscription-Tracking-Fallstudie: finanzielle Korrektheit, Auth-Sicherheit, Persistenz-Integrität."
+      },
+      "bookmarkanalyzer": {
+        "title": "BookmarkAI — Sicherheits- & Datenkorrektheit",
+        "caption": "Bookmark-Workflow-Fallstudie: SSRF-Abwehr, sanitisierter Reader-Flow, KI-Anreicherungs-Guardrails."
+      },
+      "ritualgymtracker": {
+        "title": "Ritual Gym Tracker — System-Design-Arbeit",
+        "caption": "Offline-first-Sync, Gast-zu-Account-Migration, DST-sichere Streak-Analytik."
+      }
+    },
+    "githubMomentumFallback": {
+      "releaseHardening": "Release-Hardening und Production-Readiness-Cleanup über Side-Projects hinweg.",
+      "dataCorrectness": "Security-Review und Datenkorrektheits-Audits in Finanz- und Nutzerdatenflüssen.",
+      "systemDesign": "Aktive System-Design-Iteration an Offline-first- und Local-first-Builds."
+    },
     "showProducts": "Fallstudien anzeigen",
     "hideProducts": "Fallstudien ausblenden",
     "showGithub": "GitHub anzeigen",

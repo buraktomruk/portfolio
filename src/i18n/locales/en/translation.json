@@ -116,12 +116,42 @@
     "githubSummaryTitle": "Engineering Activity",
     "githubMetricEvents": "Recent public events",
     "githubMetricActiveDays": "Active days",
-    "githubMetricContributions": "Contributions (Year)",
+    "githubMetricContributions": "Contributions this year",
     "githubMetricTopRepo": "Most active repo",
     "githubRecentActivity": "Latest activity",
     "githubOpenProfile": "Open GitHub profile",
     "githubTimelineEmpty": "GitHub activity is quiet right now.",
     "githubUnavailableMuted": "GitHub activity temporarily unavailable.",
+    "githubSignalKicker": "Public engineering signal",
+    "githubBadgeLive": "Live GitHub data",
+    "githubBadgeCached": "Cached snapshot",
+    "githubBadgeFallback": "Curated highlights",
+    "githubBadgeLoading": "Loading",
+    "githubCardActivity": "Recent activity",
+    "githubCardRepos": "Selected repositories",
+    "githubCardMomentum": "Build momentum",
+    "githubLiveNote": "Live engineering signal pulled from public GitHub events.",
+    "githubCachedNote": "Showing the most recent cached snapshot of public GitHub activity.",
+    "githubFallbackNote": "Live GitHub data is temporarily unavailable. Showing curated public engineering highlights.",
+    "githubFallback": {
+      "subtrackerrr": {
+        "title": "SubTracker — release-readiness audit",
+        "caption": "Subscription tracking case study: financial correctness, auth safety, persistence integrity."
+      },
+      "bookmarkanalyzer": {
+        "title": "BookmarkAI — security & data correctness",
+        "caption": "Bookmark workflow case study: SSRF defense, sanitized reader flow, AI enrichment guardrails."
+      },
+      "ritualgymtracker": {
+        "title": "Ritual Gym Tracker — system-design work",
+        "caption": "Offline-first sync, guest-to-account migration, DST-safe streak analytics."
+      }
+    },
+    "githubMomentumFallback": {
+      "releaseHardening": "Release-hardening and production-readiness cleanup across side projects.",
+      "dataCorrectness": "Security review and data-correctness audits on financial and user data flows.",
+      "systemDesign": "Active system-design iteration on offline-first and local-first builds."
+    },
     "showProducts": "Show case studies",
     "hideProducts": "Hide case studies",
     "showGithub": "Show GitHub",
