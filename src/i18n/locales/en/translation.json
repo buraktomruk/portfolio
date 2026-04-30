@@ -59,34 +59,57 @@
   },
   "projects": {
     "title": "Engineering Case Studies & Public Build Work",
-    "subtitle": "Selected side projects reframed around production readiness, security, data correctness, and system design.",
+    "subtitle": "Selected side projects presented as engineering case studies. Public previews are available, but these builds are still in progress and not production-ready.",
     "showcaseTitle": "Selected Engineering Case Studies",
-    "showcaseDescription": "Independent product builds positioned as production-readiness, system-design, security, and release-hardening case studies.",
-    "impactAreas": "Impact areas",
+    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
     "caseStudyInProgress": "Case study in progress",
-    "previewBuild": "Preview build",
+    "previewBuild": "View preview",
     "statusLabels": {
-      "releaseHardening": "Release hardening",
-      "productionReadiness": "Production-readiness audit",
-      "mvpDeployed": "MVP deployed",
-      "activeIteration": "Active system-design iteration"
+      "publicPreview": "Public preview",
+      "exploratoryBuild": "Exploratory build",
+      "previewBuild": "Preview build",
+      "inProgress": "In progress"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "summary": "Workout tracking case study around offline-first sync, guest migration, and timezone-safe streak logic.",
-        "impactAreas": "Offline sync · Auth migration · DST-safe analytics"
+        "typeLabel": "Workout tracking · mobile case study",
+        "summary": "Offline-first workout tracking focused on guest migration, streak correctness, and timezone-safe analytics.",
+        "highlights": [
+          "Offline sync",
+          "Guest migration",
+          "DST-safe analytics"
+        ],
+        "readinessNote": "Public preview · not production-ready"
       },
       "bookmarkanalyzer": {
-        "summary": "Bookmark intelligence case study covering local-first data, AI enrichment, SSRF defense, and reader sanitization.",
-        "impactAreas": "Local-first data · AI enrichment · SSRF defense · Sanitization"
+        "typeLabel": "Bookmark intelligence · local-first case study",
+        "summary": "Bookmark workflow case study around AI enrichment, SSRF defense, and sanitized reader flows.",
+        "highlights": [
+          "Local-first",
+          "AI enrichment",
+          "SSRF defense"
+        ],
+        "readinessNote": "Public preview · not production-ready"
       },
       "subtrackerrr": {
-        "summary": "Subscription tracking case study focused on financial correctness, Firebase auth safety, and persistence integrity.",
-        "impactAreas": "Currency correctness · Session safety · Firestore integrity"
+        "typeLabel": "Subscription tracking · MVP case study",
+        "summary": "Subscription management case study centered on financial correctness, auth safety, and persistence integrity.",
+        "highlights": [
+          "Billing correctness",
+          "Auth safety",
+          "Firestore integrity"
+        ],
+        "readinessNote": "Public preview · not production-ready"
       },
       "fintrackerrr": {
-        "summary": "Portfolio analytics case study around normalized asset data, dividend insights, and large-table UI performance.",
-        "impactAreas": "Data normalization · Portfolio UX · Dividend insights"
+        "typeLabel": "Portfolio analytics · system-design case study",
+        "summary": "Portfolio analytics case study focused on normalized asset data, dividend insights, and large-table UI performance.",
+        "highlights": [
+          "Data normalization",
+          "Dividend insights",
+          "UI performance"
+        ],
+        "readinessNote": "Public preview · not production-ready"
       }
     },
     "githubSignalTitle": "GitHub Activity",
@@ -103,7 +126,7 @@
     "hideProducts": "Hide case studies",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "4 independent product builds — production-readiness & system-design case studies",
+    "summaryProducts": "4 side projects presented as public preview engineering case studies",
     "summaryGithub": "Recent public activity and selected repositories",
     "repoTitle": "Selected Repositories",
     "viewAllRepos": "View all repositories",

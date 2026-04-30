@@ -59,34 +59,57 @@
   },
   "projects": {
     "title": "Engineering-Fallstudien & öffentliche Build-Arbeit",
-    "subtitle": "Ausgewählte Side-Projects, neu gerahmt rund um Production-Readiness, Sicherheit, Datenkorrektheit und System-Design.",
+    "subtitle": "Ausgewählte Side-Projects, präsentiert als Engineering-Fallstudien. Öffentliche Previews sind verfügbar, aber diese Builds sind noch in Arbeit und nicht produktionsreif.",
     "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
-    "showcaseDescription": "Eigenständige Produktentwicklungen, präsentiert als Fallstudien zu Production-Readiness, System-Design, Sicherheit und Release-Hardening.",
-    "impactAreas": "Schwerpunkte",
+    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
     "caseStudyInProgress": "Fallstudie in Arbeit",
-    "previewBuild": "Preview-Build",
+    "previewBuild": "Preview ansehen",
     "statusLabels": {
-      "releaseHardening": "Release-Hardening",
-      "productionReadiness": "Production-Readiness-Audit",
-      "mvpDeployed": "MVP veröffentlicht",
-      "activeIteration": "Aktive System-Design-Iteration"
+      "publicPreview": "Öffentliche Preview",
+      "exploratoryBuild": "Explorativer Build",
+      "previewBuild": "Preview-Build",
+      "inProgress": "In Arbeit"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "summary": "Workout-Tracking-Fallstudie rund um Offline-first-Sync, Gast-Migration und zeitzonensichere Streak-Logik.",
-        "impactAreas": "Offline-Sync · Auth-Migration · DST-sichere Analytik"
+        "typeLabel": "Workout-Tracking · Mobile-Fallstudie",
+        "summary": "Offline-first-Workout-Tracking mit Fokus auf Gast-Migration, korrekten Streaks und zeitzonensicherer Analytik.",
+        "highlights": [
+          "Offline-Sync",
+          "Gast-Migration",
+          "DST-sichere Analytik"
+        ],
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "bookmarkanalyzer": {
-        "summary": "Bookmark-Intelligence-Fallstudie zu Local-first-Daten, KI-Anreicherung, SSRF-Abwehr und Reader-Sanitisierung.",
-        "impactAreas": "Local-first-Daten · KI-Anreicherung · SSRF-Abwehr · Sanitisierung"
+        "typeLabel": "Bookmark-Intelligence · Local-first-Fallstudie",
+        "summary": "Bookmark-Workflow-Fallstudie rund um KI-Anreicherung, SSRF-Abwehr und sanitisierte Reader-Flows.",
+        "highlights": [
+          "Local-first",
+          "KI-Anreicherung",
+          "SSRF-Abwehr"
+        ],
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "subtrackerrr": {
-        "summary": "Abonnement-Tracking-Fallstudie mit Fokus auf finanzielle Korrektheit, Firebase-Auth-Sicherheit und Persistenz-Integrität.",
-        "impactAreas": "Währungs­korrektheit · Session-Sicherheit · Firestore-Integrität"
+        "typeLabel": "Abo-Tracking · MVP-Fallstudie",
+        "summary": "Subscription-Management-Fallstudie mit Fokus auf finanzielle Korrektheit, Auth-Sicherheit und Persistenz-Integrität.",
+        "highlights": [
+          "Billing-Korrektheit",
+          "Auth-Sicherheit",
+          "Firestore-Integrität"
+        ],
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "fintrackerrr": {
-        "summary": "Portfolio-Analytics-Fallstudie rund um normalisierte Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
-        "impactAreas": "Datennormalisierung · Portfolio-UX · Dividenden-Insights"
+        "typeLabel": "Portfolio-Analytics · System-Design-Fallstudie",
+        "summary": "Portfolio-Analytics-Fallstudie zu normalisierten Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
+        "highlights": [
+          "Datennormalisierung",
+          "Dividenden-Insights",
+          "UI-Performance"
+        ],
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
@@ -103,7 +126,7 @@
     "hideProducts": "Fallstudien ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "4 eigenständige Produkt-Builds — Production-Readiness- und System-Design-Fallstudien",
+    "summaryProducts": "4 Side-Projects als öffentliche Preview-Engineering-Fallstudien",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",
