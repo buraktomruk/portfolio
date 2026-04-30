@@ -1,5 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 import {
   createGithubStatsEnvelope,
   filterAndSortGithubRepos,
@@ -162,4 +165,77 @@ test('isGithubActivityEnvelope rejects old activity totals without top repo fiel
   }, { cached: false });
 
   assert.strictEqual(isGithubActivityEnvelope(envelope), false);
+});
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+function loadLocale(lang) {
+  const path = resolve(__dirname, `../src/i18n/locales/${lang}/translation.json`);
+  return JSON.parse(readFileSync(path, 'utf8'));
+}
+
+const REQUIRED_GITHUB_FALLBACK_KEYS = [
+  'githubSignalKicker',
+  'githubBadgeLive',
+  'githubBadgeCached',
+  'githubBadgeFallback',
+  'githubBadgeLoading',
+  'githubCardActivity',
+  'githubCardRepos',
+  'githubCardMomentum',
+  'githubLiveNote',
+  'githubCachedNote',
+  'githubFallbackNote',
+];
+
+test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
+  for (const lang of ['en', 'de']) {
+    const projects = loadLocale(lang).projects;
+    for (const key of REQUIRED_GITHUB_FALLBACK_KEYS) {
+      assert.ok(
+        typeof projects[key] === 'string' && projects[key].trim().length > 0,
+        `Missing or empty i18n key projects.${key} in ${lang}`,
+      );
+    }
+    assert.ok(projects.githubFallback?.subtrackerrr?.title, `Missing githubFallback.subtrackerrr.title in ${lang}`);
+    assert.ok(projects.githubFallback?.bookmarkanalyzer?.title, `Missing githubFallback.bookmarkanalyzer.title in ${lang}`);
+    assert.ok(projects.githubFallback?.ritualgymtracker?.title, `Missing githubFallback.ritualgymtracker.title in ${lang}`);
+    assert.ok(projects.githubMomentumFallback?.releaseHardening, `Missing githubMomentumFallback.releaseHardening in ${lang}`);
+    assert.ok(projects.githubMomentumFallback?.dataCorrectness, `Missing githubMomentumFallback.dataCorrectness in ${lang}`);
+    assert.ok(projects.githubMomentumFallback?.systemDesign, `Missing githubMomentumFallback.systemDesign in ${lang}`);
+  }
+});
+
+test('GitHub Activity fallback note never overstates production readiness', () => {
+  const forbiddenSubstrings = [
+    'production-ready',
+    'production ready',
+    'enterprise-grade',
+    'shipped saas',
+    'launched product',
+    'fully shipped',
+  ];
+  for (const lang of ['en', 'de']) {
+    const projects = loadLocale(lang).projects;
+    const corpus = [
+      projects.githubFallbackNote,
+      projects.githubLiveNote,
+      projects.githubCachedNote,
+      projects.githubFallback?.subtrackerrr?.caption,
+      projects.githubFallback?.bookmarkanalyzer?.caption,
+      projects.githubFallback?.ritualgymtracker?.caption,
+      projects.githubMomentumFallback?.releaseHardening,
+      projects.githubMomentumFallback?.dataCorrectness,
+      projects.githubMomentumFallback?.systemDesign,
+    ].filter(Boolean).join(' \n ').toLowerCase();
+    for (const phrase of forbiddenSubstrings) {
+      assert.ok(!corpus.includes(phrase), `Fallback copy in ${lang} must not include "${phrase}"`);
+    }
+  }
+});
+
+test('summarizeGithubActivity returns a safe envelope when activity array is missing', () => {
+  const summary = summarizeGithubActivity(undefined);
+  assert.ok(Array.isArray(summary.entries));
+  assert.strictEqual(summary.entries.length, 0);
+  assert.strictEqual(summary.totals.eventsLast30Days, 0);
 });
