@@ -266,6 +266,7 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
   const repoItems = projectsState.response?.data?.slice(0, 3) || [];
 
   const isActivityLoading = activityState.status === 'loading';
+  const isStatsLoading = statsState.status === 'loading';
   const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
 
   // Treat the section holistically: the page should still feel intentional
@@ -486,23 +487,21 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
                     {activity?.totals?.activeDaysLast30Days || 0}
                   </p>
                 </div>
+                <div>
+                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                    {t('projects.githubMetricContributions')}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
+                    {isStatsLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
+                  </p>
+                </div>
                 {activity?.totals?.topRepoName && (
-                  <div className="col-span-2 mt-1">
+                  <div className="mt-1">
                     <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
                       {t('projects.githubMetricTopRepo')}
                     </p>
                     <p className="mt-1 truncate text-[12px] font-semibold text-slate-700 dark:text-slate-300">
                       {activity.totals.topRepoName}
-                    </p>
-                  </div>
-                )}
-                {stats?.totalContributionsThisYear != null && (
-                  <div className="col-span-2 mt-1">
-                    <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
-                      {t('projects.githubMetricContributions')}
-                    </p>
-                    <p className="mt-1 text-[12px] font-semibold text-slate-700 dark:text-slate-300">
-                      {stats.totalContributionsThisYear}
                     </p>
                   </div>
                 )}
