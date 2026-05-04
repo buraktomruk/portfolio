@@ -14,8 +14,12 @@ html {
     padding: 1px;
     pointer-events: none;
     z-index: 60;
-    opacity: 0.28;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(59, 130, 246, 0.55) 32%, rgba(139, 92, 246, 0.5) 68%, rgba(34, 211, 238, 0.85));
+    opacity: 0.36;
+    background: linear-gradient(180deg, rgba(56, 189, 248, 0.98), rgba(59, 130, 246, 0.62) 34%, rgba(139, 92, 246, 0.56) 72%, rgba(34, 211, 238, 0.9));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 0 6px rgba(59, 130, 246, 0.08),
+      0 0 14px rgba(139, 92, 246, 0.04);
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -24,6 +28,10 @@ html {
   }
 
   .dark .page-gradient-perimeter::before {
-    opacity: 0.42;
+    opacity: 0.52;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 0 7px rgba(56, 189, 248, 0.1),
+      0 0 18px rgba(139, 92, 246, 0.06);
   }
 }
