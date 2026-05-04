@@ -58,17 +58,17 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Engineering Case Studies & Public Builds",
-    "subtitle": "Side-Projects mit Fokus auf Architektur, Zuverlässigkeit, Datenkorrektheit und Produktqualität.",
-    "showcaseTitle": "Ausgewählte Fallstudien",
-    "showcaseDescription": "Kompakte Build-Notizen zu Rahmenbedingungen, Entscheidungen und Validierung hinter jedem Projekt.",
-    "caseStudyInProgress": "Engineering-Snapshots",
-    "previewBuild": "Build ansehen",
+    "title": "Side Projects",
+    "subtitle": "Praxisnahe Projekte mit Fokus auf Architektur, Zuverlässigkeit, Datenqualität und Produktreife.",
+    "showcaseTitle": "Ausgewählte Builds",
+    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
+    "caseStudyInProgress": "Fallstudie in Arbeit",
+    "previewBuild": "Preview ansehen",
     "statusLabels": {
-      "releaseHardening": "Release-Härtung",
-      "securityReview": "Sicherheitsprüfung",
-      "mvpValidation": "MVP-Validierung",
-      "systemDesign": "System-Design"
+      "publicPreview": "Öffentliche Preview",
+      "exploratoryBuild": "Explorativer Build",
+      "previewBuild": "Preview-Build",
+      "inProgress": "In Arbeit"
     },
     "caseStudies": {
       "ritualgymtracker": {
@@ -79,7 +79,7 @@
           "Gast-Migration",
           "DST-sichere Analytik"
         ],
-        "readinessNote": "Notizen zur Release-Härtung"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "bookmarkanalyzer": {
         "typeLabel": "Bookmark-Intelligence · Local-first-Fallstudie",
@@ -89,7 +89,7 @@
           "KI-Anreicherung",
           "SSRF-Abwehr"
         ],
-        "readinessNote": "Notizen zur Sicherheitsprüfung"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "subtrackerrr": {
         "typeLabel": "Abo-Tracking · MVP-Fallstudie",
@@ -99,7 +99,7 @@
           "Auth-Sicherheit",
           "Firestore-Integrität"
         ],
-        "readinessNote": "Notizen zur MVP-Validierung"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "fintrackerrr": {
         "typeLabel": "Portfolio-Analytics · System-Design-Fallstudie",
@@ -109,7 +109,7 @@
           "Dividenden-Insights",
           "UI-Performance"
         ],
-        "readinessNote": "Notizen zum System-Design"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
