@@ -7,33 +7,21 @@ html {
 }
 
 @layer components {
-  /* Global page-level accent — inset rounded frame, pointer-events: none */
-  .page-gradient-perimeter::before {
+  /* Thin top-of-page brand accent — 2 px fixed line, full width */
+  .page-top-gradient-accent::before {
     content: '';
     position: fixed;
-    inset: 8px;
-    border-radius: 22px;
-    padding: 1px;
-    padding-top: 2px;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
     z-index: 60;
-    opacity: 0.40;
-    /* 120 deg keeps sky-blue at top-left; violet sits at 65 % (lower-right quadrant) */
-    background: linear-gradient(
-      120deg,
-      rgba(14, 165, 233, 0.90),
-      rgba(59, 130, 246, 0.70) 38%,
-      rgba(139, 92, 246, 0.50) 65%,
-      rgba(34, 211, 238, 0.85)
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    pointer-events: none;
+    background: linear-gradient(90deg, #38bdf8, #3b82f6, #8b5cf6, #22d3ee);
+    opacity: 0.65;
   }
 
-  .dark .page-gradient-perimeter::before {
-    opacity: 0.60;
+  .dark .page-top-gradient-accent::before {
+    opacity: 0.85;
   }
 }
