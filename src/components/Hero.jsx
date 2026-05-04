@@ -33,7 +33,7 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-6">
-        <div className="premium-section-shell max-w-4xl px-6 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
+        <div className="max-w-4xl">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6">
             {t('hero.role')}
           </div>

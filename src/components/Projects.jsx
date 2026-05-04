@@ -574,9 +574,9 @@ export default function Projects() {
           
           <div
             id="live-products-section"
-            className={`premium-section-shell grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
           >
-            <div className="overflow-hidden px-5 py-5 sm:px-6 sm:py-6">
+            <div className="overflow-hidden">
               <div className="mb-6 rounded-2xl border border-slate-200 bg-white/85 px-5 py-4 sm:px-6 dark:border-white/8 dark:bg-white/[0.02]">
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
                   {t('projects.caseStudyInProgress')}
@@ -608,9 +608,9 @@ export default function Projects() {
           
           <div
             id="github-activity-section"
-            className={`premium-section-shell grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
-            <div className="overflow-hidden px-5 py-5 sm:px-6 sm:py-6">
+            <div className="overflow-hidden">
               <GithubSignal 
                 t={t} 
                 statsState={statsState} 
