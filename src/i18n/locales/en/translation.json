@@ -58,17 +58,17 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Side Project Case Studies",
-    "subtitle": "Public preview builds used to document architecture decisions, reliability work, and product-readiness tradeoffs.",
-    "showcaseTitle": "Selected Work-in-Progress Builds",
-    "showcaseDescription": "These projects are shared as engineering case studies. They are helpful for reviewing architecture, UI, data, and reliability decisions, but they are not production-ready products yet.",
-    "caseStudyInProgress": "PUBLIC PREVIEW BUILDS",
+    "title": "Side Projects",
+    "subtitle": "Practical builds focused on architecture, reliability, data quality, and product-readiness tradeoffs.",
+    "showcaseTitle": "Selected Builds",
+    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
+    "caseStudyInProgress": "Case study in progress",
     "previewBuild": "Preview build",
     "statusLabels": {
-      "releaseHardening": "Release Hardening",
-      "securityReview": "Security Review",
-      "mvpValidation": "MVP Validation",
-      "systemDesign": "System Design"
+      "publicPreview": "Public preview",
+      "exploratoryBuild": "Exploratory build",
+      "previewBuild": "Preview build",
+      "inProgress": "In progress"
     },
     "caseStudies": {
       "ritualgymtracker": {
@@ -79,7 +79,7 @@
           "Guest migration",
           "Timezone-safe analytics"
         ],
-        "readinessNote": "Work in progress · public preview only"
+        "readinessNote": "Public preview · not production-ready"
       },
       "bookmarkanalyzer": {
         "typeLabel": "BOOKMARK INTELLIGENCE · WIP CASE STUDY",
@@ -89,7 +89,7 @@
           "AI enrichment",
           "SSRF defense"
         ],
-        "readinessNote": "Work in progress · public preview only"
+        "readinessNote": "Public preview · not production-ready"
       },
       "subtrackerrr": {
         "typeLabel": "SUBSCRIPTION TRACKING · WIP CASE STUDY",
@@ -99,7 +99,7 @@
           "Auth safety",
           "Persistence integrity"
         ],
-        "readinessNote": "Work in progress · public preview only"
+        "readinessNote": "Public preview · not production-ready"
       },
       "fintrackerrr": {
         "typeLabel": "PORTFOLIO ANALYTICS · WIP CASE STUDY",
@@ -109,7 +109,7 @@
           "Dividend insights",
           "UI performance"
         ],
-        "readinessNote": "Work in progress · public preview only"
+        "readinessNote": "Public preview · not production-ready"
       }
     },
     "githubSignalTitle": "GitHub Activity",
