@@ -7,23 +7,21 @@ html {
 }
 
 @layer components {
-  .page-gradient-perimeter::before {
+  /* Thin top-of-page brand accent — 2 px fixed line, full width */
+  .page-top-gradient-accent::before {
     content: '';
     position: fixed;
-    inset: 0;
-    padding: 1px;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
     z-index: 60;
-    opacity: 0.28;
-    background: linear-gradient(135deg, rgba(56, 189, 248, 0.9), rgba(59, 130, 246, 0.55) 32%, rgba(139, 92, 246, 0.5) 68%, rgba(34, 211, 238, 0.85));
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    pointer-events: none;
+    background: linear-gradient(90deg, #38bdf8, #3b82f6, #8b5cf6, #22d3ee);
+    opacity: 0.65;
   }
 
-  .dark .page-gradient-perimeter::before {
-    opacity: 0.42;
+  .dark .page-top-gradient-accent::before {
+    opacity: 0.85;
   }
 }
