@@ -135,11 +135,11 @@ function ShowcaseCard({ item, t }) {
         )}
 
         {highlights.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2.5">
+          <div className="mt-5 flex flex-wrap gap-2">
             {highlights.slice(0, 3).map((highlight) => (
               <span
                 key={highlight}
-                className={`inline-flex items-center rounded-full border px-3 py-1.5 text-[11px] font-medium tracking-[0.01em] ${accentStyles.chip}`}
+                className={`inline-flex items-center rounded-full border px-2.5 py-1.5 text-[10px] font-medium tracking-[0.01em] ${accentStyles.chip}`}
               >
                 {highlight}
               </span>
@@ -150,7 +150,7 @@ function ShowcaseCard({ item, t }) {
         <div className="mt-auto flex items-end justify-between gap-4 border-t border-slate-200/80 pt-6 dark:border-white/5">
           <div className="min-w-0">
             {readinessNote && (
-              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-500">
+              <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 {readinessNote}
               </p>
             )}
@@ -577,7 +577,7 @@ export default function Projects() {
             className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
-              <div className="mb-6 rounded-2xl border border-slate-200 bg-white/85 px-5 py-4 sm:px-6 dark:border-white/8 dark:bg-white/[0.02]">
+              <div className="mb-6 rounded-r-2xl border-l-2 border-slate-300 bg-white/60 px-5 py-4 sm:px-6 dark:border-white/20 dark:bg-white/[0.03]">
                 <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
                   {t('projects.caseStudyInProgress')}
                 </p>
