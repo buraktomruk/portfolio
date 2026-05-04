@@ -58,58 +58,58 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Side Projects",
-    "subtitle": "Practical builds focused on architecture, reliability, data quality, and product-readiness tradeoffs.",
-    "showcaseTitle": "Selected Builds",
-    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
-    "caseStudyInProgress": "Case study in progress",
-    "previewBuild": "View preview",
+    "title": "Side Project Case Studies",
+    "subtitle": "Public preview builds used to document architecture decisions, reliability work, and product-readiness tradeoffs.",
+    "showcaseTitle": "Selected Work-in-Progress Builds",
+    "showcaseDescription": "These projects are shared as engineering case studies. They are helpful for reviewing architecture, UI, data, and reliability decisions, but they are not production-ready products yet.",
+    "caseStudyInProgress": "PUBLIC PREVIEW BUILDS",
+    "previewBuild": "Preview build",
     "statusLabels": {
-      "publicPreview": "Public preview",
-      "exploratoryBuild": "Exploratory build",
-      "previewBuild": "Preview build",
-      "inProgress": "In progress"
+      "releaseHardening": "Release Hardening",
+      "securityReview": "Security Review",
+      "mvpValidation": "MVP Validation",
+      "systemDesign": "System Design"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "typeLabel": "Workout tracking · mobile case study",
-        "summary": "Offline-first workout tracking focused on guest migration, streak correctness, and timezone-safe analytics.",
+        "typeLabel": "WORKOUT TRACKING · WIP CASE STUDY",
+        "summary": "Workout tracking case study focused on offline sync, guest migration, streak correctness, and timezone-safe analytics.",
         "highlights": [
           "Offline sync",
           "Guest migration",
-          "DST-safe analytics"
+          "Timezone-safe analytics"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Work in progress · public preview only"
       },
       "bookmarkanalyzer": {
-        "typeLabel": "Bookmark intelligence · local-first case study",
-        "summary": "Bookmark workflow case study around AI enrichment, SSRF defense, and sanitized reader flows.",
+        "typeLabel": "BOOKMARK INTELLIGENCE · WIP CASE STUDY",
+        "summary": "Bookmark workflow case study focused on local-first storage, AI enrichment, SSRF defense, and reader sanitization.",
         "highlights": [
           "Local-first",
           "AI enrichment",
           "SSRF defense"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Work in progress · public preview only"
       },
       "subtrackerrr": {
-        "typeLabel": "Subscription tracking · MVP case study",
-        "summary": "Subscription management case study centered on financial correctness, auth safety, and persistence integrity.",
+        "typeLabel": "SUBSCRIPTION TRACKING · WIP CASE STUDY",
+        "summary": "Subscription tracking case study focused on billing correctness, Firebase auth safety, and persistence integrity.",
         "highlights": [
           "Billing correctness",
           "Auth safety",
-          "Firestore integrity"
+          "Persistence integrity"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Work in progress · public preview only"
       },
       "fintrackerrr": {
-        "typeLabel": "Portfolio analytics · system-design case study",
+        "typeLabel": "PORTFOLIO ANALYTICS · WIP CASE STUDY",
         "summary": "Portfolio analytics case study focused on normalized asset data, dividend insights, and large-table UI performance.",
         "highlights": [
           "Data normalization",
           "Dividend insights",
           "UI performance"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Work in progress · public preview only"
       }
     },
     "githubSignalTitle": "GitHub Activity",

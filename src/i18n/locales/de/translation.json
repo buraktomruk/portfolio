@@ -58,58 +58,58 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Side Projects",
-    "subtitle": "Praxisnahe Projekte mit Fokus auf Architektur, Zuverlässigkeit, Datenqualität und Produktreife.",
-    "showcaseTitle": "Ausgewählte Builds",
-    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
-    "caseStudyInProgress": "Fallstudie in Arbeit",
-    "previewBuild": "Preview ansehen",
+    "title": "Side-Project-Fallstudien",
+    "subtitle": "Öffentliche Preview-Builds, die Architekturentscheidungen, Zuverlässigkeit und Produktreife-Tradeoffs zeigen.",
+    "showcaseTitle": "Ausgewählte Work-in-Progress-Builds",
+    "showcaseDescription": "Diese Projekte werden als Engineering-Fallstudien gezeigt. Sie sind hilfreich für Architektur, UI, Datenqualität und Zuverlässigkeit, aber noch keine produktionsreifen Produkte.",
+    "caseStudyInProgress": "ÖFFENTLICHE PREVIEW-BUILDS",
+    "previewBuild": "Build ansehen",
     "statusLabels": {
-      "publicPreview": "Öffentliche Preview",
-      "exploratoryBuild": "Explorativer Build",
-      "previewBuild": "Preview-Build",
-      "inProgress": "In Arbeit"
+      "releaseHardening": "Release-Härtung",
+      "securityReview": "Sicherheitsprüfung",
+      "mvpValidation": "MVP-Validierung",
+      "systemDesign": "System-Design"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "typeLabel": "Workout-Tracking · Mobile-Fallstudie",
-        "summary": "Offline-first-Workout-Tracking mit Fokus auf Gast-Migration, korrekten Streaks und zeitzonensicherer Analytik.",
+        "typeLabel": "WORKOUT-TRACKING · WIP-FALLSTUDIE",
+        "summary": "Workout-Tracking-Fallstudie mit Fokus auf Offline-Sync, Gast-Migration, korrekte Streaks und zeitzonensichere Analytik.",
         "highlights": [
           "Offline-Sync",
           "Gast-Migration",
-          "DST-sichere Analytik"
+          "Zeitzonensichere Analytik"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Work in progress · nur öffentliche Preview"
       },
       "bookmarkanalyzer": {
-        "typeLabel": "Bookmark-Intelligence · Local-first-Fallstudie",
-        "summary": "Bookmark-Workflow-Fallstudie rund um KI-Anreicherung, SSRF-Abwehr und sanitisierte Reader-Flows.",
+        "typeLabel": "BOOKMARK-INTELLIGENCE · WIP-FALLSTUDIE",
+        "summary": "Bookmark-Workflow-Fallstudie rund um Local-first-Speicherung, KI-Anreicherung, SSRF-Abwehr und Reader-Sanitization.",
         "highlights": [
           "Local-first",
           "KI-Anreicherung",
           "SSRF-Abwehr"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Work in progress · nur öffentliche Preview"
       },
       "subtrackerrr": {
-        "typeLabel": "Abo-Tracking · MVP-Fallstudie",
-        "summary": "Subscription-Management-Fallstudie mit Fokus auf finanzielle Korrektheit, Auth-Sicherheit und Persistenz-Integrität.",
+        "typeLabel": "ABO-TRACKING · WIP-FALLSTUDIE",
+        "summary": "Abo-Tracking-Fallstudie mit Fokus auf finanzielle Korrektheit, Firebase-Auth-Sicherheit und Persistenz-Integrität.",
         "highlights": [
           "Billing-Korrektheit",
           "Auth-Sicherheit",
-          "Firestore-Integrität"
+          "Persistenz-Integrität"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Work in progress · nur öffentliche Preview"
       },
       "fintrackerrr": {
-        "typeLabel": "Portfolio-Analytics · System-Design-Fallstudie",
+        "typeLabel": "PORTFOLIO-ANALYTICS · WIP-FALLSTUDIE",
         "summary": "Portfolio-Analytics-Fallstudie zu normalisierten Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
         "highlights": [
           "Datennormalisierung",
           "Dividenden-Insights",
           "UI-Performance"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Work in progress · nur öffentliche Preview"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
