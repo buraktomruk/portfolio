@@ -32,41 +32,41 @@ const LANGUAGE_COLORS = {
 
 const ACCENT_STYLES = {
   emerald: {
-    card: 'from-emerald-500/8 via-transparent to-transparent dark:from-emerald-500/10 dark:via-transparent dark:to-transparent',
     badge: 'bg-emerald-500/10 text-emerald-700 ring-emerald-500/20 dark:text-emerald-300',
     accentText: 'text-emerald-600 dark:text-emerald-400',
     chip: 'border-emerald-500/15 bg-emerald-500/10 text-emerald-700 dark:border-emerald-400/15 dark:bg-emerald-400/10 dark:text-emerald-100',
     topLine: 'from-transparent via-emerald-500/35 to-transparent dark:via-emerald-400/40',
+    glow: 'from-emerald-500/6 via-transparent to-transparent dark:from-emerald-500/8 dark:via-transparent dark:to-transparent',
     hoverText: 'hover:text-emerald-700 dark:hover:text-emerald-300',
     hoverBorder: 'group-hover/link:border-emerald-500/60 dark:group-hover/link:border-emerald-300/60',
     logoRing: 'ring-emerald-500/15 dark:ring-emerald-400/20',
   },
   violet: {
-    card: 'from-violet-500/8 via-transparent to-transparent dark:from-violet-500/10 dark:via-transparent dark:to-transparent',
     badge: 'bg-violet-500/10 text-violet-700 ring-violet-500/20 dark:text-violet-300',
     accentText: 'text-violet-600 dark:text-violet-400',
     chip: 'border-violet-500/15 bg-violet-500/10 text-violet-700 dark:border-violet-400/15 dark:bg-violet-400/10 dark:text-violet-100',
     topLine: 'from-transparent via-violet-500/35 to-transparent dark:via-violet-400/40',
+    glow: 'from-violet-500/6 via-transparent to-transparent dark:from-violet-500/8 dark:via-transparent dark:to-transparent',
     hoverText: 'hover:text-violet-700 dark:hover:text-violet-300',
     hoverBorder: 'group-hover/link:border-violet-500/60 dark:group-hover/link:border-violet-300/60',
     logoRing: 'ring-violet-500/15 dark:ring-violet-400/20',
   },
   cyan: {
-    card: 'from-cyan-500/8 via-transparent to-transparent dark:from-cyan-500/10 dark:via-transparent dark:to-transparent',
     badge: 'bg-cyan-500/10 text-cyan-700 ring-cyan-500/20 dark:text-cyan-300',
     accentText: 'text-cyan-700 dark:text-cyan-400',
     chip: 'border-cyan-500/15 bg-cyan-500/10 text-cyan-700 dark:border-cyan-400/15 dark:bg-cyan-400/10 dark:text-cyan-100',
     topLine: 'from-transparent via-cyan-500/35 to-transparent dark:via-cyan-400/40',
+    glow: 'from-cyan-500/6 via-transparent to-transparent dark:from-cyan-500/8 dark:via-transparent dark:to-transparent',
     hoverText: 'hover:text-cyan-700 dark:hover:text-cyan-300',
     hoverBorder: 'group-hover/link:border-cyan-500/60 dark:group-hover/link:border-cyan-300/60',
     logoRing: 'ring-cyan-500/15 dark:ring-cyan-400/20',
   },
   indigo: {
-    card: 'from-indigo-500/8 via-transparent to-transparent dark:from-indigo-500/12 dark:via-transparent dark:to-transparent',
     badge: 'bg-indigo-500/10 text-indigo-700 ring-indigo-500/20 dark:text-indigo-300',
     accentText: 'text-indigo-700 dark:text-indigo-400',
     chip: 'border-indigo-500/15 bg-indigo-500/10 text-indigo-700 dark:border-indigo-400/15 dark:bg-indigo-400/10 dark:text-indigo-100',
     topLine: 'from-transparent via-indigo-500/35 to-transparent dark:via-indigo-400/40',
+    glow: 'from-indigo-500/6 via-transparent to-transparent dark:from-indigo-500/8 dark:via-transparent dark:to-transparent',
     hoverText: 'hover:text-indigo-700 dark:hover:text-indigo-300',
     hoverBorder: 'group-hover/link:border-indigo-500/60 dark:group-hover/link:border-indigo-300/60',
     logoRing: 'ring-indigo-500/15 dark:ring-indigo-400/20',
@@ -91,12 +91,24 @@ function ShowcaseCard({ item, t }) {
   const highlights = Array.isArray(highlightItems) ? highlightItems : [];
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-[1.75rem] border border-slate-200/80 bg-white/90 shadow-[0_24px_80px_-48px_rgba(15,23,42,0.24)] transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 dark:border-white/10 dark:bg-slate-900/55 dark:shadow-[0_24px_80px_-48px_rgba(15,23,42,0.95)] dark:hover:border-white/20">
+    <article className="group relative flex flex-col overflow-hidden rounded-[1.6rem] border border-slate-200/80 bg-white/90 shadow-[0_18px_50px_-34px_rgba(15,23,42,0.20)] transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_70px_-36px_rgba(15,23,42,0.22)] dark:border-white/10 dark:bg-slate-900/65 dark:shadow-[0_18px_50px_-34px_rgba(2,6,23,0.85)] dark:hover:border-white/15 dark:hover:shadow-[0_24px_70px_-34px_rgba(2,6,23,0.95)]">
       <div className={`pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r ${accentStyles.topLine}`} />
-      <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br opacity-50 ${accentStyles.card}`} />
-      <div className="pointer-events-none absolute inset-x-6 bottom-0 h-px bg-slate-200/70 dark:bg-white/5" />
+      <div className={`pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-gradient-to-br ${accentStyles.glow}`} />
 
-      <div className="relative z-10 flex flex-1 flex-col p-6 sm:p-7">
+      {item.previewSrc && (
+        <div className="relative isolate overflow-hidden border-b border-slate-200/70 bg-slate-100/80 dark:border-white/10 dark:bg-slate-950/70">
+          <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-white/60 to-transparent dark:from-white/[0.03]" />
+          <img
+            src={item.previewSrc}
+            alt={`${item.title} preview`}
+            loading="lazy"
+            className="h-56 w-full object-contain p-4 sm:h-60 sm:p-5"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-white/35 via-transparent to-transparent dark:from-slate-950/30" />
+        </div>
+      )}
+
+      <div className="relative z-10 flex flex-1 flex-col p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           {statusLabel ? (
             <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ring-1 backdrop-blur-sm ${accentStyles.badge}`}>
@@ -106,7 +118,7 @@ function ShowcaseCard({ item, t }) {
             <span aria-hidden="true" />
           )}
           {item.logoSrc && (
-            <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.35rem] ring-1 shadow-[0_18px_40px_-24px_rgba(15,23,42,0.35)] dark:shadow-[0_18px_40px_-24px_rgba(15,23,42,0.95)] ${item.logoTileClass || 'bg-slate-100 dark:bg-slate-950/80'} ${accentStyles.logoRing}`}>
+            <div className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-[1.35rem] ring-1 shadow-[0_18px_40px_-24px_rgba(15,23,42,0.30)] dark:shadow-[0_18px_40px_-24px_rgba(15,23,42,0.85)] ${item.logoTileClass || 'bg-slate-100 dark:bg-slate-950/80'} ${accentStyles.logoRing}`}>
               <img
                 src={item.logoSrc}
                 alt={`${item.title} logo`}
@@ -129,7 +141,7 @@ function ShowcaseCard({ item, t }) {
         </div>
 
         {summary && (
-          <p className="mt-4 max-w-[34ch] text-sm leading-6 text-slate-600 dark:text-slate-300">
+          <p className="mt-4 max-w-[34ch] text-sm leading-6 text-slate-600 line-clamp-2 dark:text-slate-300">
             {summary}
           </p>
         )}
@@ -147,7 +159,7 @@ function ShowcaseCard({ item, t }) {
           </div>
         )}
 
-        <div className="mt-auto flex items-end justify-between gap-4 border-t border-slate-200/80 pt-6 dark:border-white/5">
+        <div className="mt-auto flex items-center justify-between gap-4 pt-6">
           <div className="min-w-0">
             {readinessNote && (
               <p className="text-[11px] font-medium text-slate-500 dark:text-slate-500">
@@ -160,7 +172,7 @@ function ShowcaseCard({ item, t }) {
               href={item.demoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group/link inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-2 text-[11px] font-semibold text-slate-600 transition-colors dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 ${accentStyles.hoverText}`}
+              className={`group/link inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200/80 bg-white/80 px-3 py-2 text-[11px] font-semibold text-slate-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-slate-50 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 ${accentStyles.hoverText}`}
             >
               <span className={`border-b border-dashed border-slate-400 pb-px transition-colors dark:border-slate-600 ${accentStyles.hoverBorder}`}>
                 {t('projects.previewBuild')}
@@ -184,7 +196,7 @@ function SectionHeader({
   hideLabel
 }) {
   return (
-    <div className="border-b border-slate-200 dark:border-white/5 pb-6">
+    <div className="pb-5">
       <div className="flex items-center justify-between gap-4">
         <h3 className="text-xl font-bold text-slate-950 dark:text-white">{title}</h3>
         <button
@@ -198,6 +210,7 @@ function SectionHeader({
           <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
         </button>
       </div>
+      <div className="mt-4 h-px w-24 bg-gradient-to-r from-cyan-500/70 via-violet-500/25 to-transparent dark:from-cyan-400/50 dark:via-violet-400/20" />
       {!isExpanded && summary && (
         <p className="mt-3 text-sm text-slate-500 animate-in fade-in duration-500 dark:text-slate-500">
           {summary}
@@ -559,6 +572,7 @@ export default function Projects() {
             {t('projects.subtitle')}
           </p>
         </div>
+        <div className="mt-6 h-px w-full max-w-2xl bg-gradient-to-r from-cyan-500/45 via-violet-500/20 to-transparent dark:from-cyan-400/30 dark:via-violet-400/10" />
 
         {/* Subsection 1: Case Studies */}
         <div className="mt-12">
@@ -574,14 +588,14 @@ export default function Projects() {
           
           <div
             id="live-products-section"
-            className={`premium-section-shell grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
           >
-            <div className="overflow-hidden px-5 py-5 sm:px-6 sm:py-6">
-              <div className="mb-6 rounded-2xl border border-slate-200 bg-white/85 px-5 py-4 sm:px-6 dark:border-white/8 dark:bg-white/[0.02]">
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+            <div className="overflow-hidden">
+              <div className="mb-6 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-600 dark:bg-white/[0.04] dark:text-slate-300">
                   {t('projects.caseStudyInProgress')}
-                </p>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-400">
+                </span>
+                <p className="text-sm leading-6 text-slate-600 dark:text-slate-400">
                   {t('projects.showcaseDescription')}
                 </p>
               </div>
@@ -608,9 +622,9 @@ export default function Projects() {
           
           <div
             id="github-activity-section"
-            className={`premium-section-shell grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
+            className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
-            <div className="overflow-hidden px-5 py-5 sm:px-6 sm:py-6">
+            <div className="overflow-hidden">
               <GithubSignal 
                 t={t} 
                 statsState={statsState} 

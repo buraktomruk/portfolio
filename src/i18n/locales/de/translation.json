@@ -58,58 +58,58 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Engineering-Fallstudien & öffentliche Build-Arbeit",
-    "subtitle": "Ausgewählte Side-Projects, präsentiert als Engineering-Fallstudien. Öffentliche Previews sind verfügbar, aber diese Builds sind noch in Arbeit und nicht produktionsreif.",
-    "showcaseTitle": "Ausgewählte Engineering-Fallstudien",
-    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
+    "title": "Engineering-Fallstudien",
+    "subtitle": "Ausgewählte Side-Projects, um Produktdenken, Release-Hardening, Datenkorrektheit und Frontend-Architektur zu zeigen.",
+    "showcaseTitle": "Ausgewählte Fallstudien",
+    "showcaseDescription": "Öffentliche Previews mit Fokus auf technischen Abwägungen statt auf fertigem Produkt-Polish.",
     "caseStudyInProgress": "Fallstudie in Arbeit",
-    "previewBuild": "Preview ansehen",
+    "previewBuild": "Preview öffnen",
     "statusLabels": {
-      "publicPreview": "Öffentliche Preview",
-      "exploratoryBuild": "Explorativer Build",
-      "previewBuild": "Preview-Build",
-      "inProgress": "In Arbeit"
+      "publicPreview": "Preview-Build",
+      "exploratoryBuild": "MVP-Validierung",
+      "previewBuild": "Release-Hardening",
+      "inProgress": "Fallstudie in Arbeit"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "typeLabel": "Workout-Tracking · Mobile-Fallstudie",
-        "summary": "Offline-first-Workout-Tracking mit Fokus auf Gast-Migration, korrekten Streaks und zeitzonensicherer Analytik.",
+        "typeLabel": "Workout-Tracking · Mobile-Preview",
+        "summary": "Offline-first-Workout-Tracker für Gast-Migration und zeitzonensichere Streak-Analytik.",
         "highlights": [
           "Offline-Sync",
           "Gast-Migration",
-          "DST-sichere Analytik"
+          "Zeitzonensichere Analytik"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Preview-Build · nicht produktionsreif"
       },
       "bookmarkanalyzer": {
-        "typeLabel": "Bookmark-Intelligence · Local-first-Fallstudie",
-        "summary": "Bookmark-Workflow-Fallstudie rund um KI-Anreicherung, SSRF-Abwehr und sanitisierte Reader-Flows.",
+        "typeLabel": "Bookmark-Intelligence · Local-first-Preview",
+        "summary": "Local-first-Bookmark-Tooling mit KI-Anreicherung und SSRF-Abwehr.",
         "highlights": [
           "Local-first",
           "KI-Anreicherung",
-          "SSRF-Abwehr"
+          "Reader-Flow"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "MVP-Validierung · nicht produktionsreif"
       },
       "subtrackerrr": {
-        "typeLabel": "Abo-Tracking · MVP-Fallstudie",
-        "summary": "Subscription-Management-Fallstudie mit Fokus auf finanzielle Korrektheit, Auth-Sicherheit und Persistenz-Integrität.",
+        "typeLabel": "Abo-Tracking · Release-Preview",
+        "summary": "Subscription-Management mit Fokus auf Billing-Korrektheit und Auth-Sicherheit.",
         "highlights": [
           "Billing-Korrektheit",
           "Auth-Sicherheit",
-          "Firestore-Integrität"
+          "Persistenz-Integrität"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Release-Hardening · nicht produktionsreif"
       },
       "fintrackerrr": {
         "typeLabel": "Portfolio-Analytics · System-Design-Fallstudie",
-        "summary": "Portfolio-Analytics-Fallstudie zu normalisierten Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
+        "summary": "Portfolio-Analytics für normalisierte Asset-Daten und Dividenden-Insights.",
         "highlights": [
           "Datennormalisierung",
           "Dividenden-Insights",
-          "UI-Performance"
+          "Tabellen-Performance"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Fallstudie in Arbeit · nicht produktionsreif"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
@@ -156,7 +156,7 @@
     "hideProducts": "Fallstudien ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "4 Side-Projects als öffentliche Preview-Engineering-Fallstudien",
+    "summaryProducts": "4 Side-Projects als kompakte Preview-Fallstudien",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",

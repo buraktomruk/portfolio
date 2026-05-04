@@ -58,58 +58,58 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Engineering Case Studies & Public Build Work",
-    "subtitle": "Selected side projects presented as engineering case studies. Public previews are available, but these builds are still in progress and not production-ready.",
-    "showcaseTitle": "Selected Engineering Case Studies",
-    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
+    "title": "Engineering Case Studies",
+    "subtitle": "Selected side projects used to demonstrate product thinking, release hardening, data correctness, and frontend architecture.",
+    "showcaseTitle": "Selected Case Studies",
+    "showcaseDescription": "Public previews with a focus on engineering tradeoffs rather than finished-product polish.",
     "caseStudyInProgress": "Case study in progress",
-    "previewBuild": "View preview",
+    "previewBuild": "Open preview",
     "statusLabels": {
-      "publicPreview": "Public preview",
-      "exploratoryBuild": "Exploratory build",
-      "previewBuild": "Preview build",
-      "inProgress": "In progress"
+      "publicPreview": "Preview build",
+      "exploratoryBuild": "MVP validation",
+      "previewBuild": "Release hardening",
+      "inProgress": "Case study in progress"
     },
     "caseStudies": {
       "ritualgymtracker": {
-        "typeLabel": "Workout tracking · mobile case study",
-        "summary": "Offline-first workout tracking focused on guest migration, streak correctness, and timezone-safe analytics.",
+        "typeLabel": "Workout tracking · mobile preview",
+        "summary": "Offline-first workout tracker for guest migration and timezone-safe streak analytics.",
         "highlights": [
           "Offline sync",
           "Guest migration",
-          "DST-safe analytics"
+          "Timezone-safe analytics"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Preview build · not production-ready"
       },
       "bookmarkanalyzer": {
-        "typeLabel": "Bookmark intelligence · local-first case study",
-        "summary": "Bookmark workflow case study around AI enrichment, SSRF defense, and sanitized reader flows.",
+        "typeLabel": "Bookmark intelligence · local-first preview",
+        "summary": "Local-first bookmark tooling with AI enrichment and SSRF defense.",
         "highlights": [
           "Local-first",
           "AI enrichment",
-          "SSRF defense"
+          "Reader flow"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "MVP validation · not production-ready"
       },
       "subtrackerrr": {
-        "typeLabel": "Subscription tracking · MVP case study",
-        "summary": "Subscription management case study centered on financial correctness, auth safety, and persistence integrity.",
+        "typeLabel": "Subscription tracking · release preview",
+        "summary": "Subscription management focused on billing correctness and auth safety.",
         "highlights": [
           "Billing correctness",
           "Auth safety",
-          "Firestore integrity"
+          "Persistence integrity"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Release hardening · not production-ready"
       },
       "fintrackerrr": {
         "typeLabel": "Portfolio analytics · system-design case study",
-        "summary": "Portfolio analytics case study focused on normalized asset data, dividend insights, and large-table UI performance.",
+        "summary": "Portfolio analytics for normalized asset data and dividend insights.",
         "highlights": [
           "Data normalization",
           "Dividend insights",
-          "UI performance"
+          "Table performance"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Case study in progress · not production-ready"
       }
     },
     "githubSignalTitle": "GitHub Activity",
@@ -156,7 +156,7 @@
     "hideProducts": "Hide case studies",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "4 side projects presented as public preview engineering case studies",
+    "summaryProducts": "4 side projects shown as compact preview case studies",
     "summaryGithub": "Recent public activity and selected repositories",
     "repoTitle": "Selected Repositories",
     "viewAllRepos": "View all repositories",
