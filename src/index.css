@@ -7,17 +7,25 @@ html {
 }
 
 @layer components {
-  /* Gradient border ring — 2 px top edge, 1 px sides/bottom */
+  /* Global page-level accent — inset rounded frame, pointer-events: none */
   .page-gradient-perimeter::before {
     content: '';
     position: fixed;
-    inset: 0;
+    inset: 8px;
+    border-radius: 22px;
     padding: 1px;
     padding-top: 2px;
     pointer-events: none;
     z-index: 60;
-    opacity: 0.55;
-    background: linear-gradient(135deg, #38bdf8, #3b82f6 30%, #8b5cf6 62%, #22d3ee);
+    opacity: 0.40;
+    /* 120 deg keeps sky-blue at top-left; violet sits at 65 % (lower-right quadrant) */
+    background: linear-gradient(
+      120deg,
+      rgba(14, 165, 233, 0.90),
+      rgba(59, 130, 246, 0.70) 38%,
+      rgba(139, 92, 246, 0.50) 65%,
+      rgba(34, 211, 238, 0.85)
+    );
     -webkit-mask:
       linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
@@ -26,23 +34,6 @@ html {
   }
 
   .dark .page-gradient-perimeter::before {
-    opacity: 0.72;
-  }
-
-  /* Ambient top-edge glow — extremely faint haze, non-interactive */
-  .page-gradient-perimeter::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 80px;
-    pointer-events: none;
-    z-index: 59;
-    background: linear-gradient(180deg, rgba(56, 189, 248, 0.055), transparent);
-  }
-
-  .dark .page-gradient-perimeter::after {
-    background: linear-gradient(180deg, rgba(56, 189, 248, 0.09), transparent);
+    opacity: 0.60;
   }
 }
