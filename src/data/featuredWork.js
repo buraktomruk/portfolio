@@ -9,7 +9,7 @@ export const featuredWorkItems = [
     title: "Ritual Gym Tracker",
     statusKey: "publicPreview",
     accent: "indigo",
-    logoSrc: "/project-previews/ritualgymtracker-icon.png",
+    logoSrc: "/project-previews/ritualgymtracker-logo.png",
     logoTileClass: "bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.28),_transparent_58%),linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.9))]",
     logoClass: "h-12 w-12 rounded-[1rem]",
     demoUrl: "https://ritualgymtracker.netlify.app/",

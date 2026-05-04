@@ -227,7 +227,7 @@ const CURATED_FALLBACK_HIGHLIGHTS = [
     id: 'ritualgymtracker',
     titleKey: 'projects.githubFallback.ritualgymtracker.title',
     captionKey: 'projects.githubFallback.ritualgymtracker.caption',
-    logoSrc: '/project-previews/ritualgymtracker-icon.png',
+    logoSrc: '/project-previews/ritualgymtracker-logo.png',
   },
 ];
 
