@@ -64,7 +64,7 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 dark:bg-slate-900 dark:text-slate-100 dark:selection:bg-blue-900 transition-colors duration-300">
+    <div className="page-gradient-perimeter min-h-screen overflow-x-hidden bg-slate-50 text-slate-900 font-sans selection:bg-blue-100 dark:bg-slate-900 dark:text-slate-100 dark:selection:bg-blue-900 transition-colors duration-300">
       <div 
         className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 to-purple-600 z-[100] transition-all duration-150 ease-out"
         style={{ width: `${scrollProgress}%` }}
