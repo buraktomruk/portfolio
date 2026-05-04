@@ -58,17 +58,17 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Engineering Case Studies & Public Build Work",
-    "subtitle": "Selected side projects presented as engineering case studies. Public previews are available, but these builds are still in progress and not production-ready.",
-    "showcaseTitle": "Selected Engineering Case Studies",
-    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
-    "caseStudyInProgress": "Case study in progress",
-    "previewBuild": "View preview",
+    "title": "Engineering Case Studies & Public Builds",
+    "subtitle": "Side projects focused on architecture, reliability, data correctness, and product-quality tradeoffs.",
+    "showcaseTitle": "Selected Case Studies",
+    "showcaseDescription": "Compact build notes highlighting constraints, decisions, and validation work behind each project.",
+    "caseStudyInProgress": "Engineering snapshots",
+    "previewBuild": "Preview build",
     "statusLabels": {
-      "publicPreview": "Public preview",
-      "exploratoryBuild": "Exploratory build",
-      "previewBuild": "Preview build",
-      "inProgress": "In progress"
+      "releaseHardening": "Release Hardening",
+      "securityReview": "Security Review",
+      "mvpValidation": "MVP Validation",
+      "systemDesign": "System Design"
     },
     "caseStudies": {
       "ritualgymtracker": {
@@ -79,7 +79,7 @@
           "Guest migration",
           "DST-safe analytics"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Release hardening notes"
       },
       "bookmarkanalyzer": {
         "typeLabel": "Bookmark intelligence · local-first case study",
@@ -89,7 +89,7 @@
           "AI enrichment",
           "SSRF defense"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Security review notes"
       },
       "subtrackerrr": {
         "typeLabel": "Subscription tracking · MVP case study",
@@ -99,7 +99,7 @@
           "Auth safety",
           "Firestore integrity"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "MVP validation notes"
       },
       "fintrackerrr": {
         "typeLabel": "Portfolio analytics · system-design case study",
@@ -109,7 +109,7 @@
           "Dividend insights",
           "UI performance"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "System design notes"
       }
     },
     "githubSignalTitle": "GitHub Activity",
