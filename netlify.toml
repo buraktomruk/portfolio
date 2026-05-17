@@ -14,6 +14,24 @@
   functions = "netlify/functions"
   framework = "#custom"
 
+[[redirects]]
+  from = "https://www.buraktomruk.com/*"
+  to = "https://buraktomruk.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://buraktomruk.dev/*"
+  to = "https://buraktomruk.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.buraktomruk.dev/*"
+  to = "https://buraktomruk.com/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
