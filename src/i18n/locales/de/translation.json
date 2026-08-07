@@ -58,17 +58,17 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Side-Project-Fallstudien",
-    "subtitle": "Öffentliche Preview-Builds, die Architekturentscheidungen, Zuverlässigkeit und Produktreife-Tradeoffs zeigen.",
-    "showcaseTitle": "Ausgewählte Work-in-Progress-Builds",
-    "showcaseDescription": "Diese Projekte werden als Engineering-Fallstudien gezeigt. Sie sind hilfreich für Architektur, UI, Datenqualität und Zuverlässigkeit, aber noch keine produktionsreifen Produkte.",
-    "caseStudyInProgress": "ÖFFENTLICHE PREVIEW-BUILDS",
+    "title": "Side Projects",
+    "subtitle": "Praxisnahe Projekte mit Fokus auf Architektur, Zuverlässigkeit, Datenqualität und Produktreife.",
+    "showcaseTitle": "Ausgewählte Builds",
+    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
+    "caseStudyInProgress": "Fallstudie in Arbeit",
     "previewBuild": "Build ansehen",
     "statusLabels": {
-      "releaseHardening": "Release-Härtung",
-      "securityReview": "Sicherheitsprüfung",
-      "mvpValidation": "MVP-Validierung",
-      "systemDesign": "System-Design"
+      "publicPreview": "Öffentliche Preview",
+      "exploratoryBuild": "Explorativer Build",
+      "previewBuild": "Preview-Build",
+      "inProgress": "In Arbeit"
     },
     "caseStudies": {
       "ritualgymtracker": {
@@ -79,7 +79,7 @@
           "Gast-Migration",
           "Zeitzonensichere Analytik"
         ],
-        "readinessNote": "Work in progress · nur öffentliche Preview"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "bookmarkanalyzer": {
         "typeLabel": "BOOKMARK-INTELLIGENCE · WIP-FALLSTUDIE",
@@ -89,7 +89,7 @@
           "KI-Anreicherung",
           "SSRF-Abwehr"
         ],
-        "readinessNote": "Work in progress · nur öffentliche Preview"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "subtrackerrr": {
         "typeLabel": "ABO-TRACKING · WIP-FALLSTUDIE",
@@ -99,7 +99,7 @@
           "Auth-Sicherheit",
           "Persistenz-Integrität"
         ],
-        "readinessNote": "Work in progress · nur öffentliche Preview"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       },
       "fintrackerrr": {
         "typeLabel": "PORTFOLIO-ANALYTICS · WIP-FALLSTUDIE",
@@ -109,7 +109,7 @@
           "Dividenden-Insights",
           "UI-Performance"
         ],
-        "readinessNote": "Work in progress · nur öffentliche Preview"
+        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
