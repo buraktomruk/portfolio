@@ -455,29 +455,46 @@ export function normalizeGithubEvent(event) {
     targetUrl: getActivityTargetUrl(event, repoUrl),
     createdAt,
     summary: buildGithubActivitySummary(event),
+    score: getGithubActivityScore(event),
   };
 }
 
 export function filterAndNormalizeGithubEvents(events) {
-  return normalizeGithubContributionEvents(events).slice(0, GITHUB_ACTIVITY_MAX_DISPLAY);
+  return selectMeaningfulGithubEvents(normalizePublicGithubContributionEvents(events));
 }
 
-export function summarizeGithubActivity(events) {
-  const normalizedEvents = normalizeGithubContributionEvents(events);
-  const recentEvents = normalizedEvents.filter((event) => isEventInsideRecentWindow(event?.createdAt));
+export function summarizeGithubActivity(events, { includePrivateAggregates = false } = {}) {
+  const contributionEvents = getGithubContributionEvents(events);
+  const publicEvents = contributionEvents.filter((event) => event?.public !== false);
+  const normalizedPublicEvents = normalizePublicGithubContributionEvents(publicEvents);
+  const recentPublicEvents = normalizedPublicEvents.filter((event) => isEventInsideRecentWindow(event?.createdAt));
+  const recentAggregateEvents = contributionEvents.filter((event) => (
+    (includePrivateAggregates || event?.public !== false)
+      && isEventInsideRecentWindow(event?.created_at)
+  ));
 
-  const activeDays = new Set(recentEvents.map((event) => getUtcDayKey(event.createdAt)));
-  const topRepo = getTopGithubActivityRepo(recentEvents);
+  const publicActiveDays = new Set(recentPublicEvents.map((event) => getUtcDayKey(event.createdAt)));
+  const totalActiveDays = new Set(recentAggregateEvents.map((event) => getUtcDayKey(event.created_at)));
+  const repositoriesTouched = new Set(
+    recentAggregateEvents.map((event) => toSafeString(event?.repo?.name)).filter(Boolean),
+  );
+  const privateActivityCount = recentAggregateEvents.filter((event) => event?.public === false).length;
+  const topRepo = getTopGithubActivityRepo(recentPublicEvents);
+  const entries = selectMeaningfulGithubEvents(normalizedPublicEvents);
 
   return {
-    entries: normalizedEvents.slice(0, GITHUB_ACTIVITY_MAX_DISPLAY),
-    cadence: buildGithubActivityCadence(recentEvents),
+    entries,
+    cadence: buildGithubActivityCadence(recentPublicEvents),
     totals: {
-      eventsLast30Days: recentEvents.length,
-      activeDaysLast30Days: activeDays.size,
-      lastActiveAt: normalizedEvents[0]?.createdAt ?? null,
+      eventsLast30Days: recentPublicEvents.length,
+      activeDaysLast30Days: publicActiveDays.size,
+      lastActiveAt: normalizedPublicEvents[0]?.createdAt ?? null,
       topRepoName: topRepo?.repoName ?? null,
       topRepoEventsLast30Days: topRepo?.count ?? 0,
+      authenticatedMode: Boolean(includePrivateAggregates),
+      privateActivityCount: includePrivateAggregates ? privateActivityCount : null,
+      totalActiveDaysLast30Days: includePrivateAggregates ? totalActiveDays.size : null,
+      repositoriesTouchedCount: includePrivateAggregates ? repositoriesTouched.size : null,
     },
   };
 }
@@ -513,7 +530,11 @@ export function isGithubActivityEnvelope(value) {
       typeof value.data.totals.activeDaysLast30Days === "number" &&
       (value.data.totals.lastActiveAt === null || typeof value.data.totals.lastActiveAt === "string") &&
       (value.data.totals.topRepoName === null || typeof value.data.totals.topRepoName === "string") &&
-      typeof value.data.totals.topRepoEventsLast30Days === "number",
+      typeof value.data.totals.topRepoEventsLast30Days === "number" &&
+      typeof value.data.totals.authenticatedMode === "boolean" &&
+      (value.data.totals.privateActivityCount === null || typeof value.data.totals.privateActivityCount === "number") &&
+      (value.data.totals.totalActiveDaysLast30Days === null || typeof value.data.totals.totalActiveDaysLast30Days === "number") &&
+      (value.data.totals.repositoriesTouchedCount === null || typeof value.data.totals.repositoriesTouchedCount === "number"),
   );
 }
 
@@ -535,34 +556,103 @@ export function buildGithubActivitySummary(event) {
     case "IssuesEvent":
       return formatIssueSummary(event, repoName);
     case "IssueCommentEvent":
-      return `Commented on a discussion in ${repoName}`;
+      return "Commented on a public discussion";
     case "ReleaseEvent":
-      return `Published a release in ${repoName}`;
+      return formatReleaseSummary(event);
     default:
       return `Contributed publicly in ${repoName}`;
   }
 }
 
-function normalizeGithubContributionEvents(events) {
+const GITHUB_CONTRIBUTION_EVENT_TYPES = new Set([
+  "PushEvent",
+  "PullRequestEvent",
+  "PullRequestReviewEvent",
+  "IssuesEvent",
+  "IssueCommentEvent",
+  "ReleaseEvent",
+]);
+
+function getGithubContributionEvents(events) {
   if (!Array.isArray(events)) {
     return [];
   }
 
-  const contributionTypes = new Set([
-    "PushEvent",
-    "PullRequestEvent",
-    "PullRequestReviewEvent",
-    "IssuesEvent",
-    "IssueCommentEvent",
-    "ReleaseEvent",
-  ]);
-
   return events
+    .filter((event) => GITHUB_CONTRIBUTION_EVENT_TYPES.has(event?.type))
+    .filter((event) => toSafeString(event?.repo?.name) && toSafeTimestamp(event?.created_at));
+}
+
+function normalizePublicGithubContributionEvents(events) {
+  return getGithubContributionEvents(events)
     .filter((event) => event?.public !== false)
-    .filter((event) => contributionTypes.has(event?.type))
     .map(normalizeGithubEvent)
     .filter(Boolean)
     .sort((eventA, eventB) => new Date(eventB.createdAt).getTime() - new Date(eventA.createdAt).getTime());
+}
+
+function selectMeaningfulGithubEvents(events) {
+  const bestByGroup = new Map();
+
+  for (const event of events) {
+    const groupKey = getGithubActivityGroupKey(event);
+    const existing = bestByGroup.get(groupKey);
+    if (!existing || event.score > existing.score || (
+      event.score === existing.score
+      && new Date(event.createdAt).getTime() > new Date(existing.createdAt).getTime()
+    )) {
+      bestByGroup.set(groupKey, event);
+    }
+  }
+
+  return [...bestByGroup.values()]
+    .sort((eventA, eventB) => {
+      const scoreDelta = eventB.score - eventA.score;
+      return scoreDelta || new Date(eventB.createdAt).getTime() - new Date(eventA.createdAt).getTime();
+    })
+    .slice(0, GITHUB_ACTIVITY_MAX_DISPLAY)
+    .sort((eventA, eventB) => new Date(eventB.createdAt).getTime() - new Date(eventA.createdAt).getTime())
+    .map((event) => ({
+      id: event.id,
+      type: event.type,
+      repoName: event.repoName,
+      repoUrl: event.repoUrl,
+      targetUrl: event.targetUrl,
+      createdAt: event.createdAt,
+      summary: event.summary,
+    }));
+}
+
+function getGithubActivityGroupKey(event) {
+  if (event.targetUrl !== event.repoUrl) {
+    return `target:${event.targetUrl}`;
+  }
+
+  const dayKey = getUtcDayKey(event.createdAt);
+  const family = event.type === "PushEvent" ? "push" : event.type;
+  return `repo:${event.repoName}:${family}:${dayKey}`;
+}
+
+function getGithubActivityScore(event) {
+  switch (event?.type) {
+    case "ReleaseEvent":
+      return 100;
+    case "PullRequestEvent":
+      if (event?.payload?.pull_request?.merged_at) return 95;
+      if (event?.payload?.action === "opened") return 85;
+      if (event?.payload?.action === "closed") return 80;
+      return 65;
+    case "PullRequestReviewEvent":
+      return event?.payload?.review?.state === "approved" ? 78 : 72;
+    case "PushEvent":
+      return 68;
+    case "IssuesEvent":
+      return 55;
+    case "IssueCommentEvent":
+      return 40;
+    default:
+      return 0;
+  }
 }
 
 function buildGithubActivityCadence(events) {
@@ -677,60 +767,89 @@ function getUtcDayKey(value) {
 function formatPushSummary(event, repoName) {
   const commitCount = Array.isArray(event?.payload?.commits) ? event.payload.commits.length : 0;
   if (commitCount > 1) {
-    return `Pushed ${commitCount} commits to ${repoName}`;
+    return `Pushed ${commitCount} public commits`;
   }
   if (commitCount === 1) {
-    return `Pushed a commit to ${repoName}`;
+    return "Pushed a public commit";
   }
-  return `Pushed updates to ${repoName}`;
+  return `Updated ${repoName.split("/").pop() ?? "a public repository"}`;
 }
 
-function formatPullRequestSummary(event, repoName) {
+function formatPullRequestSummary(event) {
   const action = typeof event?.payload?.action === "string" ? event.payload.action : "";
   const mergedAt = event?.payload?.pull_request?.merged_at;
+  const title = toSafeString(event?.payload?.pull_request?.title);
+  const target = title && title.length <= 72 ? ` “${title}”` : " a pull request";
 
   if (mergedAt) {
-    return `Merged a pull request in ${repoName}`;
+    return `Merged${target}`;
   }
 
   switch (action) {
     case "opened":
-      return `Opened a pull request in ${repoName}`;
+      return `Opened${target}`;
     case "closed":
-      return `Closed a pull request in ${repoName}`;
+      return `Closed${target}`;
     case "reopened":
-      return `Reopened a pull request in ${repoName}`;
+      return `Reopened${target}`;
     case "synchronize":
-      return `Updated a pull request in ${repoName}`;
+      return `Updated${target}`;
     default:
-      return `Worked on a pull request in ${repoName}`;
+      return `Worked on${target}`;
   }
 }
 
-function formatReviewSummary(event, repoName) {
+function formatReviewSummary(event) {
   const state = String(event?.payload?.review?.state ?? "").toLowerCase();
   switch (state) {
     case "approved":
-      return `Approved a pull request in ${repoName}`;
+      return "Approved a pull request";
     case "changes_requested":
-      return `Requested changes in ${repoName}`;
+      return "Requested pull request changes";
     case "commented":
-      return `Reviewed a pull request in ${repoName}`;
+      return "Reviewed a pull request";
     default:
-      return `Reviewed a pull request in ${repoName}`;
+      return "Reviewed a pull request";
   }
 }
 
-function formatIssueSummary(event, repoName) {
+function formatIssueSummary(event) {
   const action = typeof event?.payload?.action === "string" ? event.payload.action : "";
   switch (action) {
     case "opened":
-      return `Opened an issue in ${repoName}`;
+      return "Opened an issue";
     case "closed":
-      return `Closed an issue in ${repoName}`;
+      return "Closed an issue";
     case "reopened":
-      return `Reopened an issue in ${repoName}`;
+      return "Reopened an issue";
     default:
-      return `Updated an issue in ${repoName}`;
+      return "Updated an issue";
   }
+}
+
+function formatReleaseSummary(event) {
+  const releaseName = toSafeString(event?.payload?.release?.name)
+    ?? toSafeString(event?.payload?.release?.tag_name);
+  return releaseName && releaseName.length <= 72
+    ? `Published release “${releaseName}”`
+    : "Published a release";
+}
+
+export function buildGithubSignalMetrics({
+  activeProductCount,
+  activityTotals,
+  publicRepos,
+  totalContributionsThisYear,
+} = {}) {
+  const candidates = [
+    ["activeProducts", activeProductCount],
+    ["publicEvents", activityTotals?.eventsLast30Days],
+    ["activeDays", activityTotals?.activeDaysLast30Days],
+    ["publicRepos", publicRepos],
+    ["contributions", totalContributionsThisYear],
+  ];
+
+  return candidates
+    .filter(([, value]) => typeof value === "number" && Number.isFinite(value) && value >= 0)
+    .map(([key, value]) => ({ key, value }));
 }

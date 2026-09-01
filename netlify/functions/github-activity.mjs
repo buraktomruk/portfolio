@@ -11,7 +11,7 @@ import {
 export const handler = async (event) => {
   const context = createGithubContext(event, {
     kind: "activity",
-    cacheKeyPrefix: "activity_v2",
+    cacheKeyPrefix: "activity_v3",
     rateLimitPrefix: "rl_portfolio_activity",
   });
 
@@ -27,11 +27,18 @@ export const handler = async (event) => {
 
   try {
     const githubEvents = await fetchGithubJson(
-      `https://api.github.com/users/${context.username}/events/public?per_page=20`,
+      context.token
+        ? `https://api.github.com/users/${context.username}/events?per_page=100`
+        : `https://api.github.com/users/${context.username}/events/public?per_page=100`,
       context.token,
     );
 
-    return respondWithGithubData(context, summarizeGithubActivity(githubEvents));
+    return respondWithGithubData(
+      context,
+      summarizeGithubActivity(githubEvents, {
+        includePrivateAggregates: Boolean(context.token),
+      }),
+    );
   } catch (error) {
     context.captureServerError(error);
 

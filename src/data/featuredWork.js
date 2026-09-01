@@ -72,11 +72,16 @@ export const secondaryWorkItems = [
   },
 ];
 
-// Curated public-engineering highlights surfaced when live GitHub data is
-// unavailable (no token, rate-limited, network error, cold cache). These are
-// engineering signals, not evidence that a build is production-ready. All five
-// product repos are private, so they never appear in public GitHub events —
-// this list is the only place they surface.
+export const activeProductCount = featuredWorkItems.length + secondaryWorkItems.length;
+
+export const engineeringMomentumThemeKeys = [
+  "releaseHardening",
+  "dataCorrectness",
+  "systemDesign",
+];
+
+// Curated product-engineering evidence. These are engineering signals, not
+// evidence that a build is production-ready or that its source is public.
 export const curatedFallbackHighlights = [
   {
     id: "coefpulse",

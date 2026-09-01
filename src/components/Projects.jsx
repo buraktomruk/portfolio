@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Github, ShieldCheck, Sparkles, Star } from 'lucide-react';
-import { curatedFallbackHighlights, featuredWorkItems, secondaryWorkItems } from '../data/featuredWork.js';
+import {
+  activeProductCount,
+  engineeringMomentumThemeKeys,
+  featuredWorkItems,
+  secondaryWorkItems,
+} from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
+  buildGithubSignalMetrics,
   getGithubProfileUrl,
   GITHUB_PROJECTS_ENDPOINT,
   GITHUB_STATS_ENDPOINT,
@@ -264,71 +270,32 @@ function SectionHeader({
 }
 
 
-function FallbackHighlightRow({ item, t }) {
-  const [imageFailed, setImageFailed] = React.useState(false);
-  const title = t(item.titleKey);
-  const caption = t(item.captionKey);
-  const initial = (title || '?').trim().charAt(0).toUpperCase();
-
-  return (
-    <li className="flex items-start gap-3 py-2.5 first:pt-0 last:pb-0 border-b border-slate-200/70 last:border-0 dark:border-white/[0.04]">
-      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 ring-1 ring-slate-200 dark:bg-white/[0.04] dark:ring-white/10">
-        {item.logoSrc && !imageFailed ? (
-          <img
-            src={item.logoSrc}
-            alt=""
-            loading="lazy"
-            onError={() => setImageFailed(true)}
-            className="h-7 w-7 rounded-md object-contain"
-          />
-        ) : (
-          <span aria-hidden="true" className="text-[11px] font-bold text-slate-500 dark:text-slate-400">{initial}</span>
-        )}
-      </span>
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-[13px] font-semibold text-slate-900 dark:text-slate-100">{title}</p>
-        <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-slate-500 dark:text-slate-500">{caption}</p>
-      </div>
-    </li>
-  );
-}
-
 function GithubSignal({ t, statsState, activityState, projectsState, profileUrl }) {
   const stats = statsState.response?.data;
   const activity = activityState.response?.data;
   const repoItems = projectsState.response?.data?.slice(0, 3) || [];
 
   const isActivityLoading = activityState.status === 'loading';
-  const isStatsLoading = statsState.status === 'loading';
   const isRepoLoading = projectsState.status === 'loading' && repoItems.length === 0;
 
-  // Treat the section holistically: the page should still feel intentional
-  // even if one or more endpoints fail. We only fall back to curated content
-  // when the live activity data is not usable.
   const hasLiveActivity = Boolean(activity?.entries?.length);
   const hasLiveRepos = repoItems.length > 0;
   const isCachedOrStale = Boolean(activity && (activityState.response?.cached || activityState.response?.stale));
-  const showCuratedFallback = !isActivityLoading && !hasLiveActivity;
-
-  const groupedEntries = React.useMemo(() => {
-    if (!activity?.entries) return [];
-    const seen = new Set();
-    return activity.entries
-      .filter((entry) => {
-        const key = `${entry.repoName}-${entry.summary}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .slice(0, 3);
-  }, [activity?.entries]);
+  const showActivityFallback = !isActivityLoading && !activity;
+  const currentYear = new Date().getUTCFullYear();
+  const signalMetrics = buildGithubSignalMetrics({
+    activeProductCount,
+    activityTotals: activity?.totals,
+    publicRepos: stats?.publicRepos,
+    totalContributionsThisYear: stats?.totalContributionsThisYear,
+  });
 
   let badgeLabel;
   let badgeTone;
   if (isActivityLoading) {
     badgeLabel = t('projects.githubBadgeLoading');
     badgeTone = 'loading';
-  } else if (showCuratedFallback) {
+  } else if (showActivityFallback) {
     badgeLabel = t('projects.githubBadgeFallback');
     badgeTone = 'fallback';
   } else if (isCachedOrStale) {
@@ -388,17 +355,26 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
                   <div key={i} className="h-6 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
                 ))}
               </div>
-            ) : showCuratedFallback ? (
-              <ul>
-                {curatedFallbackHighlights.map((item) => (
-                  <FallbackHighlightRow key={item.id} item={item} t={t} />
-                ))}
-              </ul>
+            ) : showActivityFallback ? (
+              <p className="text-[12px] leading-relaxed text-slate-500 dark:text-slate-400">
+                {t('projects.githubActivityUnavailable')}
+              </p>
+            ) : !hasLiveActivity ? (
+              <p className="text-[12px] leading-relaxed text-slate-500 dark:text-slate-400">
+                {t('projects.githubTimelineEmpty')}
+              </p>
             ) : (
               <ul className="space-y-1.5">
-                {groupedEntries.map((entry) => (
+                {activity.entries.map((entry) => (
                   <li key={entry.id} className="flex items-center justify-between gap-3 border-b border-slate-200/70 py-1.5 last:border-0 dark:border-white/[0.04]">
-                    <span className="truncate text-[12px] text-slate-700 dark:text-slate-300">{entry.summary}</span>
+                    <a
+                      href={entry.targetUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="truncate text-[12px] text-slate-700 transition-colors hover:text-cyan-700 dark:text-slate-300 dark:hover:text-cyan-400"
+                    >
+                      {entry.summary}
+                    </a>
                     <span className="shrink-0 text-[9px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-500">
                       {entry.repoName.split('/')[1] || entry.repoName}
                     </span>
@@ -409,7 +385,7 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
           </div>
         </div>
 
-        {/* Card 2 — Selected repositories */}
+        {/* Card 2 — Public code */}
         <div className="rounded-2xl border border-slate-200 bg-white/85 p-4 dark:border-white/5 dark:bg-white/[0.015]">
           <div className="flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
             <FolderGit2 className="h-3 w-3" aria-hidden="true" />
@@ -460,11 +436,9 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
                 })}
               </ul>
             ) : (
-              <ul>
-                {curatedFallbackHighlights.map((item) => (
-                  <FallbackHighlightRow key={item.id} item={item} t={t} />
-                ))}
-              </ul>
+              <p className="text-[12px] leading-relaxed text-slate-500 dark:text-slate-400">
+                {t('projects.githubReposUnavailable')}
+              </p>
             )}
           </div>
         </div>
@@ -476,78 +450,37 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
             {t('projects.githubCardMomentum')}
           </div>
           <div className="mt-3.5">
-            {isActivityLoading ? (
-              <div className="space-y-2">
-                <div className="h-10 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
-                <div className="h-10 w-full animate-pulse rounded-md bg-slate-200/80 dark:bg-white/5" />
-              </div>
-            ) : showCuratedFallback ? (
-              <ul className="space-y-2.5">
-                <li className="flex items-start gap-2.5">
+            <ul className="space-y-2.5">
+              {engineeringMomentumThemeKeys.map((theme) => (
+                <li key={theme} className="flex items-start gap-2.5">
                   <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
                   <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
-                    {t('projects.githubMomentumFallback.releaseHardening')}
+                    {t(`projects.githubMomentumFallback.${theme}`)}
                   </span>
                 </li>
-                <li className="flex items-start gap-2.5">
-                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
-                  <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
-                    {t('projects.githubMomentumFallback.dataCorrectness')}
-                  </span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-slate-500 dark:text-slate-400" aria-hidden="true" />
-                  <span className="text-[12px] leading-snug text-slate-700 dark:text-slate-300">
-                    {t('projects.githubMomentumFallback.systemDesign')}
-                  </span>
-                </li>
-              </ul>
-            ) : (
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
-                    {t('projects.githubMetricEvents')}
-                  </p>
-                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
-                    {activity?.totals?.eventsLast30Days || 0}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
-                    {t('projects.githubMetricActiveDays')}
-                  </p>
-                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
-                    {activity?.totals?.activeDaysLast30Days || 0}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
-                    {t('projects.githubMetricContributions')}
-                  </p>
-                  <p className="mt-1 text-lg font-bold text-slate-950 dark:text-white">
-                    {isStatsLoading ? '...' : (stats?.totalContributionsThisYear ?? '—')}
-                  </p>
-                </div>
-                {activity?.totals?.topRepoName && (
-                  <div className="mt-1">
-                    <p className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
-                      {t('projects.githubMetricTopRepo')}
-                    </p>
-                    <p className="mt-1 truncate text-[12px] font-semibold text-slate-700 dark:text-slate-300">
-                      {activity.totals.topRepoName}
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
+              ))}
+            </ul>
           </div>
         </div>
       </div>
 
+      {signalMetrics.length > 0 && (
+        <dl className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 sm:grid-cols-3 lg:grid-cols-5 dark:border-white/5 dark:bg-white/5">
+          {signalMetrics.map((metric) => (
+            <div key={metric.key} className="bg-white/90 px-3 py-2.5 dark:bg-[#07101f]">
+              <dt className="text-[8px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                {t(`projects.githubMetrics.${metric.key}`, { year: currentYear })}
+              </dt>
+              <dd className="mt-1 text-base font-bold text-slate-950 dark:text-white">{metric.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
       {/* Footer row */}
       <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
         <p className="text-[11px] text-slate-500 dark:text-slate-500">
-          {showCuratedFallback
+          {showActivityFallback
             ? t('projects.githubFallbackNote')
             : isCachedOrStale
             ? t('projects.githubCachedNote')
