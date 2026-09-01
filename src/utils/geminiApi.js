@@ -1,6 +1,8 @@
 /**
  * (/ai-product) Gemini Client Hardening
- * Strictly enforces Knowledge-Base rules on Instruction vs Context separation.
+ * Only the user prompt leaves the browser; the system prompt is owned by
+ * the server proxy (netlify/functions/chat.js) and cannot be influenced
+ * by client code.
  * Target: Low Latency, High Security, Token Efficiency.
  */
 
@@ -9,9 +11,10 @@ const chatCache = new Map();
 const CACHE_TTL = 30 * 60 * 1000; // 30 Minutes
 const MAX_CACHE_SIZE = 100;
 
-export const generateGeminiResponse = async (prompt, systemInstruction = "") => {
-  const cacheKey = `${prompt.trim()}:${systemInstruction.trim()}`;
-  
+export const generateGeminiResponse = async (prompt) => {
+  const context = prompt.trim();
+  const cacheKey = context;
+
   // (/pilot) Check and prune expired cache
   if (chatCache.has(cacheKey)) {
     const { value, expiry } = chatCache.get(cacheKey);
@@ -27,8 +30,7 @@ export const generateGeminiResponse = async (prompt, systemInstruction = "") => 
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ 
-        prompt: prompt.trim(), // Context Layer
-        systemInstruction: systemInstruction.trim() // Instruction Layer
+        prompt: context, // Context Layer only
       }),
     });
 
@@ -61,9 +63,9 @@ export const generateGeminiResponse = async (prompt, systemInstruction = "") => 
  * (/ai-product) SSE/Streaming Fallback
  * Current architecture uses Netlify Function Proxy.
  */
-export const streamGeminiResponse = async (prompt, systemInstruction = "", onChunk) => {
+export const streamGeminiResponse = async (prompt, onChunk) => {
   try {
-    const result = await generateGeminiResponse(prompt, systemInstruction);
+    const result = await generateGeminiResponse(prompt);
     onChunk(result);
   } catch (err) {
     onChunk("The AI is briefly offline. Please try again in 30 seconds.");
