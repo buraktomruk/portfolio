@@ -465,11 +465,11 @@ export function filterAndNormalizeGithubEvents(events) {
 
 export function summarizeGithubActivity(events, { includePrivateAggregates = false } = {}) {
   const contributionEvents = getGithubContributionEvents(events);
-  const publicEvents = contributionEvents.filter((event) => event?.public !== false);
+  const publicEvents = contributionEvents.filter((event) => event?.public === true);
   const normalizedPublicEvents = normalizePublicGithubContributionEvents(publicEvents);
   const recentPublicEvents = normalizedPublicEvents.filter((event) => isEventInsideRecentWindow(event?.createdAt));
   const recentAggregateEvents = contributionEvents.filter((event) => (
-    (includePrivateAggregates || event?.public !== false)
+    (includePrivateAggregates || event?.public === true)
       && isEventInsideRecentWindow(event?.created_at)
   ));
 
@@ -585,7 +585,7 @@ function getGithubContributionEvents(events) {
 
 function normalizePublicGithubContributionEvents(events) {
   return getGithubContributionEvents(events)
-    .filter((event) => event?.public !== false)
+    .filter((event) => event?.public === true)
     .map(normalizeGithubEvent)
     .filter(Boolean)
     .sort((eventA, eventB) => new Date(eventB.createdAt).getTime() - new Date(eventA.createdAt).getTime());

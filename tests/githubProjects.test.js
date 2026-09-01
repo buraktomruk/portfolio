@@ -404,3 +404,78 @@ test('EN/DE translations have matching Public code and momentum copy', () => {
   assert.ok(en.projects.githubLiveNote.includes('Public GitHub activity, complemented by engineering signals'));
   assert.ok(de.projects.githubLiveNote.includes('Öffentliche GitHub-Aktivität, ergänzt durch Engineering-Signale'));
 });
+
+test('strict public===true fail-closed visibility', () => {
+  const sensitiveTitle = 'Sensitive PR Title Should Not Leak';
+  const sensitiveUrl = 'https://github.com/buraktomruk/private-sensitive-repo/pull/999';
+  const sensitiveRepo = 'buraktomruk/private-sensitive-repo';
+  // A public:true event must be emitted
+  const publicEvent = githubEvent({ id: 'pub1', isPublic: true, repoName: 'buraktomruk/portfolio', createdAt: daysAgo(1), payload: { pull_request: { html_url: 'https://github.com/buraktomruk/portfolio/pull/1', title: 'Public PR' } } });
+  const summaryPub = summarizeGithubActivity([publicEvent]);
+  assert.strictEqual(summaryPub.entries.length, 1);
+  assert.strictEqual(summaryPub.entries[0].repoName, 'buraktomruk/portfolio');
+  // public:false must not emit
+  const privateEvent = githubEvent({ id: 'priv1', isPublic: false, repoName: sensitiveRepo, createdAt: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle } } });
+  const summaryPriv = summarizeGithubActivity([privateEvent]);
+  assert.strictEqual(summaryPriv.entries.length, 0);
+  assert.ok(!JSON.stringify(summaryPriv).includes(sensitiveRepo));
+  assert.ok(!JSON.stringify(summaryPriv).includes(sensitiveTitle));
+  // public missing (undefined) must not emit - fail closed
+  const missingEvent = { id: 'miss1', type: 'PullRequestEvent', repo: { name: sensitiveRepo }, created_at: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle } } };
+  // intentionally omit public property
+  const summaryMissing = summarizeGithubActivity([missingEvent]);
+  assert.strictEqual(summaryMissing.entries.length, 0, 'missing public field must not emit');
+  assert.ok(!JSON.stringify(summaryMissing).includes(sensitiveRepo), 'missing visibility leaked repo');
+  assert.ok(!JSON.stringify(summaryMissing).includes(sensitiveTitle), 'missing visibility leaked title');
+  assert.ok(!JSON.stringify(summaryMissing.entries).includes(sensitiveUrl), 'missing visibility leaked URL');
+  // public:null must not emit
+  const nullEvent = { id: 'null1', type: 'PullRequestEvent', public: null, repo: { name: sensitiveRepo }, created_at: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle } } };
+  const summaryNull = summarizeGithubActivity([nullEvent]);
+  assert.strictEqual(summaryNull.entries.length, 0, 'null public must not emit');
+  assert.ok(!JSON.stringify(summaryNull).includes(sensitiveTitle));
+});
+
+test('revalidate privacy with mixed synthetic authenticated data', () => {
+  const sensitiveRepo = 'buraktomruk/private-leak-repo';
+  const sensitiveTitle = 'Leak Title 12345';
+  const sensitiveUrl = 'https://github.com/buraktomruk/private-leak-repo/pull/1';
+  const events = [
+    githubEvent({ id: '1', isPublic: true, repoName: 'buraktomruk/portfolio', createdAt: daysAgo(1), payload: { pull_request: { html_url: 'https://github.com/buraktomruk/portfolio/pull/1', title: 'Public PR Title' } } }),
+    githubEvent({ id: '2', isPublic: false, repoName: sensitiveRepo, createdAt: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle }, commits: [{ message: 'secret commit' }] } }),
+    { id: '3', type: 'PullRequestEvent', repo: { name: sensitiveRepo }, created_at: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle } } }, // missing public
+    { id: '4', type: 'PullRequestEvent', public: null, repo: { name: sensitiveRepo }, created_at: daysAgo(1), payload: { pull_request: { html_url: sensitiveUrl, title: sensitiveTitle } } },
+  ];
+  const summary = summarizeGithubActivity(events, { includePrivateAggregates: true });
+  // Only public:true should appear in entries
+  assert.strictEqual(summary.entries.length, 1);
+  assert.strictEqual(summary.entries[0].repoName, 'buraktomruk/portfolio');
+  const payloadJson = JSON.stringify(summary);
+  assert.ok(!payloadJson.includes(sensitiveRepo), 'private repo leaked in authenticated mixed payload');
+  assert.ok(!payloadJson.includes(sensitiveTitle), 'private title leaked in authenticated mixed payload');
+  assert.ok(!payloadJson.includes('secret commit'), 'commit message leaked');
+  // Aggregates may reflect private count but not identities
+  assert.strictEqual(summary.totals.privateActivityCount, 1);
+  assert.ok(typeof summary.totals.repositoriesTouchedCount === 'number');
+  // No raw payload in entries
+  for (const entry of summary.entries) {
+    assert.ok(!('payload' in entry));
+  }
+});
+
+test('public/auth cache namespaces are separated', async () => {
+  const { getGithubStatsCacheKey } = await import('../src/shared/githubStats.js');
+  // Simulate what createGithubContext does: prefix + mode + fresh/backup
+  const username = 'buraktomruk';
+  const publicFresh = getGithubStatsCacheKey('activity_v3_public_fresh', username);
+  const authFresh = getGithubStatsCacheKey('activity_v3_auth_fresh', username);
+  const publicBackup = getGithubStatsCacheKey('activity_v3_public_backup', username);
+  const authBackup = getGithubStatsCacheKey('activity_v3_auth_backup', username);
+  assert.notStrictEqual(publicFresh, authFresh, 'public vs auth fresh keys must differ');
+  assert.notStrictEqual(publicBackup, authBackup, 'public vs auth backup keys must differ');
+  assert.ok(publicFresh.includes('public'), 'public key should contain mode');
+  assert.ok(authFresh.includes('auth'), 'auth key should contain mode');
+  // Also verify stats keys separate
+  const statsPublic = getGithubStatsCacheKey('stats_public_fresh', username);
+  const statsAuth = getGithubStatsCacheKey('stats_auth_fresh', username);
+  assert.notStrictEqual(statsPublic, statsAuth);
+});

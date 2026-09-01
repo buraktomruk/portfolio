@@ -207,8 +207,9 @@ export function createGithubContext(event, { kind, cacheKeyPrefix, rateLimitPref
   const username = resolveGithubUsername(process.env.GITHUB_USERNAME);
   const token = resolveOptionalGithubToken(process.env.GITHUB_TOKEN);
   const profileUrl = getGithubProfileUrl(username);
-  const freshCacheKey = getGithubStatsCacheKey(`${cacheKeyPrefix}_fresh`, username);
-  const backupCacheKey = getGithubStatsCacheKey(`${cacheKeyPrefix}_backup`, username);
+  const cacheMode = token ? "auth" : "public";
+  const freshCacheKey = getGithubStatsCacheKey(`${cacheKeyPrefix}_${cacheMode}_fresh`, username);
+  const backupCacheKey = getGithubStatsCacheKey(`${cacheKeyPrefix}_${cacheMode}_backup`, username);
   const ratelimit = createRatelimit(rateLimitPrefix);
 
   if (!redisEnabled) {
