@@ -6,18 +6,18 @@
     "education": "Ausbildung"
   },
   "hero": {
-    "role": "Softwareentwickler",
+    "role": "Senior Software Engineer",
     "greeting": "Hallo, ich bin",
-    "tagline1": "Ein Full-Stack-Entwickler, spezialisiert auf skalierbare Architekturen und Performance-Optimierung. Ansässig in",
+    "tagline1": "Frontend-fokussierter Software Engineer für skalierbare Produktionsanwendungen mit React, TypeScript und Next.js. Ansässig in",
     "tagline2": "München, Deutschland",
-    "download_resume": "Lebenslauf herunterladen",
+    "download_resume": "Lebenslauf ansehen",
     "check_thesis": "Masterarbeit ansehen",
     "connect": "Kontaktieren Sie mich"
   },
   "about": {
     "title": "Über mich",
-    "p1": "Mit über 5 Jahren Erfahrung als Full-Stack-Entwickler bin ich auf den Aufbau skalierbarer Architekturen und die Optimierung der Performance spezialisiert, mit einem starken Fokus auf Frontend-Technologien.",
-    "p2": "Ich löse leidenschaftlich gerne komplexe technische Herausforderungen und betreue Entwickler, um die technische Umsetzung an den Geschäftszielen auszurichten. Mein Ziel ist es, Anwendungen zu schaffen, die die Benutzererfahrung ve Effizienz durch kollaborative Führung und innovative Problemlösung verbessern.",
+    "p1": "Mit 6+ Jahren Erfahrung entwickle ich Produktionssoftware mit starkem Frontend-Fokus, spezialisiert auf React, TypeScript, Frontend-Architektur und Performance.",
+    "p2": "Meine Arbeit umfasst auch Testing, Observability und zuverlässige Auslieferung, mit Erfahrung in technischer Verantwortung, Mentoring von Entwickler:innen und der Weiterentwicklung von Engineering-Praktiken.",
     "location_title": "Standort",
     "location": "München, Deutschland",
     "languages_title": "Sprachen",
