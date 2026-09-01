@@ -6,18 +6,18 @@
     "education": "Education"
   },
   "hero": {
-    "role": "Software Engineer",
+    "role": "Senior Software Engineer",
     "greeting": "Hello, I'm",
-    "tagline1": "A full-stack developer specializing in scalable architectures and performance optimization. Based in",
+    "tagline1": "Frontend-focused software engineer building scalable production applications with React, TypeScript and Next.js. Based in",
     "tagline2": "Munich, Germany",
-    "download_resume": "Download My Resume",
-    "check_thesis": "Check Out My Master Thesis",
+    "download_resume": "View Resume",
+    "check_thesis": "View My Master's Thesis",
     "connect": "Connect With Me"
   },
   "about": {
     "title": "About Me",
-    "p1": "With over 5 years of experience as a full-stack developer, I specialize in building scalable architectures and optimizing performance, with a strong focus on frontend technologies.",
-    "p2": "I am passionate about solving complex technical challenges and mentoring developers to align technical execution with business outcomes. My goal is to create applications that enhance user experience and efficiency through collaborative leadership and innovative problem-solving.",
+    "p1": "With 6+ years of experience, I build production software with a strong frontend focus, specializing in React, TypeScript, frontend architecture and performance.",
+    "p2": "My work also spans testing, observability and reliable delivery, with experience in technical ownership, mentoring developers and improving engineering practices.",
     "location_title": "Location",
     "location": "Munich, Germany",
     "languages_title": "Languages",
