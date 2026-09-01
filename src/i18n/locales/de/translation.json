@@ -104,7 +104,7 @@
           "Gast-Workspace & Auth-Sicherheit",
           "PWA-/iOS-Wiederherstellung"
         ],
-        "readinessNote": "Private Beta · Gast-Workspace, ohne Konto und ohne Bankzugang"
+        "readinessNote": "Private Beta · Gast-Workspace ohne Konto oder Bankverbindung nutzbar"
       },
       "fitvalue": {
         "typeLabel": "MITGLIEDSCHAFTSWERT · WEB-APP",
@@ -147,7 +147,7 @@
     "githubCardMomentum": "Build-Momentum",
     "githubLiveNote": "Live-Engineering-Signal aus öffentlichen GitHub-Ereignissen.",
     "githubCachedNote": "Aktuellster zwischengespeicherter Stand der öffentlichen GitHub-Aktivität.",
-    "githubFallbackNote": "Live-GitHub-Daten sind vorübergehend nicht verfügbar. Stattdessen werden kuratierte öffentliche Engineering-Highlights gezeigt.",
+    "githubFallbackNote": "Live-GitHub-Daten sind vorübergehend nicht verfügbar. Stattdessen werden kuratierte Engineering-Highlights aus ausgewählten Projekten gezeigt.",
     "githubFallback": {
       "coefpulse": {
         "title": "CoefPulse — geprüfte Datenpipeline",
@@ -171,7 +171,7 @@
     "hideProducts": "Projekte ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "Vier Produkte in öffentlicher Nutzung, dazu ein Pre-Beta-Build",
+    "summaryProducts": "Vier aktive Produkte in unterschiedlichen Reifephasen, dazu ein Pre-Beta-Build",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",

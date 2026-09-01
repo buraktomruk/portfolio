@@ -104,7 +104,7 @@
           "Guest workspace & auth safety",
           "PWA / iOS recovery"
         ],
-        "readinessNote": "Private beta · guest workspace, no account and no bank link"
+        "readinessNote": "Private beta · guest workspace available without an account or bank connection"
       },
       "fitvalue": {
         "typeLabel": "MEMBERSHIP VALUE · WEB APP",
@@ -147,7 +147,7 @@
     "githubCardMomentum": "Build momentum",
     "githubLiveNote": "Live engineering signal pulled from public GitHub events.",
     "githubCachedNote": "Showing the most recent cached snapshot of public GitHub activity.",
-    "githubFallbackNote": "Live GitHub data is temporarily unavailable. Showing curated public engineering highlights.",
+    "githubFallbackNote": "Live GitHub data is temporarily unavailable. Showing curated engineering highlights from selected projects.",
     "githubFallback": {
       "coefpulse": {
         "title": "CoefPulse — verified data pipeline",
@@ -171,7 +171,7 @@
     "hideProducts": "Hide projects",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "Four products in public use, plus one pre-beta build",
+    "summaryProducts": "Four active products at different maturity stages, plus one pre-beta build",
     "summaryGithub": "Recent public activity and selected repositories",
     "repoTitle": "Selected Repositories",
     "viewAllRepos": "View all repositories",
