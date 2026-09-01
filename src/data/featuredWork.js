@@ -33,8 +33,8 @@ export const featuredWorkItems = [
   {
     id: "subtrackerrr",
     title: "SubTracker",
-    statusKey: "publicBeta",
-    ctaKey: "projects.ctaBeta",
+    statusKey: "privateBeta",
+    ctaKey: "projects.ctaApp",
     accent: "cyan",
     logoSrc: "/project-previews/subtrackerrr-logo.png",
     logoTileClass: "bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.24),_transparent_58%),linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.92))]",
@@ -69,5 +69,31 @@ export const secondaryWorkItems = [
     logoClass: "h-7 w-7 rounded-md object-contain",
     demoUrl: "https://outthereee.netlify.app/",
     repoUrl: null,
+  },
+];
+
+// Curated public-engineering highlights surfaced when live GitHub data is
+// unavailable (no token, rate-limited, network error, cold cache). These are
+// engineering signals, not evidence that a build is production-ready. All five
+// product repos are private, so they never appear in public GitHub events —
+// this list is the only place they surface.
+export const curatedFallbackHighlights = [
+  {
+    id: "coefpulse",
+    titleKey: "projects.githubFallback.coefpulse.title",
+    captionKey: "projects.githubFallback.coefpulse.caption",
+    logoSrc: "/project-previews/coefpulse-logo.png",
+  },
+  {
+    id: "magnetmiles",
+    titleKey: "projects.githubFallback.magnetmiles.title",
+    captionKey: "projects.githubFallback.magnetmiles.caption",
+    logoSrc: "/project-previews/magnetmiles-logo.svg",
+  },
+  {
+    id: "subtrackerrr",
+    titleKey: "projects.githubFallback.subtrackerrr.title",
+    captionKey: "projects.githubFallback.subtrackerrr.caption",
+    logoSrc: "/project-previews/subtrackerrr-logo.png",
   },
 ];

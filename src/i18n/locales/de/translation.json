@@ -65,13 +65,13 @@
     "caseStudyInProgress": "Wo die Projekte wirklich stehen",
     "previewBuild": "Build ansehen",
     "ctaLiveApp": "Live-App öffnen",
-    "ctaBeta": "Beta öffnen",
+    "ctaApp": "App öffnen",
     "ctaPreview": "Vorschau ansehen",
     "moreWorkTitle": "Ebenfalls in Arbeit",
     "statusLabels": {
       "publicWebMvp": "Öffentliches Web-MVP",
       "productionMvp": "Produktives MVP",
-      "publicBeta": "Offene Beta",
+      "privateBeta": "Private Beta",
       "inProduction": "Im Produktiveinsatz",
       "preBeta": "Pre-Beta"
     },
@@ -84,7 +84,7 @@
           "Local-First-Speicherung",
           "Bildnachweise & Barrierefreiheit"
         ],
-        "readinessNote": "Live im Web · optionale Cloud-Sync noch nicht ausgerollt"
+        "readinessNote": "Local-First auf dem Gerät, mit optionaler Google-Sync"
       },
       "coefpulse": {
         "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
@@ -104,7 +104,7 @@
           "Gast-Workspace & Auth-Sicherheit",
           "PWA-/iOS-Wiederherstellung"
         ],
-        "readinessNote": "Offene Beta · Gast-Workspace, ohne Konto und ohne Bankzugang"
+        "readinessNote": "Private Beta · Gast-Workspace, ohne Konto und ohne Bankzugang"
       },
       "fitvalue": {
         "typeLabel": "MITGLIEDSCHAFTSWERT · WEB-APP",
@@ -114,7 +114,7 @@
           "Gastdaten bleiben erhalten",
           "Nachträgliche Besuchskorrektur"
         ],
-        "readinessNote": "Live und täglich im Einsatz · Korrektheit wird weiter gehärtet"
+        "readinessNote": "Produktiver Live-Build · Korrektheit wird weiter gehärtet"
       },
       "outthere": {
         "typeLabel": "TAGESAUSFLÜGE · WEB-APP",

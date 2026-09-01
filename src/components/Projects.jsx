@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Github, ShieldCheck, Sparkles, Star } from 'lucide-react';
-import { featuredWorkItems, secondaryWorkItems } from '../data/featuredWork.js';
+import { curatedFallbackHighlights, featuredWorkItems, secondaryWorkItems } from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
   getGithubProfileUrl,
@@ -263,29 +263,6 @@ function SectionHeader({
   );
 }
 
-// Curated public-engineering highlights surfaced when live GitHub data is
-// unavailable (no token, rate-limited, network error, cold cache, etc.). These
-// are intentionally framed as engineering signals — not shipped products.
-const CURATED_FALLBACK_HIGHLIGHTS = [
-  {
-    id: 'coefpulse',
-    titleKey: 'projects.githubFallback.coefpulse.title',
-    captionKey: 'projects.githubFallback.coefpulse.caption',
-    logoSrc: '/project-previews/coefpulse-logo.png',
-  },
-  {
-    id: 'magnetmiles',
-    titleKey: 'projects.githubFallback.magnetmiles.title',
-    captionKey: 'projects.githubFallback.magnetmiles.caption',
-    logoSrc: '/project-previews/magnetmiles-logo.svg',
-  },
-  {
-    id: 'subtrackerrr',
-    titleKey: 'projects.githubFallback.subtrackerrr.title',
-    captionKey: 'projects.githubFallback.subtrackerrr.caption',
-    logoSrc: '/project-previews/subtrackerrr-logo.png',
-  },
-];
 
 function FallbackHighlightRow({ item, t }) {
   const [imageFailed, setImageFailed] = React.useState(false);
@@ -413,7 +390,7 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
               </div>
             ) : showCuratedFallback ? (
               <ul>
-                {CURATED_FALLBACK_HIGHLIGHTS.map((item) => (
+                {curatedFallbackHighlights.map((item) => (
                   <FallbackHighlightRow key={item.id} item={item} t={t} />
                 ))}
               </ul>
@@ -484,7 +461,7 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
               </ul>
             ) : (
               <ul>
-                {CURATED_FALLBACK_HIGHLIGHTS.map((item) => (
+                {curatedFallbackHighlights.map((item) => (
                   <FallbackHighlightRow key={item.id} item={item} t={t} />
                 ))}
               </ul>

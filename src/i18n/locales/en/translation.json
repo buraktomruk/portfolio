@@ -65,13 +65,13 @@
     "caseStudyInProgress": "Where each build actually stands",
     "previewBuild": "Preview build",
     "ctaLiveApp": "Open live app",
-    "ctaBeta": "Open beta",
+    "ctaApp": "Open app",
     "ctaPreview": "View preview",
     "moreWorkTitle": "Also in the workshop",
     "statusLabels": {
       "publicWebMvp": "Public web MVP",
       "productionMvp": "Production MVP",
-      "publicBeta": "Public beta",
+      "privateBeta": "Private beta",
       "inProduction": "In production",
       "preBeta": "Pre-beta"
     },
@@ -84,7 +84,7 @@
           "Local-first storage",
           "Attribution & accessibility"
         ],
-        "readinessNote": "Live web build · optional cloud sync not deployed yet"
+        "readinessNote": "Local-first on device, with optional Google sync"
       },
       "coefpulse": {
         "typeLabel": "UEFA COEFFICIENT MODELING · WEB APP",
@@ -104,7 +104,7 @@
           "Guest workspace & auth safety",
           "PWA / iOS recovery"
         ],
-        "readinessNote": "Open beta · guest workspace, no account and no bank link"
+        "readinessNote": "Private beta · guest workspace, no account and no bank link"
       },
       "fitvalue": {
         "typeLabel": "MEMBERSHIP VALUE · WEB APP",
@@ -114,7 +114,7 @@
           "Guest persistence",
           "Attendance correction"
         ],
-        "readinessNote": "Live and in daily use · correctness hardening ongoing"
+        "readinessNote": "Live production build · correctness hardening ongoing"
       },
       "outthere": {
         "typeLabel": "DAY-TRIP PLANNING · WEB APP",

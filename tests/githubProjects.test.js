@@ -187,10 +187,8 @@ const REQUIRED_GITHUB_FALLBACK_KEYS = [
   'githubFallbackNote',
 ];
 
-// Must stay in sync with CURATED_FALLBACK_HIGHLIGHTS in src/components/Projects.jsx.
-const CURATED_GITHUB_FALLBACK_IDS = ['coefpulse', 'magnetmiles', 'subtrackerrr'];
-
-test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
+test('GitHub Activity fallback i18n keys exist in EN and DE', async () => {
+  const { curatedFallbackHighlights } = await import('../src/data/featuredWork.js');
   for (const lang of ['en', 'de']) {
     const projects = loadLocale(lang).projects;
     for (const key of REQUIRED_GITHUB_FALLBACK_KEYS) {
@@ -199,9 +197,11 @@ test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
         `Missing or empty i18n key projects.${key} in ${lang}`,
       );
     }
-    for (const id of CURATED_GITHUB_FALLBACK_IDS) {
+    for (const { id, titleKey, captionKey } of curatedFallbackHighlights) {
       assert.ok(projects.githubFallback?.[id]?.title, `Missing githubFallback.${id}.title in ${lang}`);
       assert.ok(projects.githubFallback?.[id]?.caption, `Missing githubFallback.${id}.caption in ${lang}`);
+      assert.strictEqual(titleKey, `projects.githubFallback.${id}.title`);
+      assert.strictEqual(captionKey, `projects.githubFallback.${id}.caption`);
     }
     assert.ok(projects.githubMomentumFallback?.releaseHardening, `Missing githubMomentumFallback.releaseHardening in ${lang}`);
     assert.ok(projects.githubMomentumFallback?.dataCorrectness, `Missing githubMomentumFallback.dataCorrectness in ${lang}`);
@@ -209,7 +209,8 @@ test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
   }
 });
 
-test('GitHub Activity fallback note never overstates production readiness', () => {
+test('GitHub Activity fallback note never overstates production readiness', async () => {
+  const { curatedFallbackHighlights } = await import('../src/data/featuredWork.js');
   const forbiddenSubstrings = [
     'production-ready',
     'production ready',
@@ -224,7 +225,7 @@ test('GitHub Activity fallback note never overstates production readiness', () =
       projects.githubFallbackNote,
       projects.githubLiveNote,
       projects.githubCachedNote,
-      ...CURATED_GITHUB_FALLBACK_IDS.map((id) => projects.githubFallback?.[id]?.caption),
+      ...curatedFallbackHighlights.map(({ id }) => projects.githubFallback?.[id]?.caption),
       projects.githubMomentumFallback?.releaseHardening,
       projects.githubMomentumFallback?.dataCorrectness,
       projects.githubMomentumFallback?.systemDesign,
