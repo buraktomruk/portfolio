@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Github, ShieldCheck, Sparkles, Star } from 'lucide-react';
-import { featuredWorkItems } from '../data/featuredWork.js';
+import { featuredWorkItems, secondaryWorkItems } from '../data/featuredWork.js';
 import { useGithubResource } from '../hooks/useGithubResource.js';
 import {
   getGithubProfileUrl,
@@ -31,6 +31,16 @@ const LANGUAGE_COLORS = {
 };
 
 const ACCENT_STYLES = {
+  amber: {
+    card: 'from-amber-500/8 via-transparent to-transparent dark:from-amber-500/10 dark:via-transparent dark:to-transparent',
+    badge: 'bg-amber-500/10 text-amber-700 ring-amber-500/20 dark:text-amber-300',
+    accentText: 'text-amber-700 dark:text-amber-400',
+    chip: 'border-amber-500/15 bg-amber-500/10 text-amber-800 dark:border-amber-400/15 dark:bg-amber-400/10 dark:text-amber-100',
+    topLine: 'from-transparent via-amber-500/35 to-transparent dark:via-amber-400/40',
+    hoverText: 'hover:text-amber-800 dark:hover:text-amber-300',
+    hoverBorder: 'group-hover/link:border-amber-500/60 dark:group-hover/link:border-amber-300/60',
+    logoRing: 'ring-amber-500/15 dark:ring-amber-400/20',
+  },
   emerald: {
     card: 'from-emerald-500/8 via-transparent to-transparent dark:from-emerald-500/10 dark:via-transparent dark:to-transparent',
     badge: 'bg-emerald-500/10 text-emerald-700 ring-emerald-500/20 dark:text-emerald-300',
@@ -163,7 +173,7 @@ function ShowcaseCard({ item, t }) {
               className={`group/link inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-2 text-[11px] font-semibold text-slate-600 transition-colors dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 ${accentStyles.hoverText}`}
             >
               <span className={`border-b border-dashed border-slate-400 pb-px transition-colors dark:border-slate-600 ${accentStyles.hoverBorder}`}>
-                {t('projects.previewBuild')}
+                {t(item.ctaKey || 'projects.previewBuild')}
               </span>
               <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
@@ -171,6 +181,52 @@ function ShowcaseCard({ item, t }) {
         </div>
       </div>
     </article>
+  );
+}
+
+function SecondaryWorkRow({ item, t }) {
+  const accentStyles = getAccentStyles(item.accent);
+  const statusLabel = t(`projects.statusLabels.${item.statusKey}`, { defaultValue: '' });
+  const summary = t(`projects.caseStudies.${item.id}.summary`, { defaultValue: '' });
+  const readinessNote = t(`projects.caseStudies.${item.id}.readinessNote`, { defaultValue: '' });
+
+  return (
+    <li className="flex flex-wrap items-start gap-x-4 gap-y-3 border-b border-slate-200/70 py-4 first:pt-0 last:border-0 last:pb-0 dark:border-white/[0.04]">
+      {item.logoSrc && (
+        <span className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 ring-1 dark:bg-slate-950/80 ${accentStyles.logoRing}`}>
+          <img src={item.logoSrc} alt="" loading="lazy" className={item.logoClass || 'h-7 w-7 object-contain'} />
+        </span>
+      )}
+      <div className="min-w-[14rem] flex-1">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          <h4 className="text-base font-bold text-slate-950 dark:text-white">{item.title}</h4>
+          {statusLabel && (
+            <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.18em] ring-1 ${accentStyles.badge}`}>
+              {statusLabel}
+            </span>
+          )}
+        </div>
+        {summary && (
+          <p className="mt-2 max-w-[52ch] text-sm leading-6 text-slate-600 dark:text-slate-300">{summary}</p>
+        )}
+        {readinessNote && (
+          <p className="mt-2 text-[11px] font-medium text-slate-500 dark:text-slate-400">{readinessNote}</p>
+        )}
+      </div>
+      {item.demoUrl && (
+        <a
+          href={item.demoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`group/link mt-0.5 inline-flex shrink-0 items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50/90 px-3 py-2 text-[11px] font-semibold text-slate-600 transition-colors dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-300 ${accentStyles.hoverText}`}
+        >
+          <span className={`border-b border-dashed border-slate-400 pb-px transition-colors dark:border-slate-600 ${accentStyles.hoverBorder}`}>
+            {t(item.ctaKey || 'projects.previewBuild')}
+          </span>
+          <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+        </a>
+      )}
+    </li>
   );
 }
 
@@ -212,22 +268,22 @@ function SectionHeader({
 // are intentionally framed as engineering signals — not shipped products.
 const CURATED_FALLBACK_HIGHLIGHTS = [
   {
+    id: 'coefpulse',
+    titleKey: 'projects.githubFallback.coefpulse.title',
+    captionKey: 'projects.githubFallback.coefpulse.caption',
+    logoSrc: '/project-previews/coefpulse-logo.png',
+  },
+  {
+    id: 'magnetmiles',
+    titleKey: 'projects.githubFallback.magnetmiles.title',
+    captionKey: 'projects.githubFallback.magnetmiles.caption',
+    logoSrc: '/project-previews/magnetmiles-logo.svg',
+  },
+  {
     id: 'subtrackerrr',
     titleKey: 'projects.githubFallback.subtrackerrr.title',
     captionKey: 'projects.githubFallback.subtrackerrr.caption',
     logoSrc: '/project-previews/subtrackerrr-logo.png',
-  },
-  {
-    id: 'bookmarkanalyzer',
-    titleKey: 'projects.githubFallback.bookmarkanalyzer.title',
-    captionKey: 'projects.githubFallback.bookmarkanalyzer.caption',
-    logoSrc: '/project-previews/bookmarkanalyzer-logo.svg',
-  },
-  {
-    id: 'ritualgymtracker',
-    titleKey: 'projects.githubFallback.ritualgymtracker.title',
-    captionKey: 'projects.githubFallback.ritualgymtracker.caption',
-    logoSrc: '/project-previews/ritualgymtracker-logo.png',
   },
 ];
 
@@ -590,6 +646,18 @@ export default function Projects() {
                   <ShowcaseCard key={item.id} item={item} t={t} />
                 ))}
               </div>
+              {secondaryWorkItems.length > 0 && (
+                <div className="mt-6 rounded-[1.75rem] border border-slate-200/80 bg-white/70 p-6 sm:p-7 dark:border-white/10 dark:bg-slate-900/40">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+                    {t('projects.moreWorkTitle')}
+                  </p>
+                  <ul className="mt-5">
+                    {secondaryWorkItems.map((item) => (
+                      <SecondaryWorkRow key={item.id} item={item} t={t} />
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>

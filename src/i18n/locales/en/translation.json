@@ -59,57 +59,72 @@
   },
   "projects": {
     "title": "Side Projects",
-    "subtitle": "Practical builds focused on architecture, reliability, data quality, and product-readiness tradeoffs.",
+    "subtitle": "Independent products I designed, built and still maintain — each shown at the maturity it has actually reached.",
     "showcaseTitle": "Selected Builds",
-    "showcaseDescription": "Compact product snapshots of side projects shared as public preview builds, with the engineering constraints and tradeoffs foregrounded over launch polish.",
-    "caseStudyInProgress": "Case study in progress",
+    "showcaseDescription": "Four products at four different stages. The badge on each card is the real state of the build, not a launch label.",
+    "caseStudyInProgress": "Where each build actually stands",
     "previewBuild": "Preview build",
+    "ctaLiveApp": "Open live app",
+    "ctaBeta": "Open beta",
+    "ctaPreview": "View preview",
+    "moreWorkTitle": "Also in the workshop",
     "statusLabels": {
-      "publicPreview": "Public preview",
-      "exploratoryBuild": "Exploratory build",
-      "previewBuild": "Preview build",
-      "inProgress": "In progress"
+      "publicWebMvp": "Public web MVP",
+      "productionMvp": "Production MVP",
+      "publicBeta": "Public beta",
+      "inProduction": "In production",
+      "preBeta": "Pre-beta"
     },
     "caseStudies": {
-      "ritualgymtracker": {
-        "typeLabel": "WORKOUT TRACKING · WIP CASE STUDY",
-        "summary": "Workout tracking case study focused on offline sync, guest migration, streak correctness, and timezone-safe analytics.",
+      "magnetmiles": {
+        "typeLabel": "TRAVEL MEMORIES · WEB APP",
+        "summary": "Travel memories collected as visual fridge magnets, maps, passport stamps and shareable recaps.",
         "highlights": [
-          "Offline sync",
-          "Guest migration",
-          "Timezone-safe analytics"
+          "251 curated city images",
+          "Local-first storage",
+          "Attribution & accessibility"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Live web build · optional cloud sync not deployed yet"
       },
-      "bookmarkanalyzer": {
-        "typeLabel": "BOOKMARK INTELLIGENCE · WIP CASE STUDY",
-        "summary": "Bookmark workflow case study focused on local-first storage, AI enrichment, SSRF defense, and reader sanitization.",
+      "coefpulse": {
+        "typeLabel": "UEFA COEFFICIENT MODELING · WEB APP",
+        "summary": "Shows how each European result moves a country's UEFA coefficient and its place in the ranking race.",
         "highlights": [
-          "Local-first",
-          "AI enrichment",
-          "SSRF defense"
+          "All 55 UEFA associations",
+          "Annex D scenario modeling",
+          "Verified snapshot gating"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Deterministic calculator on verified static data — not live scores"
       },
       "subtrackerrr": {
-        "typeLabel": "SUBSCRIPTION TRACKING · WIP CASE STUDY",
-        "summary": "Subscription tracking case study focused on billing correctness, Firebase auth safety, and persistence integrity.",
+        "typeLabel": "RECURRING SPEND · WEB APP",
+        "summary": "Recurring-spend workspace built around one question: what renews next, and what is worth cancelling.",
         "highlights": [
-          "Billing correctness",
-          "Auth safety",
-          "Persistence integrity"
+          "Renewal-date correctness",
+          "Guest workspace & auth safety",
+          "PWA / iOS recovery"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Open beta · guest workspace, no account and no bank link"
       },
-      "fintrackerrr": {
-        "typeLabel": "PORTFOLIO ANALYTICS · WIP CASE STUDY",
-        "summary": "Portfolio analytics case study focused on normalized asset data, dividend insights, and large-table UI performance.",
+      "fitvalue": {
+        "typeLabel": "MEMBERSHIP VALUE · WEB APP",
+        "summary": "Turns gym attendance and membership cost into a straight answer: keep it, downgrade it, or cancel it.",
         "highlights": [
-          "Data normalization",
-          "Dividend insights",
-          "UI performance"
+          "Cost-per-visit analytics",
+          "Guest persistence",
+          "Attendance correction"
         ],
-        "readinessNote": "Public preview · not production-ready"
+        "readinessNote": "Live and in daily use · correctness hardening ongoing"
+      },
+      "outthere": {
+        "typeLabel": "DAY-TRIP PLANNING · WEB APP",
+        "summary": "Decision-first planner for a same-day trip that still gets you home by the time you set.",
+        "highlights": [
+          "Time-window correctness",
+          "Decision-first ranking",
+          "Consent-gated validation"
+        ],
+        "readinessNote": "Pre-beta · Munich only, built-in trip data, no live routing"
       }
     },
     "githubSignalTitle": "GitHub Activity",
@@ -134,29 +149,29 @@
     "githubCachedNote": "Showing the most recent cached snapshot of public GitHub activity.",
     "githubFallbackNote": "Live GitHub data is temporarily unavailable. Showing curated public engineering highlights.",
     "githubFallback": {
+      "coefpulse": {
+        "title": "CoefPulse — verified data pipeline",
+        "caption": "Coefficient modeling across 55 associations, with snapshot validation and freshness gates."
+      },
+      "magnetmiles": {
+        "title": "MagnetMiles — local-first product work",
+        "caption": "251 curated city images, offline-capable board and map, licensed image attribution."
+      },
       "subtrackerrr": {
-        "title": "SubTracker — release-readiness audit",
-        "caption": "Subscription tracking case study: financial correctness, auth safety, persistence integrity."
-      },
-      "bookmarkanalyzer": {
-        "title": "BookmarkAI — security & data correctness",
-        "caption": "Bookmark workflow case study: SSRF defense, sanitized reader flow, AI enrichment guardrails."
-      },
-      "ritualgymtracker": {
-        "title": "Ritual Gym Tracker — system-design work",
-        "caption": "Offline-first sync, guest-to-account migration, DST-safe streak analytics."
+        "title": "SubTracker — recurring-money correctness",
+        "caption": "Renewal-date anchoring, guest-to-account safety, installed-app runtime recovery."
       }
     },
     "githubMomentumFallback": {
-      "releaseHardening": "Release-hardening and production-readiness cleanup across side projects.",
-      "dataCorrectness": "Security review and data-correctness audits on financial and user data flows.",
-      "systemDesign": "Active system-design iteration on offline-first and local-first builds."
+      "releaseHardening": "Release hardening and installed-app runtime recovery across the live builds.",
+      "dataCorrectness": "Verified-source gating and recurring-money correctness audits.",
+      "systemDesign": "Local-first and offline-capable system design across the product work."
     },
-    "showProducts": "Show case studies",
-    "hideProducts": "Hide case studies",
+    "showProducts": "Show projects",
+    "hideProducts": "Hide projects",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "4 side projects presented as public preview engineering case studies",
+    "summaryProducts": "Four products in public use, plus one pre-beta build",
     "summaryGithub": "Recent public activity and selected repositories",
     "repoTitle": "Selected Repositories",
     "viewAllRepos": "View all repositories",
