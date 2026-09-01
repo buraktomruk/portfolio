@@ -80,6 +80,20 @@ test('handler rejects oversized payloads before parsing', async () => {
   assert.strictEqual(res.statusCode, 413);
 });
 
+test('handler measures body limit in UTF-8 bytes, not UTF-16 code units', async () => {
+  // JS string length stays at/below MAX_BODY_BYTES, but multibyte characters
+  // push the real UTF-8 size over the limit.
+  const multibyteBody = 'x'.repeat(2000) + 'é'.repeat(MAX_BODY_BYTES - 2000);
+  assert.ok(multibyteBody.length <= MAX_BODY_BYTES, 'string length must not trip a naive check');
+  assert.ok(Buffer.byteLength(multibyteBody, 'utf8') > MAX_BODY_BYTES, 'utf8 bytes must exceed the limit');
+  const res = await handler({
+    httpMethod: 'POST',
+    headers: {},
+    body: multibyteBody,
+  });
+  assert.strictEqual(res.statusCode, 413);
+});
+
 test('handler rejects invalid prompt or missing server credential', async () => {
   const invalidPrompt = await handler({
     httpMethod: 'POST',

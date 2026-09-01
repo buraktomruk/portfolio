@@ -122,8 +122,9 @@ export const handler = async (event) => {
     return jsonResponse(403, { error: 'Access Denied: Malformed Request' });
   }
 
-  // 2. (/privacy) Reject oversized payloads before parsing
-  if (event.body.length > MAX_BODY_BYTES) {
+  // 2. (/privacy) Reject oversized payloads before parsing (UTF-8 bytes,
+  // not UTF-16 code units)
+  if (Buffer.byteLength(event.body, "utf8") > MAX_BODY_BYTES) {
     return jsonResponse(413, { error: 'Request Entity Too Large' });
   }
 
