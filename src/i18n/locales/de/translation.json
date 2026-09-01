@@ -8,7 +8,7 @@
   "hero": {
     "role": "Senior Software Engineer",
     "greeting": "Hallo, ich bin",
-    "tagline1": "Frontend-fokussierter Software Engineer für skalierbare Produktionsanwendungen mit React, TypeScript und Next.js. Ansässig in",
+    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus für skalierbare Produktionsanwendungen mit React, TypeScript und Next.js. Ansässig in",
     "tagline2": "München, Deutschland",
     "download_resume": "Lebenslauf ansehen",
     "check_thesis": "Masterarbeit ansehen",
@@ -16,7 +16,7 @@
   },
   "about": {
     "title": "Über mich",
-    "p1": "Mit mehr als sechs Jahren Erfahrung entwickle ich Produktionssoftware mit starkem Frontend-Fokus, spezialisiert auf React, TypeScript, Frontend-Architektur und Performance.",
+    "p1": "Als Full-Stack-Entwickler mit Frontend-Fokus entwickle ich seit mehr als sechs Jahren skalierbare Produktionsanwendungen über Frontend- und Backend-Systeme hinweg, mit Schwerpunkt auf React, TypeScript, Frontend-Architektur und Performance.",
     "p2": "Meine Arbeit umfasst auch Testing, Observability und zuverlässige Auslieferung, mit Erfahrung in technischer Verantwortung, Mentoring von Entwickler:innen und der Weiterentwicklung von Engineering-Praktiken.",
     "location_title": "Standort",
     "location": "München, Deutschland",
