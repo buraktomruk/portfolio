@@ -19,8 +19,8 @@ Languages: English (Full Professional), German (Intermediate), Turkish (Native).
 
 export const SKILLS = {
   frontend: ["React", "React Native", "Next.js", "Gatsby.js", "TypeScript", "JavaScript", "HTML", "CSS", "Sass", "Tailwind CSS", "Redux", "Zustand", "Vue.js", "AngularJS", "Angular 2+", "Storybook"],
-  backend: ["Node.js", "Express.js", "Nest.js", "Java", "Spring", "GraphQL", "Python", "PostgreSQL", "MongoDB", "NoSQL", "ElasticSearch"],
-  devops: ["Docker", "Azure DevOps", "Jenkins", "Gitlab CI", "Git", "Gerrit", "Webpack"],
+  backend: ["Node.js", "Express.js", "NestJS", "Java", "Spring", "GraphQL", "Python", "PostgreSQL", "MongoDB", "NoSQL", "Elasticsearch"],
+  devops: ["Docker", "Azure DevOps", "Jenkins", "GitLab CI", "Git", "Gerrit", "Webpack"],
   testing: ["Jest", "Playwright", "Cypress", "Detox"],
   other: ["Sentry", "SonarQube", "VS Code Extension Development", "Claude Code", "Codex"]
 };
