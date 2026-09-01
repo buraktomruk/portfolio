@@ -187,7 +187,8 @@ const REQUIRED_GITHUB_FALLBACK_KEYS = [
   'githubFallbackNote',
 ];
 
-test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
+test('GitHub Activity fallback i18n keys exist in EN and DE', async () => {
+  const { curatedFallbackHighlights } = await import('../src/data/featuredWork.js');
   for (const lang of ['en', 'de']) {
     const projects = loadLocale(lang).projects;
     for (const key of REQUIRED_GITHUB_FALLBACK_KEYS) {
@@ -196,16 +197,20 @@ test('GitHub Activity fallback i18n keys exist in EN and DE', () => {
         `Missing or empty i18n key projects.${key} in ${lang}`,
       );
     }
-    assert.ok(projects.githubFallback?.subtrackerrr?.title, `Missing githubFallback.subtrackerrr.title in ${lang}`);
-    assert.ok(projects.githubFallback?.bookmarkanalyzer?.title, `Missing githubFallback.bookmarkanalyzer.title in ${lang}`);
-    assert.ok(projects.githubFallback?.ritualgymtracker?.title, `Missing githubFallback.ritualgymtracker.title in ${lang}`);
+    for (const { id, titleKey, captionKey } of curatedFallbackHighlights) {
+      assert.ok(projects.githubFallback?.[id]?.title, `Missing githubFallback.${id}.title in ${lang}`);
+      assert.ok(projects.githubFallback?.[id]?.caption, `Missing githubFallback.${id}.caption in ${lang}`);
+      assert.strictEqual(titleKey, `projects.githubFallback.${id}.title`);
+      assert.strictEqual(captionKey, `projects.githubFallback.${id}.caption`);
+    }
     assert.ok(projects.githubMomentumFallback?.releaseHardening, `Missing githubMomentumFallback.releaseHardening in ${lang}`);
     assert.ok(projects.githubMomentumFallback?.dataCorrectness, `Missing githubMomentumFallback.dataCorrectness in ${lang}`);
     assert.ok(projects.githubMomentumFallback?.systemDesign, `Missing githubMomentumFallback.systemDesign in ${lang}`);
   }
 });
 
-test('GitHub Activity fallback note never overstates production readiness', () => {
+test('GitHub Activity fallback note never overstates production readiness', async () => {
+  const { curatedFallbackHighlights } = await import('../src/data/featuredWork.js');
   const forbiddenSubstrings = [
     'production-ready',
     'production ready',
@@ -220,9 +225,7 @@ test('GitHub Activity fallback note never overstates production readiness', () =
       projects.githubFallbackNote,
       projects.githubLiveNote,
       projects.githubCachedNote,
-      projects.githubFallback?.subtrackerrr?.caption,
-      projects.githubFallback?.bookmarkanalyzer?.caption,
-      projects.githubFallback?.ritualgymtracker?.caption,
+      ...curatedFallbackHighlights.map(({ id }) => projects.githubFallback?.[id]?.caption),
       projects.githubMomentumFallback?.releaseHardening,
       projects.githubMomentumFallback?.dataCorrectness,
       projects.githubMomentumFallback?.systemDesign,
@@ -238,4 +241,51 @@ test('summarizeGithubActivity returns a safe envelope when activity array is mis
   assert.ok(Array.isArray(summary.entries));
   assert.strictEqual(summary.entries.length, 0);
   assert.strictEqual(summary.totals.eventsLast30Days, 0);
+});
+
+test('every featured and secondary build has complete EN and DE case-study copy', async () => {
+  const { featuredWorkItems, secondaryWorkItems } = await import('../src/data/featuredWork.js');
+  const items = [...featuredWorkItems, ...secondaryWorkItems];
+  assert.ok(items.length > 0);
+
+  for (const lang of ['en', 'de']) {
+    const projects = loadLocale(lang).projects;
+    for (const item of items) {
+      const study = projects.caseStudies?.[item.id];
+      assert.ok(study, `Missing projects.caseStudies.${item.id} in ${lang}`);
+      for (const field of ['typeLabel', 'summary', 'readinessNote']) {
+        assert.ok(
+          typeof study[field] === 'string' && study[field].trim().length > 0,
+          `Missing projects.caseStudies.${item.id}.${field} in ${lang}`,
+        );
+      }
+      assert.ok(
+        Array.isArray(study.highlights) && study.highlights.length === 3,
+        `projects.caseStudies.${item.id}.highlights must hold exactly 3 entries in ${lang}`,
+      );
+      assert.ok(
+        typeof projects.statusLabels?.[item.statusKey] === 'string'
+          && projects.statusLabels[item.statusKey].trim().length > 0,
+        `Missing projects.statusLabels.${item.statusKey} in ${lang}`,
+      );
+      const ctaKey = item.ctaKey.replace(/^projects\./, '');
+      assert.ok(
+        typeof projects[ctaKey] === 'string' && projects[ctaKey].trim().length > 0,
+        `Missing projects.${ctaKey} in ${lang}`,
+      );
+    }
+  }
+});
+
+test('featured build demo URLs are safe absolute URLs', async () => {
+  const { featuredWorkItems, secondaryWorkItems } = await import('../src/data/featuredWork.js');
+  for (const item of [...featuredWorkItems, ...secondaryWorkItems]) {
+    assert.ok(item.demoUrl === null || typeof item.demoUrl === 'string', `${item.id} demoUrl must be a string or null`);
+    if (item.demoUrl) {
+      const url = new URL(item.demoUrl);
+      assert.strictEqual(url.protocol, 'https:', `${item.id} demoUrl must use https`);
+      assert.ok(!/example\.|placeholder|localhost|TODO/i.test(item.demoUrl), `${item.id} demoUrl looks like a placeholder`);
+    }
+    assert.ok(item.repoUrl === null || /^https:\/\//.test(item.repoUrl), `${item.id} repoUrl must be https or null`);
+  }
 });

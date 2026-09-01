@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" fill="none" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbf5ed"/>
+      <stop offset="100%" stop-color="#f0e6d3"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0%" stop-color="#c96738"/>
+      <stop offset="100%" stop-color="#a95132"/>
+    </linearGradient>
+    <!-- Authored in the 64-unit mark space, so scale(15) below renders this as
+         a ~30px offset / 30px blur on the 1024 canvas. -->
+    <filter id="lift" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#4a2a18" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" rx="224" fill="url(#ground)"/>
+
+  <!-- The mark is authored in a 64-unit box (see src/components/BrandMark.tsx)
+       and scaled up, so the icon and the in-app mark stay identical. At scale 15
+       it spans 238-786px, inside the 80% maskable safe zone. -->
+  <g transform="translate(32 32) scale(15)">
+    <g transform="rotate(-10 32 32)">
+      <g filter="url(#lift)">
+        <path d="M19 18.5V27.5A13 13 0 0 0 45 27.5V18.5" stroke="url(#body)" stroke-width="10.5"/>
+        <path d="M19 18.5v7" stroke="#2a6567" stroke-width="10.5"/>
+        <path d="M45 18.5v7" stroke="#2a6567" stroke-width="10.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -59,57 +59,72 @@
   },
   "projects": {
     "title": "Side Projects",
-    "subtitle": "Praxisnahe Projekte mit Fokus auf Architektur, Zuverlässigkeit, Datenqualität und Produktreife.",
+    "subtitle": "Eigene Produkte, die ich entworfen, gebaut und weiterhin betreue — jeweils in dem Reifegrad, den sie wirklich erreicht haben.",
     "showcaseTitle": "Ausgewählte Builds",
-    "showcaseDescription": "Kompakte Produktansichten von Side-Projects, geteilt als öffentliche Preview-Builds, bei denen technische Entscheidungen und Trade-offs wichtiger sind als Launch-Polish.",
-    "caseStudyInProgress": "Fallstudie in Arbeit",
+    "showcaseDescription": "Vier Produkte in vier unterschiedlichen Phasen. Das Label auf jeder Karte beschreibt den tatsächlichen Stand, nicht die Vermarktung.",
+    "caseStudyInProgress": "Wo die Projekte wirklich stehen",
     "previewBuild": "Build ansehen",
+    "ctaLiveApp": "Live-App öffnen",
+    "ctaApp": "App öffnen",
+    "ctaPreview": "Vorschau ansehen",
+    "moreWorkTitle": "Ebenfalls in Arbeit",
     "statusLabels": {
-      "publicPreview": "Öffentliche Preview",
-      "exploratoryBuild": "Explorativer Build",
-      "previewBuild": "Preview-Build",
-      "inProgress": "In Arbeit"
+      "publicWebMvp": "Öffentliches Web-MVP",
+      "productionMvp": "Produktives MVP",
+      "privateBeta": "Private Beta",
+      "inProduction": "Im Produktiveinsatz",
+      "preBeta": "Pre-Beta"
     },
     "caseStudies": {
-      "ritualgymtracker": {
-        "typeLabel": "WORKOUT-TRACKING · WIP-FALLSTUDIE",
-        "summary": "Workout-Tracking-Fallstudie mit Fokus auf Offline-Sync, Gast-Migration, korrekte Streaks und zeitzonensichere Analytik.",
+      "magnetmiles": {
+        "typeLabel": "REISEERINNERUNGEN · WEB-APP",
+        "summary": "Reiseerinnerungen als Kühlschrankmagnete, Karten, Passstempel und teilbare Rückblicke.",
         "highlights": [
-          "Offline-Sync",
-          "Gast-Migration",
-          "Zeitzonensichere Analytik"
+          "251 kuratierte Städtebilder",
+          "Local-First-Speicherung",
+          "Bildnachweise & Barrierefreiheit"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Local-First auf dem Gerät, mit optionaler Google-Sync"
       },
-      "bookmarkanalyzer": {
-        "typeLabel": "BOOKMARK-INTELLIGENCE · WIP-FALLSTUDIE",
-        "summary": "Bookmark-Workflow-Fallstudie rund um Local-first-Speicherung, KI-Anreicherung, SSRF-Abwehr und Reader-Sanitization.",
+      "coefpulse": {
+        "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
+        "summary": "Zeigt, wie jedes europäische Ergebnis den UEFA-Koeffizienten eines Landes und seinen Platz im Rennen verschiebt.",
         "highlights": [
-          "Local-first",
-          "KI-Anreicherung",
-          "SSRF-Abwehr"
+          "Alle 55 UEFA-Verbände",
+          "Szenarien nach Annex D",
+          "Geprüfte Datenstände"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Deterministischer Rechner auf geprüften Daten — keine Live-Ergebnisse"
       },
       "subtrackerrr": {
-        "typeLabel": "ABO-TRACKING · WIP-FALLSTUDIE",
-        "summary": "Abo-Tracking-Fallstudie mit Fokus auf finanzielle Korrektheit, Firebase-Auth-Sicherheit und Persistenz-Integrität.",
+        "typeLabel": "WIEDERKEHRENDE KOSTEN · WEB-APP",
+        "summary": "Arbeitsfläche für laufende Kosten, gebaut um eine Frage: Was verlängert sich als Nächstes und was lohnt sich nicht mehr?",
         "highlights": [
-          "Billing-Korrektheit",
-          "Auth-Sicherheit",
-          "Persistenz-Integrität"
+          "Korrekte Verlängerungstermine",
+          "Gast-Workspace & Auth-Sicherheit",
+          "PWA-/iOS-Wiederherstellung"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Private Beta · Gast-Workspace ohne Konto oder Bankverbindung nutzbar"
       },
-      "fintrackerrr": {
-        "typeLabel": "PORTFOLIO-ANALYTICS · WIP-FALLSTUDIE",
-        "summary": "Portfolio-Analytics-Fallstudie zu normalisierten Asset-Daten, Dividenden-Insights und Performance großer Tabellen.",
+      "fitvalue": {
+        "typeLabel": "MITGLIEDSCHAFTSWERT · WEB-APP",
+        "summary": "Macht aus Besuchen und Mitgliedsbeitrag eine klare Antwort: behalten, herabstufen oder kündigen.",
         "highlights": [
-          "Datennormalisierung",
-          "Dividenden-Insights",
-          "UI-Performance"
+          "Kosten pro Besuch",
+          "Gastdaten bleiben erhalten",
+          "Nachträgliche Besuchskorrektur"
         ],
-        "readinessNote": "Öffentliche Preview · nicht produktionsreif"
+        "readinessNote": "Produktiver Live-Build · Korrektheit wird weiter gehärtet"
+      },
+      "outthere": {
+        "typeLabel": "TAGESAUSFLÜGE · WEB-APP",
+        "summary": "Planer für den Tagesausflug, der zuerst entscheidet — und dich pünktlich wieder nach Hause bringt.",
+        "highlights": [
+          "Korrekte Zeitfenster",
+          "Entscheidung zuerst",
+          "Validierung nur mit Einwilligung"
+        ],
+        "readinessNote": "Pre-Beta · nur München, feste Ausflugsdaten, kein Live-Routing"
       }
     },
     "githubSignalTitle": "GitHub-Aktivität",
@@ -122,7 +137,7 @@
     "githubOpenProfile": "GitHub-Profil öffnen",
     "githubTimelineEmpty": "Die GitHub-Aktivität ist gerade ruhig.",
     "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
-    "githubSignalKicker": "Öffentliches Engineering-Signal",
+    "githubSignalKicker": "Engineering-Signal",
     "githubBadgeLive": "Live GitHub-Daten",
     "githubBadgeCached": "Cache-Snapshot",
     "githubBadgeFallback": "Kuratierte Highlights",
@@ -132,31 +147,31 @@
     "githubCardMomentum": "Build-Momentum",
     "githubLiveNote": "Live-Engineering-Signal aus öffentlichen GitHub-Ereignissen.",
     "githubCachedNote": "Aktuellster zwischengespeicherter Stand der öffentlichen GitHub-Aktivität.",
-    "githubFallbackNote": "Live-GitHub-Daten sind vorübergehend nicht verfügbar. Stattdessen werden kuratierte öffentliche Engineering-Highlights gezeigt.",
+    "githubFallbackNote": "Live-GitHub-Daten sind vorübergehend nicht verfügbar. Stattdessen werden kuratierte Engineering-Highlights aus ausgewählten Projekten gezeigt.",
     "githubFallback": {
+      "coefpulse": {
+        "title": "CoefPulse — geprüfte Datenpipeline",
+        "caption": "Koeffizientenmodell über 55 Verbände, mit validierten Snapshots und Aktualitätsprüfung."
+      },
+      "magnetmiles": {
+        "title": "MagnetMiles — Local-First-Produktarbeit",
+        "caption": "251 kuratierte Städtebilder, offlinefähige Pinnwand und Karte, lizenzkonforme Bildnachweise."
+      },
       "subtrackerrr": {
-        "title": "SubTracker — Release-Readiness-Audit",
-        "caption": "Subscription-Tracking-Fallstudie: finanzielle Korrektheit, Auth-Sicherheit, Persistenz-Integrität."
-      },
-      "bookmarkanalyzer": {
-        "title": "BookmarkAI — Sicherheits- & Datenkorrektheit",
-        "caption": "Bookmark-Workflow-Fallstudie: SSRF-Abwehr, sanitisierter Reader-Flow, KI-Anreicherungs-Guardrails."
-      },
-      "ritualgymtracker": {
-        "title": "Ritual Gym Tracker — System-Design-Arbeit",
-        "caption": "Offline-first-Sync, Gast-zu-Account-Migration, DST-sichere Streak-Analytik."
+        "title": "SubTracker — Korrektheit bei laufenden Kosten",
+        "caption": "Verlängerungstermine, sicherer Wechsel von Gast zu Konto, Wiederherstellung der installierten App."
       }
     },
     "githubMomentumFallback": {
-      "releaseHardening": "Release-Hardening und Production-Readiness-Cleanup über Side-Projects hinweg.",
-      "dataCorrectness": "Security-Review und Datenkorrektheits-Audits in Finanz- und Nutzerdatenflüssen.",
-      "systemDesign": "Aktive System-Design-Iteration an Offline-first- und Local-first-Builds."
+      "releaseHardening": "Release-Härtung und Laufzeit-Wiederherstellung in den laufenden Builds.",
+      "dataCorrectness": "Geprüfte Datenquellen und Korrektheitsprüfungen bei wiederkehrenden Kosten.",
+      "systemDesign": "Local-First- und offlinefähiges Systemdesign quer durch die Produktarbeit."
     },
-    "showProducts": "Fallstudien anzeigen",
-    "hideProducts": "Fallstudien ausblenden",
+    "showProducts": "Projekte anzeigen",
+    "hideProducts": "Projekte ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "4 Side-Projects als öffentliche Preview-Engineering-Fallstudien",
+    "summaryProducts": "Vier aktive Produkte in unterschiedlichen Reifephasen, dazu ein Pre-Beta-Build",
     "summaryGithub": "Aktuelle öffentliche Aktivitäten und ausgewählte Repositories",
     "repoTitle": "Ausgewählte Repositories",
     "viewAllRepos": "Alle Repositories ansehen",

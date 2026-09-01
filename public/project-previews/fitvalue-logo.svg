@@ -1,0 +1,9 @@
+<svg width="1024" height="1024" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" rx="22" fill="#111827"/>
+  <!-- F — white letterform; 8px stroke-equivalent width, balanced with V -->
+  <rect x="18" y="20" width="8" height="60" rx="2" fill="#ffffff"/>
+  <rect x="18" y="20" width="22" height="8" rx="2" fill="#ffffff"/>
+  <rect x="18" y="46" width="17" height="8" rx="2" fill="#ffffff"/>
+  <!-- V — green value/check mark; stroke-width=8 matches F visual weight -->
+  <path d="M45 20 L56 78 L82 20" stroke="#22c55e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
