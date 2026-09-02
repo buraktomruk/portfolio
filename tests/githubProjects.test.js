@@ -253,12 +253,17 @@ test('every featured and secondary build has complete EN and DE case-study copy'
     for (const item of items) {
       const study = projects.caseStudies?.[item.id];
       assert.ok(study, `Missing projects.caseStudies.${item.id} in ${lang}`);
-      for (const field of ['typeLabel', 'summary', 'readinessNote']) {
+      for (const field of ['typeLabel', 'summary']) {
         assert.ok(
           typeof study[field] === 'string' && study[field].trim().length > 0,
           `Missing projects.caseStudies.${item.id}.${field} in ${lang}`,
         );
       }
+      // readinessNote is optional — an empty string means the status badge alone is sufficient
+      assert.ok(
+        typeof study.readinessNote === 'string',
+        `projects.caseStudies.${item.id}.readinessNote must be a string in ${lang}`,
+      );
       assert.ok(
         Array.isArray(study.highlights) && study.highlights.length === 3,
         `projects.caseStudies.${item.id}.highlights must hold exactly 3 entries in ${lang}`,
@@ -401,8 +406,8 @@ test('EN/DE translations have matching Public code and momentum copy', () => {
   assert.strictEqual(de.projects.githubCardRepos, 'Öffentlicher Code');
   assert.strictEqual(en.projects.repoTitle, 'Public Code');
   assert.strictEqual(de.projects.repoTitle, 'Öffentlicher Code');
-  assert.ok(en.projects.githubLiveNote.includes('Public GitHub activity, complemented by engineering signals'));
-  assert.ok(de.projects.githubLiveNote.includes('Öffentliche GitHub-Aktivität, ergänzt durch Engineering-Signale'));
+  assert.ok(en.projects.githubLiveNote.includes('Recent public GitHub activity'));
+  assert.ok(de.projects.githubLiveNote.includes('Aktuelle öffentliche GitHub-Aktivität'));
 });
 
 test('strict public===true fail-closed visibility', () => {
