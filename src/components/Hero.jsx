@@ -55,7 +55,7 @@ const Hero = () => {
                 </span>
               ))}
             </span>
-            <span className="block translate-y-[-0.05em]">I am Burak Tomruk.</span>
+            <span className="block translate-y-[-0.05em]">{t('hero.intro')}</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mb-10">
             {t('hero.tagline1')} <span className="text-slate-900 dark:text-slate-200 font-medium">{t('hero.tagline2')}</span>.

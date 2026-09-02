@@ -1,14 +1,15 @@
 {
   "navbar": {
     "about": "Über mich",
-    "skills": "Fähigkeiten",
     "projects": "Projekte",
+    "skills": "Fähigkeiten",
     "education": "Ausbildung"
   },
   "hero": {
     "role": "Senior Software Engineer",
     "greeting": "Hallo, ich bin",
-    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus für skalierbare Produktionsanwendungen mit React, TypeScript und Next.js. Ansässig in",
+    "intro": "Ich bin Burak Tomruk.",
+    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus, der skalierbare Webprodukte mit React und TypeScript baut, mit starkem Fokus auf Architektur, Performance und Zuverlässigkeit. Ansässig in",
     "tagline2": "München, Deutschland",
     "download_resume": "Lebenslauf ansehen",
     "check_thesis": "Masterarbeit ansehen",
@@ -16,8 +17,8 @@
   },
   "about": {
     "title": "Über mich",
-    "p1": "Als Full-Stack-Entwickler mit Frontend-Fokus entwickle ich seit mehr als sechs Jahren skalierbare Produktionsanwendungen über Frontend- und Backend-Systeme hinweg, mit Schwerpunkt auf React, TypeScript, Frontend-Architektur und Performance.",
-    "p2": "Meine Arbeit umfasst auch Testing, Observability und zuverlässige Auslieferung, mit Erfahrung in technischer Verantwortung, Mentoring von Entwickler:innen und der Weiterentwicklung von Engineering-Praktiken.",
+    "p1": "Ich entwickle seit mehr als sechs Jahren Produktionssoftware in den Bereichen Medien, Enterprise, Banking und AI. Ich arbeite über den gesamten Stack hinweg, mit meinem stärksten Schwerpunkt auf React, TypeScript und Frontend-Architektur.",
+    "p2": "Ich löse gern anspruchsvolle Produkt- und Engineering-Probleme, verbessere Performance und Zuverlässigkeit und helfe Teams mit klaren technischen Entscheidungen, wiederverwendbaren Patterns und praxisnahem Mentoring schneller voranzukommen.",
     "location_title": "Standort",
     "location": "München, Deutschland",
     "languages_title": "Sprachen",
@@ -26,11 +27,11 @@
   "skills": {
     "title": "Technische Fähigkeiten",
     "categories": {
-      "frontend": "Frontend Technologien",
+      "frontend": "Kern-Frontend",
       "backend": "Backend & Daten",
-      "devops": "DevOps & CI/CD",
-      "testing": "Testing & QA",
-      "other": "Weitere Tools"
+      "devops": "Delivery",
+      "testing": "Testing & Qualität",
+      "other": "Weitere Erfahrung"
     }
   },
   "education": {
@@ -58,11 +59,11 @@
     "tooltip": "Chat mit KI"
   },
   "projects": {
-    "title": "Side Projects",
-    "subtitle": "Eigene Produkte, die ich entworfen, gebaut und weiterhin betreue — jeweils in dem Reifegrad, den sie wirklich erreicht haben.",
-    "showcaseTitle": "Ausgewählte Builds",
-    "showcaseDescription": "Vier Produkte in vier unterschiedlichen Phasen. Das Label auf jeder Karte beschreibt den tatsächlichen Stand, nicht die Vermarktung.",
-    "caseStudyInProgress": "Wo die Projekte wirklich stehen",
+    "title": "Ausgewählte Projekte",
+    "subtitle": "Eigene Produkte, die ich neben dem Job baue — von Reise- und Sportdaten bis zu Abo-Tracking und Fitness.",
+    "showcaseTitle": "Aktuelle Projekte",
+    "showcaseDescription": "Vier aktive Produkte, jedes löst ein anderes Problem und zeigt einen anderen Teil davon, wie ich Software designe, baue und ausliefere.",
+    "caseStudyInProgress": "Woran ich gerade arbeite",
     "previewBuild": "Build ansehen",
     "ctaLiveApp": "Live-App öffnen",
     "ctaApp": "App öffnen",
@@ -78,56 +79,56 @@
     "caseStudies": {
       "magnetmiles": {
         "typeLabel": "REISEERINNERUNGEN · WEB-APP",
-        "summary": "Reiseerinnerungen als Kühlschrankmagnete, Karten, Passstempel und teilbare Rückblicke.",
+        "summary": "Verwandle besuchte Orte in eine visuelle Sammlung aus Kühlschrankmagneten, Karten und teilbaren Reise-Rückblicken.",
         "highlights": [
-          "251 kuratierte Städtebilder",
-          "Local-First-Speicherung",
-          "Bildnachweise & Barrierefreiheit"
+          "251 kuratierte Städte",
+          "Local-first",
+          "Optionale Google-Sync"
         ],
-        "readinessNote": "Local-First auf dem Gerät, mit optionaler Google-Sync"
+        "readinessNote": "Local-first auf dem Gerät · Google-Sync optional"
       },
       "coefpulse": {
         "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
-        "summary": "Zeigt, wie jedes europäische Ergebnis den UEFA-Koeffizienten eines Landes und seinen Platz im Rennen verschiebt.",
+        "summary": "Sieh, wie europäische Spielergebnisse den UEFA-Koeffizienten und das Ranking-Rennen eines Landes verändern.",
         "highlights": [
-          "Alle 55 UEFA-Verbände",
-          "Szenarien nach Annex D",
+          "55 UEFA-Verbände",
+          "Szenario-Simulator",
           "Geprüfte Datenstände"
         ],
-        "readinessNote": "Deterministischer Rechner auf geprüften Daten — keine Live-Ergebnisse"
+        "readinessNote": "Produktives MVP · deterministische Daten, keine Live-Ergebnisse"
       },
       "subtrackerrr": {
         "typeLabel": "WIEDERKEHRENDE KOSTEN · WEB-APP",
-        "summary": "Arbeitsfläche für laufende Kosten, gebaut um eine Frage: Was verlängert sich als Nächstes und was lohnt sich nicht mehr?",
+        "summary": "Sieh, was als Nächstes verlängert wird, wie viel Abos kosten und welche sich zu kündigen lohnen.",
         "highlights": [
-          "Korrekte Verlängerungstermine",
-          "Gast-Workspace & Auth-Sicherheit",
-          "PWA-/iOS-Wiederherstellung"
+          "Verlängerungskalender",
+          "Ausgabenübersicht",
+          "Gastmodus"
         ],
-        "readinessNote": "Private Beta · Gast-Workspace ohne Konto oder Bankverbindung nutzbar"
+        "readinessNote": "Private Beta · keine Bankverbindung nötig"
       },
       "fitvalue": {
         "typeLabel": "MITGLIEDSCHAFTSWERT · WEB-APP",
-        "summary": "Macht aus Besuchen und Mitgliedsbeitrag eine klare Antwort: behalten, herabstufen oder kündigen.",
+        "summary": "Macht aus Besuchen und Mitgliedsbeitrag eine einfache Antwort: behalten, herabstufen oder kündigen.",
         "highlights": [
           "Kosten pro Besuch",
-          "Gastdaten bleiben erhalten",
-          "Nachträgliche Besuchskorrektur"
+          "Besuchstrends",
+          "Gastmodus"
         ],
-        "readinessNote": "Produktiver Live-Build · Korrektheit wird weiter gehärtet"
+        "readinessNote": "Produktiver Live-Build"
       },
       "outthere": {
         "typeLabel": "TAGESAUSFLÜGE · WEB-APP",
-        "summary": "Planer für den Tagesausflug, der zuerst entscheidet — und dich pünktlich wieder nach Hause bringt.",
+        "summary": "Finde einen Tagesausflug, der zur verfügbaren Zeit passt und dich trotzdem pünktlich nach Hause bringt.",
         "highlights": [
-          "Korrekte Zeitfenster",
-          "Entscheidung zuerst",
-          "Validierung nur mit Einwilligung"
+          "Zeitbewusstes Ranking",
+          "Ausflüge rund um München",
+          "Entscheidung zuerst"
         ],
-        "readinessNote": "Pre-Beta · nur München, feste Ausflugsdaten, kein Live-Routing"
+        "readinessNote": "Pre-Beta · nur München"
       }
     },
-    "githubSignalTitle": "GitHub-Aktivität",
+    "githubSignalTitle": "Entwicklungsaktivität",
     "githubSummaryTitle": "Entwicklungsaktivität",
     "githubMetricEvents": "Öffentliche Events · 30 T.",
     "githubMetricActiveDays": "Aktive Tage · 30 T.",
@@ -139,17 +140,17 @@
     "githubUnavailableMuted": "GitHub-Aktivität vorübergehend nicht verfügbar.",
     "githubActivityUnavailable": "Öffentliche GitHub-Aktivität ist vorübergehend nicht verfügbar.",
     "githubReposUnavailable": "Details zu öffentlichen Repositories sind vorübergehend nicht verfügbar.",
-    "githubSignalKicker": "Engineering-Signal",
+    "githubSignalKicker": "Zuletzt gebaut",
     "githubBadgeLive": "Live GitHub-Daten",
     "githubBadgeCached": "Cache-Snapshot",
     "githubBadgeFallback": "Kuratierte Highlights",
     "githubBadgeLoading": "Lädt",
-    "githubCardActivity": "Aktuelle Aktivität",
+    "githubCardActivity": "Zuletzt auf GitHub",
     "githubCardRepos": "Öffentlicher Code",
-    "githubCardMomentum": "Build-Momentum",
-    "githubLiveNote": "Öffentliche GitHub-Aktivität, ergänzt durch Engineering-Signale aus den oben gezeigten Produktprojekten.",
-    "githubCachedNote": "Zwischengespeicherte öffentliche GitHub-Aktivität, ergänzt durch Engineering-Signale aus den oben gezeigten Produktprojekten.",
-    "githubFallbackNote": "Öffentliche GitHub-Aktivität ist vorübergehend nicht verfügbar. Engineering-Signale aus den oben gezeigten Produktprojekten bleiben sichtbar.",
+    "githubCardMomentum": "Aktuelle Themen",
+    "githubLiveNote": "Aktuelle öffentliche GitHub-Aktivität, dazu technische Themen aus den Produkten oben.",
+    "githubCachedNote": "Zuletzt zwischengespeicherte GitHub-Aktivität, dazu technische Themen aus den Produkten oben.",
+    "githubFallbackNote": "GitHub-Aktivität ist vorübergehend nicht verfügbar. Die Produktarbeit oben zeigt weiterhin, woran ich arbeite.",
     "githubMetrics": {
       "activeProducts": "Aktive Produkte",
       "publicEvents": "Öffentliche Events · 30 T.",
@@ -172,16 +173,16 @@
       }
     },
     "githubMomentumFallback": {
-      "releaseHardening": "Release-Härtung und Laufzeit-Wiederherstellung in den laufenden Builds.",
-      "dataCorrectness": "Geprüfte Datenquellen und Korrektheitsprüfungen bei wiederkehrenden Kosten.",
-      "systemDesign": "Local-First- und offlinefähiges Systemdesign quer durch die Produktarbeit."
+      "releaseHardening": "Verbessere die Zuverlässigkeit von Auth-, Persistenz- und Installed-App-Abläufen.",
+      "dataCorrectness": "Halte Sportdaten- und Abo-Berechnungen korrekt und nachvollziehbar.",
+      "systemDesign": "Entwerfe Local-first-Workflows, die auch ohne Konto oder ständige Verbindung nutzbar bleiben."
     },
     "showProducts": "Projekte anzeigen",
     "hideProducts": "Projekte ausblenden",
     "showGithub": "GitHub anzeigen",
     "hideGithub": "GitHub ausblenden",
-    "summaryProducts": "Vier aktive Produkte in unterschiedlichen Reifephasen, dazu ein Pre-Beta-Build",
-    "summaryGithub": "Öffentliche GitHub-Aktivität und breiteres Momentum der Produktentwicklung",
+    "summaryProducts": "Vier aktive Produkte, dazu ein früher Build",
+    "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",
     "viewAllRepos": "Alle Repositories ansehen",
     "repoFeatured": "Ausgewählt",

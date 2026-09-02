@@ -401,8 +401,8 @@ test('EN/DE translations have matching Public code and momentum copy', () => {
   assert.strictEqual(de.projects.githubCardRepos, 'Öffentlicher Code');
   assert.strictEqual(en.projects.repoTitle, 'Public Code');
   assert.strictEqual(de.projects.repoTitle, 'Öffentlicher Code');
-  assert.ok(en.projects.githubLiveNote.includes('Public GitHub activity, complemented by engineering signals'));
-  assert.ok(de.projects.githubLiveNote.includes('Öffentliche GitHub-Aktivität, ergänzt durch Engineering-Signale'));
+  assert.ok(en.projects.githubLiveNote.includes('Recent public GitHub activity'));
+  assert.ok(de.projects.githubLiveNote.includes('Aktuelle öffentliche GitHub-Aktivität'));
 });
 
 test('strict public===true fail-closed visibility', () => {

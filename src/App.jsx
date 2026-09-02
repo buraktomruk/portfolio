@@ -79,9 +79,9 @@ const App = () => {
       />
       <Hero />
       <About />
+      <Projects />
       <Skills />
       <Education />
-      <Projects />
       <Footer />
       <Suspense fallback={null}>
         <AIChatWidget />

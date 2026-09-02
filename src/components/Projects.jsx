@@ -504,7 +504,7 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
 
 export default function Projects() {
   const { t } = useTranslation();
-  const [isProductsExpanded, setIsProductsExpanded] = useState(false);
+  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
   const [isGithubExpanded, setIsGithubExpanded] = useState(false);
 
   const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope);

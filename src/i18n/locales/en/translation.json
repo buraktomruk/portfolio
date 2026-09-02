@@ -1,14 +1,15 @@
 {
   "navbar": {
     "about": "About",
-    "skills": "Skills",
     "projects": "Projects",
+    "skills": "Skills",
     "education": "Education"
   },
   "hero": {
     "role": "Senior Software Engineer",
     "greeting": "Hello, I'm",
-    "tagline1": "Full-stack developer with a frontend focus, building scalable production applications with React, TypeScript and Next.js. Based in",
+    "intro": "I'm Burak Tomruk.",
+    "tagline1": "Full-stack developer with a frontend focus, building scalable web products with React and TypeScript, with a strong emphasis on architecture, performance and reliability. Based in",
     "tagline2": "Munich, Germany",
     "download_resume": "View Resume",
     "check_thesis": "View My Master's Thesis",
@@ -16,8 +17,8 @@
   },
   "about": {
     "title": "About Me",
-    "p1": "With 6+ years of experience as a full-stack developer with a frontend focus, I build scalable production applications across frontend and backend systems, specializing in React, TypeScript, frontend architecture and performance.",
-    "p2": "My work also spans testing, observability and reliable delivery, with experience in technical ownership, mentoring developers and improving engineering practices.",
+    "p1": "I have 6+ years of experience building production software across media, enterprise, banking and AI. I work across the stack, with my strongest depth in React, TypeScript and frontend architecture.",
+    "p2": "I enjoy solving hard product and engineering problems, improving performance and reliability, and helping teams move faster through clear technical decisions, reusable patterns and practical mentoring.",
     "location_title": "Location",
     "location": "Munich, Germany",
     "languages_title": "Languages",
@@ -26,11 +27,11 @@
   "skills": {
     "title": "Technical Skills",
     "categories": {
-      "frontend": "Frontend Technologies",
+      "frontend": "Core Frontend",
       "backend": "Backend & Data",
-      "devops": "DevOps & CI/CD",
-      "testing": "Testing & QA",
-      "other": "Other Tools"
+      "devops": "Delivery",
+      "testing": "Testing & Quality",
+      "other": "Additional Experience"
     }
   },
   "education": {
@@ -58,16 +59,16 @@
     "tooltip": "Chat with AI"
   },
   "projects": {
-    "title": "Side Projects",
-    "subtitle": "Independent products I designed, built and still maintain — each shown at the maturity it has actually reached.",
-    "showcaseTitle": "Selected Builds",
-    "showcaseDescription": "Four products at four different stages. The badge on each card is the real state of the build, not a launch label.",
-    "caseStudyInProgress": "Where each build actually stands",
+    "title": "Selected Projects",
+    "subtitle": "Independent products I build outside work — from travel and sports data to subscription tracking and fitness.",
+    "showcaseTitle": "Featured work",
+    "showcaseDescription": "Four active products, each solving a different problem and showing a different part of how I design, build and ship software.",
+    "caseStudyInProgress": "What I'm building",
     "previewBuild": "Preview build",
     "ctaLiveApp": "Open live app",
     "ctaApp": "Open app",
     "ctaPreview": "View preview",
-    "moreWorkTitle": "Also in the workshop",
+    "moreWorkTitle": "Also building",
     "statusLabels": {
       "publicWebMvp": "Public web MVP",
       "productionMvp": "Production MVP",
@@ -78,56 +79,56 @@
     "caseStudies": {
       "magnetmiles": {
         "typeLabel": "TRAVEL MEMORIES · WEB APP",
-        "summary": "Travel memories collected as visual fridge magnets, maps, passport stamps and shareable recaps.",
+        "summary": "Turn the places you've visited into a visual collection of fridge magnets, maps and shareable travel recaps.",
         "highlights": [
-          "251 curated city images",
-          "Local-first storage",
-          "Attribution & accessibility"
+          "251 curated cities",
+          "Local-first",
+          "Optional Google sync"
         ],
-        "readinessNote": "Local-first on device, with optional Google sync"
+        "readinessNote": "Local-first on device · Google sync optional"
       },
       "coefpulse": {
         "typeLabel": "UEFA COEFFICIENT MODELING · WEB APP",
-        "summary": "Shows how each European result moves a country's UEFA coefficient and its place in the ranking race.",
+        "summary": "See how European match results change a country's UEFA coefficient and ranking race.",
         "highlights": [
-          "All 55 UEFA associations",
-          "Annex D scenario modeling",
-          "Verified snapshot gating"
+          "55 UEFA associations",
+          "Scenario simulator",
+          "Verified snapshots"
         ],
-        "readinessNote": "Deterministic calculator on verified static data — not live scores"
+        "readinessNote": "Production MVP · deterministic data, not live scores"
       },
       "subtrackerrr": {
         "typeLabel": "RECURRING SPEND · WEB APP",
-        "summary": "Recurring-spend workspace built around one question: what renews next, and what is worth cancelling.",
+        "summary": "See what renews next, how much subscriptions cost and which ones may be worth cancelling.",
         "highlights": [
-          "Renewal-date correctness",
-          "Guest workspace & auth safety",
-          "PWA / iOS recovery"
+          "Renewal calendar",
+          "Spend insights",
+          "Guest mode"
         ],
-        "readinessNote": "Private beta · guest workspace available without an account or bank connection"
+        "readinessNote": "Private beta · no bank connection required"
       },
       "fitvalue": {
         "typeLabel": "MEMBERSHIP VALUE · WEB APP",
-        "summary": "Turns gym attendance and membership cost into a straight answer: keep it, downgrade it, or cancel it.",
+        "summary": "Turn gym attendance and membership cost into a simple answer: keep it, downgrade it or cancel it.",
         "highlights": [
-          "Cost-per-visit analytics",
-          "Guest persistence",
-          "Attendance correction"
+          "Cost per visit",
+          "Attendance trends",
+          "Guest mode"
         ],
-        "readinessNote": "Live production build · correctness hardening ongoing"
+        "readinessNote": "Live production build"
       },
       "outthere": {
         "typeLabel": "DAY-TRIP PLANNING · WEB APP",
-        "summary": "Decision-first planner for a same-day trip that still gets you home by the time you set.",
+        "summary": "Find a day trip that fits the time you have and still gets you home when you want.",
         "highlights": [
-          "Time-window correctness",
-          "Decision-first ranking",
-          "Consent-gated validation"
+          "Time-aware ranking",
+          "Munich trips",
+          "Decision-first UI"
         ],
-        "readinessNote": "Pre-beta · Munich only, built-in trip data, no live routing"
+        "readinessNote": "Pre-beta · Munich only"
       }
     },
-    "githubSignalTitle": "GitHub Activity",
+    "githubSignalTitle": "Engineering Activity",
     "githubSummaryTitle": "Engineering Activity",
     "githubMetricEvents": "Public events · 30d",
     "githubMetricActiveDays": "Active days · 30d",
@@ -139,17 +140,17 @@
     "githubUnavailableMuted": "GitHub activity temporarily unavailable.",
     "githubActivityUnavailable": "Public GitHub activity is temporarily unavailable.",
     "githubReposUnavailable": "Public repository details are temporarily unavailable.",
-    "githubSignalKicker": "Engineering signal",
+    "githubSignalKicker": "Recent work",
     "githubBadgeLive": "Live GitHub data",
     "githubBadgeCached": "Cached snapshot",
     "githubBadgeFallback": "Curated highlights",
     "githubBadgeLoading": "Loading",
-    "githubCardActivity": "Recent activity",
+    "githubCardActivity": "Recent GitHub",
     "githubCardRepos": "Public code",
-    "githubCardMomentum": "Build momentum",
-    "githubLiveNote": "Public GitHub activity, complemented by engineering signals from the product work shown above.",
-    "githubCachedNote": "Cached public GitHub activity, complemented by engineering signals from the product work shown above.",
-    "githubFallbackNote": "Public GitHub activity is temporarily unavailable. Product engineering signals remain available from the work shown above.",
+    "githubCardMomentum": "Current themes",
+    "githubLiveNote": "Recent public GitHub activity, plus technical themes from the products above.",
+    "githubCachedNote": "Recent cached GitHub activity, plus technical themes from the products above.",
+    "githubFallbackNote": "GitHub activity is temporarily unavailable. The product work above still shows what I'm building.",
     "githubMetrics": {
       "activeProducts": "Active products",
       "publicEvents": "Public events · 30d",
@@ -172,16 +173,16 @@
       }
     },
     "githubMomentumFallback": {
-      "releaseHardening": "Release hardening and installed-app runtime recovery across the live builds.",
-      "dataCorrectness": "Verified-source gating and recurring-money correctness audits.",
-      "systemDesign": "Local-first and offline-capable system design across the product work."
+      "releaseHardening": "Improving reliability across auth, persistence and installed-app flows.",
+      "dataCorrectness": "Keeping sports-data and recurring-spend calculations correct and explainable.",
+      "systemDesign": "Designing local-first workflows that stay useful without an account or constant connectivity."
     },
     "showProducts": "Show projects",
     "hideProducts": "Hide projects",
     "showGithub": "Show GitHub",
     "hideGithub": "Hide GitHub",
-    "summaryProducts": "Four active products at different maturity stages, plus one pre-beta build",
-    "summaryGithub": "Public GitHub activity and wider product-engineering momentum",
+    "summaryProducts": "Four active products, plus one early-stage build",
+    "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",
     "viewAllRepos": "View all repositories",
     "repoFeatured": "Featured",
