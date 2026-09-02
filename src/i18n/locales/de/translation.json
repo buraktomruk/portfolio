@@ -17,7 +17,7 @@
   },
   "about": {
     "title": "Über mich",
-    "p1": "Ich entwickle seit mehr als sechs Jahren Produktionssoftware in den Bereichen Medien, Enterprise, Banking und AI. Ich arbeite über den gesamten Stack hinweg, mit meiner tiefsten Expertise in React, TypeScript und Frontend-Architektur.",
+    "p1": "Ich entwickle seit mehr als sechs Jahren Produktionssoftware in den Bereichen Medien, Enterprise, Banking und AI. Meine größte fachliche Tiefe liegt in React, TypeScript und Frontend-Architektur, während ich über den gesamten Stack hinweg arbeite.",
     "p2": "Ich löse gern anspruchsvolle Produkt- und Engineering-Probleme, verbessere Performance und Zuverlässigkeit und helfe Teams mit klaren technischen Entscheidungen, wiederverwendbaren Patterns und praxisnahem Mentoring schneller voranzukommen.",
     "location_title": "Standort",
     "location": "München, Deutschland",
@@ -85,7 +85,7 @@
           "Local-first",
           "Optionale Google-Sync"
         ],
-        "readinessNote": "Local-first · optionale Google-Sync"
+        "readinessNote": "Local-first · Google-Sync optional"
       },
       "coefpulse": {
         "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
