@@ -9,7 +9,7 @@
     "role": "Senior Software Engineer",
     "greeting": "Hello, I'm",
     "intro": "I'm Burak Tomruk.",
-    "tagline1": "Full-stack developer with a frontend focus, building scalable web products with React and TypeScript, with a strong emphasis on architecture, performance and reliability. Based in",
+    "tagline1": "Full-stack developer with a frontend focus, building scalable web products with React and TypeScript. Focused on architecture, performance and reliability. Based in",
     "tagline2": "Munich, Germany",
     "download_resume": "View Resume",
     "check_thesis": "View My Master's Thesis",
@@ -17,7 +17,7 @@
   },
   "about": {
     "title": "About Me",
-    "p1": "I have 6+ years of experience building production software across media, enterprise, banking and AI. I work across the stack, with my strongest depth in React, TypeScript and frontend architecture.",
+    "p1": "I have 6+ years of experience building production software across media, enterprise, banking and AI. I work across the stack, with my deepest expertise in React, TypeScript and frontend architecture.",
     "p2": "I enjoy solving hard product and engineering problems, improving performance and reliability, and helping teams move faster through clear technical decisions, reusable patterns and practical mentoring.",
     "location_title": "Location",
     "location": "Munich, Germany",
@@ -85,7 +85,7 @@
           "Local-first",
           "Optional Google sync"
         ],
-        "readinessNote": "Local-first on device · Google sync optional"
+        "readinessNote": "Local-first · optional Google sync"
       },
       "coefpulse": {
         "typeLabel": "UEFA COEFFICIENT MODELING · WEB APP",
@@ -95,17 +95,17 @@
           "Scenario simulator",
           "Verified snapshots"
         ],
-        "readinessNote": "Production MVP · deterministic data, not live scores"
+        "readinessNote": "Verified snapshots · not live scores"
       },
       "subtrackerrr": {
         "typeLabel": "RECURRING SPEND · WEB APP",
-        "summary": "See what renews next, how much subscriptions cost and which ones may be worth cancelling.",
+        "summary": "See what renews next, how much you're spending on subscriptions and which ones may be worth cancelling.",
         "highlights": [
           "Renewal calendar",
           "Spend insights",
           "Guest mode"
         ],
-        "readinessNote": "Private beta · no bank connection required"
+        "readinessNote": "No bank connection required"
       },
       "fitvalue": {
         "typeLabel": "MEMBERSHIP VALUE · WEB APP",
@@ -115,7 +115,7 @@
           "Attendance trends",
           "Guest mode"
         ],
-        "readinessNote": "Live production build"
+        "readinessNote": ""
       },
       "outthere": {
         "typeLabel": "DAY-TRIP PLANNING · WEB APP",
@@ -125,7 +125,7 @@
           "Munich trips",
           "Decision-first UI"
         ],
-        "readinessNote": "Pre-beta · Munich only"
+        "readinessNote": "Munich only"
       }
     },
     "githubSignalTitle": "Engineering Activity",

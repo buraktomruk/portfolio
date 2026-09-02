@@ -9,7 +9,7 @@
     "role": "Senior Software Engineer",
     "greeting": "Hallo, ich bin",
     "intro": "Ich bin Burak Tomruk.",
-    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus, der skalierbare Webprodukte mit React und TypeScript baut, mit starkem Fokus auf Architektur, Performance und Zuverlässigkeit. Ansässig in",
+    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus, der skalierbare Webprodukte mit React und TypeScript baut. Fokus auf Architektur, Performance und Zuverlässigkeit. Ansässig in",
     "tagline2": "München, Deutschland",
     "download_resume": "Lebenslauf ansehen",
     "check_thesis": "Masterarbeit ansehen",
@@ -17,7 +17,7 @@
   },
   "about": {
     "title": "Über mich",
-    "p1": "Ich entwickle seit mehr als sechs Jahren Produktionssoftware in den Bereichen Medien, Enterprise, Banking und AI. Ich arbeite über den gesamten Stack hinweg, mit meinem stärksten Schwerpunkt auf React, TypeScript und Frontend-Architektur.",
+    "p1": "Ich entwickle seit mehr als sechs Jahren Produktionssoftware in den Bereichen Medien, Enterprise, Banking und AI. Ich arbeite über den gesamten Stack hinweg, mit meiner tiefsten Expertise in React, TypeScript und Frontend-Architektur.",
     "p2": "Ich löse gern anspruchsvolle Produkt- und Engineering-Probleme, verbessere Performance und Zuverlässigkeit und helfe Teams mit klaren technischen Entscheidungen, wiederverwendbaren Patterns und praxisnahem Mentoring schneller voranzukommen.",
     "location_title": "Standort",
     "location": "München, Deutschland",
@@ -85,7 +85,7 @@
           "Local-first",
           "Optionale Google-Sync"
         ],
-        "readinessNote": "Local-first auf dem Gerät · Google-Sync optional"
+        "readinessNote": "Local-first · optionale Google-Sync"
       },
       "coefpulse": {
         "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
@@ -95,17 +95,17 @@
           "Szenario-Simulator",
           "Geprüfte Datenstände"
         ],
-        "readinessNote": "Produktives MVP · deterministische Daten, keine Live-Ergebnisse"
+        "readinessNote": "Geprüfte Datenstände · keine Live-Ergebnisse"
       },
       "subtrackerrr": {
         "typeLabel": "WIEDERKEHRENDE KOSTEN · WEB-APP",
-        "summary": "Sieh, was als Nächstes verlängert wird, wie viel Abos kosten und welche sich zu kündigen lohnen.",
+        "summary": "Sieh, was als Nächstes verlängert wird, wie viel du für Abos ausgibst und welche sich zu kündigen lohnen.",
         "highlights": [
           "Verlängerungskalender",
           "Ausgabenübersicht",
           "Gastmodus"
         ],
-        "readinessNote": "Private Beta · keine Bankverbindung nötig"
+        "readinessNote": "Keine Bankverbindung nötig"
       },
       "fitvalue": {
         "typeLabel": "MITGLIEDSCHAFTSWERT · WEB-APP",
@@ -115,7 +115,7 @@
           "Besuchstrends",
           "Gastmodus"
         ],
-        "readinessNote": "Produktiver Live-Build"
+        "readinessNote": ""
       },
       "outthere": {
         "typeLabel": "TAGESAUSFLÜGE · WEB-APP",
@@ -125,7 +125,7 @@
           "Ausflüge rund um München",
           "Entscheidung zuerst"
         ],
-        "readinessNote": "Pre-Beta · nur München"
+        "readinessNote": "Nur München"
       }
     },
     "githubSignalTitle": "Entwicklungsaktivität",
