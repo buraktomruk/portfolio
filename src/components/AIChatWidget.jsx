@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { MessageSquare, X, Send, Bot } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/geminiApi';
-import { RESUME_CONTEXT } from '../data/resumeData';
 import { useTranslation } from 'react-i18next';
 
 // (/pilot) Memoized component to prevent cascading re-renders
@@ -76,14 +75,10 @@ const AIChatWidget = () => {
     setInput("");
     setIsTyping(true);
 
-    const systemPrompt = `[IDENTITY]: You are the dedicated personal AI for Burak Tomruk, a Software Engineer based in Munich, Germany. You represent ONLY the person described in the context below. 
-    [ANTI-HALLUCINATION]: NEVER suggest Burak is an actor or any other celebrity. He is a high-level Software Engineer with expertise in React, TypeScript, and Satellite TV systems.
-    [CONTEXT]: ${RESUME_CONTEXT}. 
-    [RULE]: Speak ONLY about the Software Engineer. ALWAYS reply in English. Keep answers extremely short and professional.
-    [RESPOND STYLE]: Enthusiastic, helpful, and concise.`;
-
+    // (/privacy) The system prompt is server-owned (netlify/functions/chat.js);
+    // the client only sends the user prompt.
     try {
-      const response = await generateGeminiResponse(userMessage, systemPrompt);
+      const response = await generateGeminiResponse(userMessage);
       setIsTyping(false); 
       setMessages(prev => [...prev, { text: response, sender: 'ai' }]);
     } catch (err) {
