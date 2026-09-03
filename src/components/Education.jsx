@@ -21,6 +21,14 @@ const Education = () => {
             <div className="text-slate-500 dark:text-slate-400 flex items-center gap-2 text-sm">
               <MapPin className="w-4 h-4" /> {t('education.tum.location')}
             </div>
+            <a
+              href="/thesis.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex text-sm font-semibold text-blue-600 underline decoration-blue-600/30 underline-offset-4 transition-colors hover:text-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              {t('education.thesis')}
+            </a>
           </div>
 
           <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">

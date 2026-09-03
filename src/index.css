@@ -6,22 +6,27 @@ html {
   scroll-behavior: smooth;
 }
 
-@layer components {
-  /* Thin top-of-page brand accent — 2 px fixed line, full width */
-  .page-top-gradient-accent::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    z-index: 60;
-    pointer-events: none;
-    background: linear-gradient(90deg, #38bdf8, #3b82f6, #8b5cf6, #22d3ee);
-    opacity: 0.65;
+section[id], header[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .dark .page-top-gradient-accent::before {
-    opacity: 0.85;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

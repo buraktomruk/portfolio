@@ -3,17 +3,25 @@
     "about": "Über mich",
     "projects": "Projekte",
     "skills": "Fähigkeiten",
-    "education": "Ausbildung"
+    "education": "Ausbildung",
+    "themeLight": "Hellmodus aktivieren",
+    "themeDark": "Dunkelmodus aktivieren",
+    "openMenu": "Navigationsmenü öffnen",
+    "closeMenu": "Navigationsmenü schließen"
   },
   "hero": {
     "role": "Senior Software Engineer",
+    "name": "Burak Tomruk",
+    "location": "München, Deutschland",
     "greeting": "Hallo, ich bin",
     "intro": "Ich bin Burak Tomruk.",
-    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus, der skalierbare Webprodukte mit React und TypeScript baut. Fokus auf Architektur, Performance und Zuverlässigkeit. Ansässig in",
+    "tagline1": "Full-Stack-Entwickler mit Frontend-Fokus, der skalierbare Webprodukte mit React und TypeScript baut. Fokus auf Architektur, Performance und Zuverlässigkeit.",
     "tagline2": "München, Deutschland",
     "download_resume": "Lebenslauf ansehen",
     "check_thesis": "Masterarbeit ansehen",
-    "connect": "Kontaktieren Sie mich"
+    "connect": "Kontaktieren Sie mich",
+    "view_projects": "Projekte ansehen",
+    "send_message": "E-Mail schreiben"
   },
   "about": {
     "title": "Über mich",
@@ -32,6 +40,12 @@
       "devops": "Delivery",
       "testing": "Testing & Qualität",
       "other": "Weitere Erfahrung"
+    },
+    "groups": {
+      "frontend": "Produkt-UI",
+      "backend": "Systeme & Daten",
+      "delivery": "Delivery & Qualität",
+      "other": "Weitere Erfahrung"
     }
   },
   "education": {
@@ -47,23 +61,31 @@
       "university": "Bogazici Universität",
       "degree": "Bachelor of Science (B. Sc.) - Technische Informatik",
       "location": "Istanbul, Türkei"
-    }
+    },
+    "thesis": "Masterarbeit lesen"
   },
   "footer": {
     "all_rights_reserved": "Alle Rechte vorbehalten."
   },
+  "a11y": {
+    "backToTop": "Nach oben"
+  },
   "chat": {
     "header": "Fragen Sie Burak",
-    "initial_message": "Hallo! Ich bin Buraks KI-Assistent. Fragen Sie beni alles über seine Erfahrung oder Fähigkeiten!",
+    "initial_message": "Hallo! Ich bin Buraks KI-Assistent. Fragen Sie mich alles über seine Erfahrung oder Fähigkeiten!",
     "placeholder": "Stellen Sie eine Frage...",
-    "tooltip": "Chat mit KI"
+    "tooltip": "Chat mit KI",
+    "close": "Chat schließen",
+    "send": "Nachricht senden",
+    "input_label": "Chatnachricht",
+    "session_limit": "Sitzungslimit erreicht. Bitte versuchen Sie es später erneut.",
+    "offline": "Das KI-Gateway ist kurzzeitig nicht erreichbar. Bitte versuchen Sie es später erneut."
   },
   "projects": {
     "title": "Ausgewählte Projekte",
     "subtitle": "Eigene Produkte, die ich neben dem Job baue — von Reise- und Sportdaten bis zu Abo-Tracking und Fitness.",
     "showcaseTitle": "Aktuelle Projekte",
     "showcaseDescription": "Vier aktive Produkte, jedes löst ein anderes Problem und zeigt einen anderen Teil davon, wie ich Software designe, baue und ausliefere.",
-    "caseStudyInProgress": "Woran ich gerade arbeite",
     "previewBuild": "Build ansehen",
     "ctaLiveApp": "Live-App öffnen",
     "ctaApp": "App öffnen",
@@ -177,10 +199,8 @@
       "dataCorrectness": "Halte Sportdaten- und Abo-Berechnungen korrekt und nachvollziehbar.",
       "systemDesign": "Entwerfe Local-first-Workflows, die auch ohne Konto oder ständige Verbindung nutzbar bleiben."
     },
-    "showProducts": "Projekte anzeigen",
-    "hideProducts": "Projekte ausblenden",
-    "showGithub": "GitHub anzeigen",
-    "hideGithub": "GitHub ausblenden",
+    "showActivity": "Aktivität anzeigen",
+    "hideActivity": "Aktivität ausblenden",
     "summaryProducts": "Vier aktive Produkte, dazu ein früher Build",
     "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",

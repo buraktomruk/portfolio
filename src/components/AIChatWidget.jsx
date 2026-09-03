@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
 import { MessageSquare, X, Send, Bot } from 'lucide-react';
 import { generateGeminiResponse } from '../utils/geminiApi';
-import { RESUME_CONTEXT } from '../data/resumeData';
 import { useTranslation } from 'react-i18next';
 
 // (/pilot) Memoized component to prevent cascading re-renders
@@ -65,7 +64,7 @@ const AIChatWidget = () => {
     // (/monetize-strategy) Expert Factor: Session Rate Limit (15 msgs)
     const currentCount = parseInt(sessionStorage.getItem('chat_count') || "0");
     if (currentCount >= 15) {
-      setMessages(prev => [...prev, { text: "Session limit reached. Please try tomorrow!", sender: 'ai' }]);
+      setMessages(prev => [...prev, { text: t('chat.session_limit'), sender: 'ai' }]);
       return;
     }
     sessionStorage.setItem('chat_count', (currentCount + 1).toString());
@@ -76,26 +75,20 @@ const AIChatWidget = () => {
     setInput("");
     setIsTyping(true);
 
-    const systemPrompt = `[IDENTITY]: You are the dedicated personal AI for Burak Tomruk, a Software Engineer based in Munich, Germany. You represent ONLY the person described in the context below. 
-    [ANTI-HALLUCINATION]: NEVER suggest Burak is an actor or any other celebrity. He is a high-level Software Engineer with expertise in React, TypeScript, and Satellite TV systems.
-    [CONTEXT]: ${RESUME_CONTEXT}. 
-    [RULE]: Speak ONLY about the Software Engineer. ALWAYS reply in English. Keep answers extremely short and professional.
-    [RESPOND STYLE]: Enthusiastic, helpful, and concise.`;
-
     try {
-      const response = await generateGeminiResponse(userMessage, systemPrompt);
+      const response = await generateGeminiResponse(userMessage);
       setIsTyping(false); 
       setMessages(prev => [...prev, { text: response, sender: 'ai' }]);
     } catch (err) {
       setIsTyping(false);
-      setMessages(prev => [...prev, { text: "The AI gateway is briefly offline. Please try again soon.", sender: 'ai' }]);
+      setMessages(prev => [...prev, { text: t('chat.offline'), sender: 'ai' }]);
     }
-  }, [input, isTyping]);
+  }, [input, isTyping, t]);
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {isOpen && (
-        <div className="mb-5 w-80 md:w-96 h-[450px] bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/50 flex flex-col overflow-hidden animate-fade-in-up origin-bottom-right">
+        <div className="mb-5 h-[min(70vh,450px)] w-[calc(100vw-2rem)] max-w-96 bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/40 dark:border-slate-700/50 flex flex-col overflow-hidden animate-fade-in-up origin-bottom-right">
           <div className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex justify-between items-center shadow-sm z-10">
             <div className="flex items-center gap-2.5 font-semibold tracking-wide">
               <div className="p-1.5 bg-white/20 rounded-full backdrop-blur-sm">
@@ -103,7 +96,7 @@ const AIChatWidget = () => {
               </div>
               {t('chat.header')}
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1.5 rounded-full transition-colors">
+            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 p-1.5 rounded-full transition-colors" aria-label={t('chat.close')}>
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -130,12 +123,14 @@ const AIChatWidget = () => {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                aria-label={t('chat.input_label')}
                 placeholder={t('chat.placeholder')}
                 className="w-full pl-4 pr-12 py-3 rounded-full bg-slate-100 outline-none dark:bg-slate-900/50 border border-transparent focus:border-indigo-400 focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-indigo-500/10 text-[15px] dark:text-white transition-all shadow-inner"
               />
               <button 
                 type="submit"
                 disabled={!input.trim() || isTyping}
+                aria-label={t('chat.send')}
                 className="absolute right-1.5 p-2 bg-indigo-500 text-white rounded-full hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md shadow-indigo-500/30"
               >
                 <Send className="w-4 h-4 ml-0.5" />
@@ -149,6 +144,8 @@ const AIChatWidget = () => {
         <button 
           onClick={() => setIsOpen(!isOpen)}
           className="peer relative flex items-center justify-center w-16 h-16 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-full shadow-lg shadow-indigo-500/40 hover:shadow-indigo-500/60 hover:scale-105 transition-all duration-300 z-10"
+          aria-label={t(isOpen ? 'chat.close' : 'chat.tooltip')}
+          aria-expanded={isOpen}
         >
           {isOpen ? <X className="w-7 h-7 rotate-90 transition-transform duration-300" /> : <MessageSquare className="w-7 h-7 transition-transform duration-300" />}
           {!isOpen && (

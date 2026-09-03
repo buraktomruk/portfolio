@@ -11,14 +11,10 @@
     <!-- Apple Touch Icon (iOS için Base64 kullanımı devam edebilir veya dosya yolu verilebilir) -->
     <link rel="apple-touch-icon" href="data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTAwIDEwMCI+CiAgPCEtLSBBUktBIFBMQU4gRMSwS0TDllJUR0VOxLAgS0FMRElSSUxESS4gxLBrb24gYXJ0xLFrIHNheWRhbWTEsXIuIC0tPgogIAogIDwhLS0KICBEaWtleSBtZXJrZXpsZW1lIGnDp2luOiB5PTUwIChvcnRhKSArIGR5PTE4IChoYXJmaSBnw7Zyc2VsIG1lcmtlemUga2F5ZMSxcm1hayBpw6dpbiBheWFyKSBrdWxsYW7EsWxkxLEuCiAgLS0+CiAgPHRleHQgeD0iNTAiIHk9IjUwIiBkeT0iMTgiIAogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIgCiAgICBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgCiAgICBmb250LXNpemU9IjY1IiAKICAgIGZvbnQtd2VpZ2h0PSJib2xkZXIiIAogICAgZmlsbD0iIzI1NjNlYiI+QlQ8L3RleHQ+Cjwvc3ZnPgo=" />
 
-    <!-- PWA Manifest Link -->
-    <link rel="manifest" href="/manifest.json">
-    <!-- PWA Theme Color -->
-    <meta name="theme-color" content="#1e293b"/>
     
     <!-- SEO Meta Tags -->
     <title>Burak Tomruk | Senior Software Engineer</title>
-    <meta name="description" content="Senior Software Engineer in Munich with 6+ years of experience building frontend-focused production applications with React, TypeScript and Next.js." />
+    <meta name="description" content="Senior Software Engineer in Munich with 6+ years of experience as a full-stack developer with a frontend focus, building reliable web products with React, TypeScript and Next.js." />
     <meta name="keywords" content="Burak Tomruk, Senior Software Engineer, Munich, React, TypeScript, Next.js, Frontend Architecture, Germany" />
     <meta name="author" content="Burak Tomruk" />
     <meta name="robots" content="index, follow" />
@@ -26,22 +22,25 @@
     <!-- Open Graph / LinkedIn Preview -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Burak Tomruk | Senior Software Engineer" />
-    <meta property="og:description" content="Senior Software Engineer in Munich. 6+ years building frontend-focused production applications with React, TypeScript and Next.js." />
-    <meta property="og:image" content="/ai_burak.JPG" />
+    <meta property="og:description" content="Senior Software Engineer in Munich with 6+ years of experience as a full-stack developer with a frontend focus, building reliable web products with React, TypeScript and Next.js." />
+    <meta property="og:url" content="https://buraktomruk.com/" />
+    <meta property="og:image" content="https://buraktomruk.com/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <link rel="canonical" href="https://buraktomruk.com/" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
     <script>
-      // Service Worker kaldırma (Cache Busting için zorunlu)
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function(registrations) {
-          for(let registration of registrations) {
-            registration.unregister();
-            console.log('Old Service Worker unregistered.');
-          }
-        });
-      }
+      (() => {
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (storedTheme === 'dark' || (!storedTheme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
     </script>
   </body>
 </html>
