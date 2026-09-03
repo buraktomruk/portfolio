@@ -8,6 +8,8 @@ import i18n from 'i18next';
 import * as Sentry from '@sentry/react';
 import { hasValidSentryDsn } from './shared/githubStats.js';
 
+document.documentElement.lang = i18n.resolvedLanguage === 'de' ? 'de' : 'en';
+
 const frontendSentryDsn = hasValidSentryDsn(import.meta.env.VITE_SENTRY_DSN)
   ? import.meta.env.VITE_SENTRY_DSN
   : undefined;

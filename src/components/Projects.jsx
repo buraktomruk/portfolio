@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Activity, ArrowUpRight, ChevronDown, Circle, FolderGit2, Github, ShieldCheck, Sparkles, Star } from 'lucide-react';
 import {
@@ -97,7 +97,6 @@ function ShowcaseCard({ item, t }) {
   const accentStyles = getAccentStyles(item.accent);
 
   const statusLabel = t(`projects.statusLabels.${item.statusKey}`, { defaultValue: '' });
-  const typeLabel = t(`projects.caseStudies.${item.id}.typeLabel`, { defaultValue: '' });
   const summary = t(`projects.caseStudies.${item.id}.summary`, { defaultValue: '' });
   const readinessNote = t(`projects.caseStudies.${item.id}.readinessNote`, { defaultValue: '' });
   const highlightItems = t(`projects.caseStudies.${item.id}.highlights`, {
@@ -137,11 +136,6 @@ function ShowcaseCard({ item, t }) {
           <h3 className="text-xl font-bold tracking-tight text-slate-950 dark:text-white sm:text-[1.45rem]">
             {item.title}
           </h3>
-          {typeLabel && (
-            <p className={`mt-2 text-[11px] font-semibold uppercase tracking-[0.22em] ${accentStyles.accentText}`}>
-              {typeLabel}
-            </p>
-          )}
         </div>
 
         {summary && (
@@ -152,7 +146,7 @@ function ShowcaseCard({ item, t }) {
 
         {highlights.length > 0 && (
           <div className="mt-5 flex flex-wrap gap-2">
-            {highlights.slice(0, 3).map((highlight) => (
+            {highlights.slice(0, 2).map((highlight) => (
               <span
                 key={highlight}
                 className={`inline-flex items-center rounded-full border px-2.5 py-1.5 text-[10px] font-medium tracking-[0.01em] ${accentStyles.chip}`}
@@ -504,12 +498,33 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
 
 export default function Projects() {
   const { t } = useTranslation();
-  const [isProductsExpanded, setIsProductsExpanded] = useState(true);
   const [isGithubExpanded, setIsGithubExpanded] = useState(false);
+  const [isGithubNearViewport, setIsGithubNearViewport] = useState(false);
+  const githubSectionRef = useRef(null);
+  const shouldLoadGithub = isGithubExpanded || isGithubNearViewport;
 
-  const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope);
-  const activityState = useGithubResource(GITHUB_ACTIVITY_ENDPOINT, isGithubActivityEnvelope);
-  const projectsState = useGithubResource(GITHUB_PROJECTS_ENDPOINT, isGithubProjectsEnvelope);
+  useEffect(() => {
+    const section = githubSectionRef.current;
+    if (!section || isGithubNearViewport) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsGithubNearViewport(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '320px 0px' },
+    );
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [isGithubNearViewport]);
+
+  const statsState = useGithubResource(GITHUB_STATS_ENDPOINT, isGithubStatsEnvelope, shouldLoadGithub);
+  const activityState = useGithubResource(GITHUB_ACTIVITY_ENDPOINT, isGithubActivityEnvelope, shouldLoadGithub);
+  const projectsState = useGithubResource(GITHUB_PROJECTS_ENDPOINT, isGithubProjectsEnvelope, shouldLoadGithub);
 
   const profileUrl = statsState.response?.data?.profileUrl || getGithubProfileUrl();
 
@@ -526,62 +541,42 @@ export default function Projects() {
           </p>
         </div>
 
-        {/* Subsection 1: Case Studies */}
+        {/* Featured work */}
         <div className="mt-12">
-          <SectionHeader
-            title={t('projects.showcaseTitle')}
-            isExpanded={isProductsExpanded}
-            onToggle={() => setIsProductsExpanded(!isProductsExpanded)}
-            summary={t('projects.summaryProducts')}
-            id="live-products-section"
-            showLabel={t('projects.showProducts')}
-            hideLabel={t('projects.hideProducts')}
-          />
-          
-          <div
-            id="live-products-section"
-            className={`grid transition-all duration-500 ease-in-out ${isProductsExpanded ? 'grid-rows-[1fr] opacity-100 mt-8' : 'grid-rows-[0fr] opacity-0'}`}
-          >
-            <div className="overflow-hidden">
-              <div className="mb-6 rounded-r-2xl border-l-2 border-slate-300 bg-white/60 px-5 py-4 sm:px-6 dark:border-white/20 dark:bg-white/[0.03]">
-                <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
-                  {t('projects.caseStudyInProgress')}
-                </p>
-                <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 dark:text-slate-400">
-                  {t('projects.showcaseDescription')}
-                </p>
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                {featuredWorkItems.map((item) => (
-                  <ShowcaseCard key={item.id} item={item} t={t} />
-                ))}
-              </div>
-              {secondaryWorkItems.length > 0 && (
-                <div className="mt-6 rounded-[1.75rem] border border-slate-200/80 bg-white/70 p-6 sm:p-7 dark:border-white/10 dark:bg-slate-900/40">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
-                    {t('projects.moreWorkTitle')}
-                  </p>
-                  <ul className="mt-5">
-                    {secondaryWorkItems.map((item) => (
-                      <SecondaryWorkRow key={item.id} item={item} t={t} />
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+          <div className="mb-6 flex items-center gap-3 border-b border-slate-200 pb-5 dark:border-white/10">
+            <h3 className="text-xl font-bold text-slate-950 dark:text-white">{t('projects.showcaseTitle')}</h3>
+            <span className="text-sm text-slate-400" aria-hidden="true">/</span>
+            <span className="text-sm text-slate-500 dark:text-slate-400">{t('projects.summaryProducts')}</span>
           </div>
+          <div className="grid gap-5 md:grid-cols-2">
+            {featuredWorkItems.map((item) => (
+              <ShowcaseCard key={item.id} item={item} t={t} />
+            ))}
+          </div>
+          {secondaryWorkItems.length > 0 && (
+            <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white/70 p-5 dark:border-white/10 dark:bg-slate-900/40">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+                {t('projects.moreWorkTitle')}
+              </p>
+              <ul className="mt-4">
+                {secondaryWorkItems.map((item) => (
+                  <SecondaryWorkRow key={item.id} item={item} t={t} />
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Subsection 2: GitHub Activity */}
-        <div className="mt-8">
+        <div ref={githubSectionRef} className="mt-12">
           <SectionHeader
             title={t('projects.githubSignalTitle')}
             isExpanded={isGithubExpanded}
             onToggle={() => setIsGithubExpanded(!isGithubExpanded)}
             summary={t('projects.summaryGithub')}
             id="github-activity-section"
-            showLabel={t('projects.showGithub')}
-            hideLabel={t('projects.hideGithub')}
+            showLabel={t('projects.showActivity')}
+            hideLabel={t('projects.hideActivity')}
           />
           
           <div

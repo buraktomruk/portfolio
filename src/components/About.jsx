@@ -14,7 +14,7 @@ const About = () => {
               <User className="w-8 h-8 text-blue-600" />
               {t('about.title')}
             </h2>
-            <div className="aspect-square rounded-2xl overflow-hidden bg-slate-200 dark:bg-slate-700 relative shadow-xl -rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white dark:border-slate-600">
+            <div className="aspect-square overflow-hidden rounded-2xl border-4 border-white bg-slate-200 shadow-xl dark:border-slate-600 dark:bg-slate-700">
               <img
                 src="/ai_burak.JPG"
                 alt="Burak Tomruk"

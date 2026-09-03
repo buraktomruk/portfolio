@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -6,13 +6,12 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Education from './components/Education';
 import Footer from './components/Footer';
-const AIChatWidget = lazy(() => import('./components/AIChatWidget'));
 import BackToTopButton from './components/BackToTopButton';
 import { useTranslation } from 'react-i18next';
 
 const App = () => {
   const { i18n } = useTranslation();
-  const [currentLang, setCurrentLang] = useState(i18n.language);
+  const [currentLang, setCurrentLang] = useState(i18n.resolvedLanguage === 'de' ? 'de' : 'en');
   
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -56,10 +55,17 @@ const App = () => {
     setCurrentLang(lang);
   };
 
+  useEffect(() => {
+    const language = i18n.resolvedLanguage === 'de' ? 'de' : 'en';
+    document.documentElement.lang = language;
+    setCurrentLang(language);
+  }, [i18n.resolvedLanguage]);
+
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      element.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'start' });
     }
   };
 
@@ -83,9 +89,6 @@ const App = () => {
       <Skills />
       <Education />
       <Footer />
-      <Suspense fallback={null}>
-        <AIChatWidget />
-      </Suspense>
       <BackToTopButton />
     </div>
   );

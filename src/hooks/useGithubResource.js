@@ -3,15 +3,19 @@ import * as Sentry from '@sentry/react';
 import { createAbortError, GITHUB_STATS_TIMEOUT_MS } from '../shared/githubStats.js';
 
 const INITIAL_STATE = {
-  status: 'loading',
+  status: 'idle',
   response: null,
 };
 
-export function useGithubResource(endpoint, validateResponse) {
+export function useGithubResource(endpoint, validateResponse, enabled = true) {
   const [requestNonce, setRequestNonce] = useState(0);
   const [state, setState] = useState(INITIAL_STATE);
 
   useEffect(() => {
+    if (!enabled) {
+      return undefined;
+    }
+
     let cancelled = false;
     const controller = new AbortController();
     const timeoutId = window.setTimeout(
@@ -78,7 +82,7 @@ export function useGithubResource(endpoint, validateResponse) {
       window.clearTimeout(timeoutId);
       controller.abort();
     };
-  }, [endpoint, requestNonce, validateResponse]);
+  }, [enabled, endpoint, requestNonce, validateResponse]);
 
   return {
     ...state,

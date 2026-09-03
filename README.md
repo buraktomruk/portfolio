@@ -44,7 +44,7 @@ npm install
 
 3. Copy `.env.example` to `.env` and fill in the values you need:
 ```env
-VITE_GEMINI_API_KEY=your_api_key_here
+GEMINI_API_KEY=your_api_key_here
 VITE_SENTRY_DSN=
 GITHUB_USERNAME=buraktomruk
 GITHUB_TOKEN=
@@ -99,9 +99,8 @@ npm run preview
 burak-tomruk-portfolio/
 ├── public/              # Static assets
 │   ├── favicon.svg
-│   ├── manifest.json
 │   ├── robots.txt
-│   ├── service-worker.js
+│   ├── social-card.svg
 │   └── sitemap.xml
 ├── src/
 │   ├── components/      # React components
@@ -139,7 +138,7 @@ burak-tomruk-portfolio/
 Create a `.env` file based on `.env.example`:
 
 ```env
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 VITE_SENTRY_DSN=
 GITHUB_USERNAME=buraktomruk
 GITHUB_TOKEN=
@@ -155,7 +154,7 @@ Notes:
 - `GITHUB_USERNAME` falls back to `buraktomruk` if omitted or left as a placeholder value.
 - `GITHUB_TOKEN` is optional but recommended in production to improve GitHub API rate limits and enable authenticated contribution totals.
 - `GITHUB_PINNED_REPOS` is optional and accepts comma-separated repo names, such as `portfolio,react-initializer`.
-- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are optional locally. Without them, the widget still works, but caching and rate limiting are intentionally disabled instead of failing silently.
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are optional for the server-side chat rate limiter. The AI chat stays hidden until a server credential and production rate limit are configured and verified.
 - `VITE_SENTRY_DSN` and `SENTRY_DSN` are optional. Invalid DSNs are ignored.
 
 ## Deployment

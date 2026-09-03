@@ -5,4 +5,4 @@ Allow: /
 Disallow: /resume.pdf
 Disallow: /thesis.pdf
 
-Sitemap: https://buraktomruk.dev/sitemap.xml
+Sitemap: https://buraktomruk.com/sitemap.xml

@@ -1,0 +1,13 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0F172A"/>
+  <circle cx="1030" cy="-40" r="340" fill="#1D4ED8" fill-opacity="0.28"/>
+  <circle cx="1100" cy="80" r="210" stroke="#38BDF8" stroke-opacity="0.35" stroke-width="2"/>
+  <circle cx="1100" cy="80" r="150" stroke="#38BDF8" stroke-opacity="0.24" stroke-width="2"/>
+  <path d="M0 560C230 500 330 610 520 550C730 483 818 516 1200 390V630H0V560Z" fill="#111C33"/>
+  <rect x="88" y="88" width="76" height="76" rx="20" fill="#2563EB"/>
+  <text x="126" y="141" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="32" font-weight="700">BT</text>
+  <text x="88" y="290" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="64" font-weight="700">Burak Tomruk</text>
+  <text x="92" y="355" fill="#7DD3FC" font-family="Arial, sans-serif" font-size="28" font-weight="600">Senior Software Engineer</text>
+  <text x="92" y="420" fill="#CBD5E1" font-family="Arial, sans-serif" font-size="23">Full-stack developer with a frontend focus</text>
+  <text x="92" y="468" fill="#94A3B8" font-family="Arial, sans-serif" font-size="21">React · TypeScript · Next.js · Munich</text>
+</svg>

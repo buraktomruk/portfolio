@@ -3,17 +3,25 @@
     "about": "About",
     "projects": "Projects",
     "skills": "Skills",
-    "education": "Education"
+    "education": "Education",
+    "themeLight": "Switch to light mode",
+    "themeDark": "Switch to dark mode",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu"
   },
   "hero": {
     "role": "Senior Software Engineer",
+    "name": "Burak Tomruk",
+    "location": "Munich, Germany",
     "greeting": "Hello, I'm",
     "intro": "I'm Burak Tomruk.",
-    "tagline1": "Full-stack developer with a frontend focus, building scalable web products with React and TypeScript. Focused on architecture, performance and reliability. Based in",
+    "tagline1": "Full-stack developer with a frontend focus, building scalable web products with React and TypeScript. Focused on architecture, performance and reliability.",
     "tagline2": "Munich, Germany",
     "download_resume": "View Resume",
     "check_thesis": "View My Master's Thesis",
-    "connect": "Connect With Me"
+    "connect": "Connect With Me",
+    "view_projects": "View Projects",
+    "send_message": "Email me"
   },
   "about": {
     "title": "About Me",
@@ -32,6 +40,12 @@
       "devops": "Delivery",
       "testing": "Testing & Quality",
       "other": "Additional Experience"
+    },
+    "groups": {
+      "frontend": "Product UI",
+      "backend": "Systems & data",
+      "delivery": "Delivery & quality",
+      "other": "Additional experience"
     }
   },
   "education": {
@@ -47,23 +61,31 @@
       "university": "Bogazici University",
       "degree": "Bachelor of Science (BSc) - Computer Engineering",
       "location": "Istanbul, Turkey"
-    }
+    },
+    "thesis": "Read Master's thesis"
   },
   "footer": {
     "all_rights_reserved": "All rights reserved."
+  },
+  "a11y": {
+    "backToTop": "Back to top"
   },
   "chat": {
     "header": "Ask About Burak",
     "initial_message": "Hi! I'm Burak's AI assistant. Ask me anything about his experience or skills!",
     "placeholder": "Ask a question...",
-    "tooltip": "Chat with AI"
+    "tooltip": "Chat with AI",
+    "close": "Close chat",
+    "send": "Send message",
+    "input_label": "Chat message",
+    "session_limit": "Session limit reached. Please try again later.",
+    "offline": "The AI gateway is briefly offline. Please try again soon."
   },
   "projects": {
     "title": "Selected Projects",
     "subtitle": "Independent products I build outside work — from travel and sports data to subscription tracking and fitness.",
     "showcaseTitle": "Featured work",
     "showcaseDescription": "Four active products, each solving a different problem and showing a different part of how I design, build and ship software.",
-    "caseStudyInProgress": "What I'm building",
     "previewBuild": "Preview build",
     "ctaLiveApp": "Open live app",
     "ctaApp": "Open app",
@@ -177,10 +199,8 @@
       "dataCorrectness": "Keeping sports-data and recurring-spend calculations correct and explainable.",
       "systemDesign": "Designing local-first workflows that stay useful without an account or constant connectivity."
     },
-    "showProducts": "Show projects",
-    "hideProducts": "Hide projects",
-    "showGithub": "Show GitHub",
-    "hideGithub": "Hide GitHub",
+    "showActivity": "Show activity",
+    "hideActivity": "Hide activity",
     "summaryProducts": "Four active products, plus one early-stage build",
     "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",
