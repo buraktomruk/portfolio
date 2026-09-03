@@ -10,7 +10,7 @@ const Navbar = ({ isScrolled, scrollToSection, darkMode, toggleDarkMode, changeL
   const firstMenuItemRef = useRef(null);
   const menuRef = useRef(null);
 
-  const sectionIds = ['about', 'projects', 'skills', 'education'];
+  const sectionIds = ['about', 'skills', 'education', 'projects'];
 
   useEffect(() => {
     if (isMenuOpen) {

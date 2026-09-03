@@ -8,13 +8,13 @@ const About = () => {
   return (
     <section id="about" className="py-20 bg-white dark:bg-slate-800/50">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row gap-12 items-start">
+        <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="md:w-1/3">
             <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
               <User className="w-8 h-8 text-blue-600" />
               {t('about.title')}
             </h2>
-            <div className="aspect-square overflow-hidden rounded-2xl border-4 border-white bg-slate-200 shadow-xl dark:border-slate-600 dark:bg-slate-700">
+            <div className="relative aspect-square -rotate-3 overflow-hidden rounded-2xl border-4 border-white bg-slate-200 shadow-xl transition-transform duration-500 hover:rotate-0 dark:border-slate-600 dark:bg-slate-700">
               <img
                 src="/ai_burak.JPG"
                 alt="Burak Tomruk"

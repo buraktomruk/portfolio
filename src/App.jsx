@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Education from './components/Education';
 import Footer from './components/Footer';
+const AIChatWidget = lazy(() => import('./components/AIChatWidget'));
 import BackToTopButton from './components/BackToTopButton';
 import { useTranslation } from 'react-i18next';
 
@@ -85,10 +86,13 @@ const App = () => {
       />
       <Hero />
       <About />
-      <Projects />
       <Skills />
       <Education />
+      <Projects />
       <Footer />
+      <Suspense fallback={null}>
+        <AIChatWidget />
+      </Suspense>
       <BackToTopButton />
     </div>
   );
