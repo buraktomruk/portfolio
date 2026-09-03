@@ -101,6 +101,7 @@ burak-tomruk-portfolio/
 │   ├── favicon.svg
 │   ├── robots.txt
 │   ├── social-card.svg
+│   ├── social-card.png
 │   └── sitemap.xml
 ├── src/
 │   ├── components/      # React components

@@ -27,7 +27,14 @@ const Navbar = ({ isScrolled, scrollToSection, darkMode, toggleDarkMode, changeL
     };
 
     const handlePointerDown = (event) => {
-      if (isMenuOpen && menuRef.current && !menuRef.current.contains(event.target)) {
+      const clickedOutsideMenu =
+        menuRef.current &&
+        !menuRef.current.contains(event.target);
+      const clickedOutsideButton =
+        menuButtonRef.current &&
+        !menuButtonRef.current.contains(event.target);
+
+      if (isMenuOpen && clickedOutsideMenu && clickedOutsideButton) {
         setIsMenuOpen(false);
       }
     };
@@ -111,13 +118,12 @@ const Navbar = ({ isScrolled, scrollToSection, darkMode, toggleDarkMode, changeL
 
       {isMenuOpen && (
         <div ref={menuRef} id="mobile-navigation" className="border-t border-slate-200/80 bg-white/95 px-6 py-4 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-slate-900/95 md:hidden">
-          <div className="container mx-auto flex flex-col gap-1" role="menu">
+          <div className="container mx-auto flex flex-col gap-1">
             {sectionIds.map((id, index) => (
               <button
                 key={id}
                 ref={index === 0 ? firstMenuItemRef : undefined}
                 type="button"
-                role="menuitem"
                 onClick={() => handleSectionClick(id)}
                 className="rounded-lg px-3 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-100 hover:text-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:text-slate-200 dark:hover:bg-white/10 dark:hover:text-blue-300"
               >
