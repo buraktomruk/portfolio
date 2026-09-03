@@ -1,8 +1,9 @@
-/** Server-owned AI proxy. The browser submits only a visitor prompt. */
-import { Redis } from '@upstash/redis';
-import { Ratelimit } from '@upstash/ratelimit';
+/**
+ * Server-owned AI proxy. The browser submits only a visitor prompt.
+ * Runs on Netlify's v2 Functions API so it can carry a custom route
+ * (required for Netlify's native, platform-side function rate limiting).
+ */
 import { RESUME_CONTEXT } from '../../src/data/resumeData.js';
-import { hasValidHttpUrl, resolveOptionalRedisToken } from '../../src/shared/githubStats.js';
 
 export const MAX_BODY_BYTES = 4 * 1024;
 export const MAX_PROMPT_CHARS = 1000;
@@ -33,78 +34,34 @@ export function resolveChatApiKey(env = process.env) {
   return key && !key.startsWith('ey') ? key : null;
 }
 
-function getHeaderValue(headers, name) {
-  const key = Object.keys(headers || {}).find((headerName) => headerName.toLowerCase() === name.toLowerCase());
-  return key ? headers[key] : undefined;
-}
-
-function getClientIp(event) {
-  const netlifyIp = getHeaderValue(event.headers, 'x-nf-client-connection-ip');
-  if (typeof netlifyIp === 'string' && netlifyIp.trim()) return netlifyIp.trim();
-  const forwardedFor = getHeaderValue(event.headers, 'x-forwarded-for');
-  if (typeof forwardedFor === 'string' && forwardedFor.trim()) return forwardedFor.split(',')[0].trim();
-  return '127.0.0.1';
-}
-
-let chatRatelimit;
-let chatRatelimitInitialized = false;
-
-function getChatRatelimit() {
-  if (!chatRatelimitInitialized) {
-    chatRatelimitInitialized = true;
-    const redisUrl = hasValidHttpUrl(process.env.UPSTASH_REDIS_REST_URL)
-      ? process.env.UPSTASH_REDIS_REST_URL
-      : undefined;
-    const redisToken = resolveOptionalRedisToken(process.env.UPSTASH_REDIS_REST_TOKEN);
-    if (redisUrl && redisToken) {
-      chatRatelimit = new Ratelimit({
-        redis: new Redis({ url: redisUrl, token: redisToken }),
-        limiter: Ratelimit.slidingWindow(CHAT_RATE_LIMIT_MAX_REQUESTS, `${CHAT_RATE_LIMIT_WINDOW_SECONDS} s`),
-        analytics: true,
-        prefix: 'rl_portfolio_chat',
-      });
-    }
-  }
-  return chatRatelimit;
-}
-
 function jsonResponse(statusCode, body, headers = {}) {
-  return {
-    statusCode,
+  return new Response(JSON.stringify(body), {
+    status: statusCode,
     headers: {
       'Content-Type': 'application/json',
       'X-Frame-Options': 'DENY',
       'X-Content-Type-Options': 'nosniff',
       ...headers,
     },
-    body: JSON.stringify(body),
-  };
+  });
 }
-export const handler = async (event) => {
-  if (event.httpMethod !== 'POST' || !event.body) {
+
+export default async (req) => {
+  if (req.method !== 'POST') {
     return jsonResponse(403, { error: 'Access Denied: Malformed Request' });
   }
 
-  if (Buffer.byteLength(event.body, 'utf8') > MAX_BODY_BYTES) {
+  const rawBody = await req.text().catch(() => '');
+  if (!rawBody) {
+    return jsonResponse(403, { error: 'Access Denied: Malformed Request' });
+  }
+
+  if (Buffer.byteLength(rawBody, 'utf8') > MAX_BODY_BYTES) {
     return jsonResponse(413, { error: 'Request Entity Too Large' });
   }
 
-  const ratelimit = getChatRatelimit();
-  if (ratelimit) {
-    try {
-      const { success } = await ratelimit.limit(`ip_${getClientIp(event)}`);
-      if (!success) {
-        return jsonResponse(429, { error: 'Too many requests. Try again shortly.' }, {
-          'Retry-After': String(CHAT_RATE_LIMIT_WINDOW_SECONDS),
-        });
-      }
-    } catch (error) {
-      console.error('[AI Proxy]: Rate limiter unavailable; request allowed.', error?.message);
-    }
-  }
-
   try {
-    const validation = validateChatRequest(JSON.parse(event.body));
+    const validation = validateChatRequest(JSON.parse(rawBody));
     if (!validation.ok) {
       return jsonResponse(400, { error: 'Invalid Configuration' });
     }
@@ -128,7 +85,7 @@ export const handler = async (event) => {
     );
 
     if (!response.ok) {
-      // 4. (/privacy) Don't leak provider details; fail gracefully
+      // Don't leak provider details; fail gracefully
       const errBody = await response.text().catch(() => '');
       console.error('[AI Proxy] Upstream error status:', response.status, 'body:', errBody.substring(0, 300));
       return jsonResponse(502, { error: 'AI Service Temporarily Unavailable' });
@@ -138,7 +95,16 @@ export const handler = async (event) => {
     return jsonResponse(200, data);
   } catch (error) {
     console.error('[AI Proxy Critical Failure]:', error);
-    // 5. (/privacy) Fail Closed on Parse Errors
+    // Fail Closed on Parse Errors
     return jsonResponse(500, { error: 'Infrastructure Error' });
   }
+};
+
+export const config = {
+  path: '/api/chat',
+  rateLimit: {
+    windowLimit: CHAT_RATE_LIMIT_MAX_REQUESTS,
+    windowSize: CHAT_RATE_LIMIT_WINDOW_SECONDS,
+    aggregateBy: ['ip', 'domain'],
+  },
 };
