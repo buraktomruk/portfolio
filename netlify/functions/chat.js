@@ -100,11 +100,15 @@ export default async (req) => {
   }
 };
 
+// Netlify's function bundler extracts this config via static analysis of the
+// AST, not runtime evaluation -- these values must stay literal (not
+// references to CHAT_RATE_LIMIT_MAX_REQUESTS/CHAT_RATE_LIMIT_WINDOW_SECONDS
+// above) or the whole `rateLimit` block is silently dropped.
 export const config = {
   path: '/api/chat',
   rateLimit: {
-    windowLimit: CHAT_RATE_LIMIT_MAX_REQUESTS,
-    windowSize: CHAT_RATE_LIMIT_WINDOW_SECONDS,
+    windowLimit: 10,
+    windowSize: 60,
     aggregateBy: ['ip', 'domain'],
   },
 };
