@@ -202,6 +202,8 @@
     },
     "showActivity": "Show activity",
     "hideActivity": "Hide activity",
+    "showProjects": "Show projects",
+    "hideProjects": "Hide projects",
     "summaryProducts": "Four active products, plus one early-stage build",
     "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",

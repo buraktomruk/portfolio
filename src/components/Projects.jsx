@@ -498,7 +498,8 @@ function GithubSignal({ t, statsState, activityState, projectsState, profileUrl 
 
 export default function Projects() {
   const { t } = useTranslation();
-  const [isGithubExpanded, setIsGithubExpanded] = useState(false);
+  const [isProjectsExpanded, setIsProjectsExpanded] = useState(false);
+  const [isGithubExpanded, setIsGithubExpanded] = useState(true);
   const [isGithubNearViewport, setIsGithubNearViewport] = useState(false);
   const githubSectionRef = useRef(null);
   const shouldLoadGithub = isGithubExpanded || isGithubNearViewport;
@@ -543,28 +544,44 @@ export default function Projects() {
 
         {/* Featured work */}
         <div className="mt-12">
-          <div className="mb-6 flex items-center gap-3 border-b border-slate-200 pb-5 dark:border-white/10">
-            <h3 className="text-xl font-bold text-slate-950 dark:text-white">{t('projects.showcaseTitle')}</h3>
-            <span className="text-sm text-slate-400" aria-hidden="true">/</span>
-            <span className="text-sm text-slate-500 dark:text-slate-400">{t('projects.summaryProducts')}</span>
-          </div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {featuredWorkItems.map((item) => (
-              <ShowcaseCard key={item.id} item={item} t={t} />
-            ))}
-          </div>
-          {secondaryWorkItems.length > 0 && (
-            <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white/70 p-5 dark:border-white/10 dark:bg-slate-900/40">
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
-                {t('projects.moreWorkTitle')}
-              </p>
-              <ul className="mt-4">
-                {secondaryWorkItems.map((item) => (
-                  <SecondaryWorkRow key={item.id} item={item} t={t} />
+          <SectionHeader
+            title={t('projects.showcaseTitle')}
+            isExpanded={isProjectsExpanded}
+            onToggle={() => setIsProjectsExpanded(!isProjectsExpanded)}
+            summary={t('projects.summaryProducts')}
+            id="side-projects-section"
+            showLabel={t('projects.showProjects')}
+            hideLabel={t('projects.hideProjects')}
+          />
+
+          <div
+            id="side-projects-section"
+            ref={(node) => {
+              if (node) node.inert = !isProjectsExpanded;
+            }}
+            aria-hidden={!isProjectsExpanded}
+            className={`grid transition-all duration-500 ease-in-out ${isProjectsExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
+          >
+            <div className="overflow-hidden">
+              <div className="grid gap-5 md:grid-cols-2">
+                {featuredWorkItems.map((item) => (
+                  <ShowcaseCard key={item.id} item={item} t={t} />
                 ))}
-              </ul>
+              </div>
+              {secondaryWorkItems.length > 0 && (
+                <div className="mt-6 rounded-2xl border border-slate-200/80 bg-white/70 p-5 dark:border-white/10 dark:bg-slate-900/40">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500 dark:text-slate-500">
+                    {t('projects.moreWorkTitle')}
+                  </p>
+                  <ul className="mt-4">
+                    {secondaryWorkItems.map((item) => (
+                      <SecondaryWorkRow key={item.id} item={item} t={t} />
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Subsection 2: GitHub Activity */}
@@ -581,6 +598,10 @@ export default function Projects() {
           
           <div
             id="github-activity-section"
+            ref={(node) => {
+              if (node) node.inert = !isGithubExpanded;
+            }}
+            aria-hidden={!isGithubExpanded}
             className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
