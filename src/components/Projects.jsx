@@ -556,6 +556,10 @@ export default function Projects() {
 
           <div
             id="side-projects-section"
+            ref={(node) => {
+              if (node) node.inert = !isProjectsExpanded;
+            }}
+            aria-hidden={!isProjectsExpanded}
             className={`grid transition-all duration-500 ease-in-out ${isProjectsExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
@@ -594,6 +598,10 @@ export default function Projects() {
           
           <div
             id="github-activity-section"
+            ref={(node) => {
+              if (node) node.inert = !isGithubExpanded;
+            }}
+            aria-hidden={!isGithubExpanded}
             className={`grid transition-all duration-500 ease-in-out ${isGithubExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0'}`}
           >
             <div className="overflow-hidden">
