@@ -202,6 +202,8 @@
     },
     "showActivity": "Aktivität anzeigen",
     "hideActivity": "Aktivität ausblenden",
+    "showProjects": "Projekte anzeigen",
+    "hideProjects": "Projekte ausblenden",
     "summaryProducts": "Vier aktive Produkte, dazu ein früher Build",
     "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",
