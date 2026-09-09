@@ -36,17 +36,11 @@
   "skills": {
     "title": "Technische Fähigkeiten",
     "categories": {
-      "frontend": "Kern-Frontend",
+      "frontend": "Frontend Technologien",
       "backend": "Backend & Daten",
-      "devops": "Delivery",
-      "testing": "Testing & Qualität",
-      "other": "Weitere Erfahrung"
-    },
-    "groups": {
-      "frontend": "Produkt-UI",
-      "backend": "Systeme & Daten",
-      "delivery": "Delivery & Qualität",
-      "other": "Weitere Erfahrung"
+      "devops": "DevOps & CI/CD",
+      "testing": "Testing & QA",
+      "other": "Weitere Tools"
     }
   },
   "education": {
