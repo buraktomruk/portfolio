@@ -61,15 +61,10 @@ For the full local stack, including Netlify serverless functions:
 npm run dev:netlify
 ```
 
-This runs the Vite frontend and proxies `/.netlify/functions/*` through Netlify Dev.
+This runs the Vite frontend and the Netlify functions (including `/api/chat`) behind Netlify Dev on `http://localhost:8888`.
 The script runs in offline mode and uses only your local `.env`, so it does not require a logged-in global Netlify session for routine development.
 
-If you only need the frontend without Netlify functions:
-```bash
-npm run dev
-```
-
-The frontend-only application will be available at `http://localhost:5173`
+`npm run dev` is an alias for `npm run dev:netlify`. Open `http://localhost:8888` (Vite itself listens on `5173` behind it).
 
 ## Build
 
@@ -155,7 +150,7 @@ Notes:
 - `GITHUB_USERNAME` falls back to `buraktomruk` if omitted or left as a placeholder value.
 - `GITHUB_TOKEN` is optional but recommended in production to improve GitHub API rate limits and enable authenticated contribution totals.
 - `GITHUB_PINNED_REPOS` is optional and accepts comma-separated repo names, such as `portfolio,react-initializer`.
-- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are optional for the server-side chat rate limiter. The AI chat stays hidden until a server credential and production rate limit are configured and verified.
+- `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are optional and used only by the GitHub functions (cache and per-IP rate limiting; the limiter fails open if Redis is unavailable). The AI chat (`/api/chat`) needs `GEMINI_API_KEY` and is rate limited by Netlify's native function rate limit (10 requests/60s per IP), declared in `netlify/functions/chat.js`. Verify it is active in the Netlify dashboard after deploy.
 - `VITE_SENTRY_DSN` and `SENTRY_DSN` are optional. Invalid DSNs are ignored.
 
 ## Deployment
@@ -171,10 +166,7 @@ This project can be deployed to various platforms:
 4. Add your environment variables in Netlify's dashboard
 5. For the GitHub Portfolio Layer, set optional `GITHUB_TOKEN`, `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`, `GITHUB_PINNED_REPOS`, and `SENTRY_DSN`
 
-### Vercel
-1. Import your GitHub repository to Vercel
-2. Vercel will automatically detect Vite settings
-3. Add your environment variables in Vercel's dashboard
+The serverless functions and `/api/*` routes are Netlify-specific; deploying elsewhere (e.g. Vercel) would require porting them.
 
 ## Features in Detail
 
@@ -190,8 +182,8 @@ This project can be deployed to various platforms:
 
 ### AI Chat Widget
 - Context-aware responses about the portfolio owner
-- Supports both English and Turkish
-- Real-time streaming responses
+- Replies in English
+- Complete (non-streaming) responses with a 15s upstream timeout
 
 ### GitHub Portfolio Layer
 - Uses `/.netlify/functions/github-stats`, `/.netlify/functions/github-activity`, and `/.netlify/functions/github-projects`
