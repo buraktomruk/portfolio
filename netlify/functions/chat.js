@@ -7,6 +7,7 @@ import { RESUME_CONTEXT } from '../../src/data/resumeData.js';
 
 export const MAX_BODY_BYTES = 4 * 1024;
 export const MAX_PROMPT_CHARS = 1000;
+export const UPSTREAM_TIMEOUT_MS = 15000;
 export const CHAT_RATE_LIMIT_MAX_REQUESTS = 10;
 export const CHAT_RATE_LIMIT_WINDOW_SECONDS = 60;
 
@@ -46,12 +47,41 @@ function jsonResponse(statusCode, body, headers = {}) {
   });
 }
 
+// Reads the request stream and aborts as soon as the cap is exceeded, so an
+// oversized (or length-less) body is never fully buffered.
+async function readBodyCapped(req) {
+  if (!req.body) return '';
+  const reader = req.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > MAX_BODY_BYTES) {
+        await reader.cancel().catch(() => undefined);
+        return 'x'.repeat(MAX_BODY_BYTES + 1);
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return '';
+  }
+  return Buffer.concat(chunks).toString('utf8');
+}
+
 export default async (req) => {
   if (req.method !== 'POST') {
     return jsonResponse(403, { error: 'Access Denied: Malformed Request' });
   }
 
-  const rawBody = await req.text().catch(() => '');
+  const declaredLength = Number(req.headers.get('content-length'));
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_BODY_BYTES) {
+    return jsonResponse(413, { error: 'Request Entity Too Large' });
+  }
+
+  const rawBody = await readBodyCapped(req);
   if (!rawBody) {
     return jsonResponse(403, { error: 'Access Denied: Malformed Request' });
   }
@@ -76,10 +106,12 @@ export default async (req) => {
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: validation.prompt }] }],
           systemInstruction: { parts: [{ text: SERVER_SYSTEM_PROMPT }] },
+          generationConfig: { maxOutputTokens: 512 },
         }),
       }
     );
