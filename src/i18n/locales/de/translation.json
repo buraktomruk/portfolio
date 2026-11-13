@@ -97,7 +97,8 @@
       "productionMvp": "Produktives MVP",
       "privateBeta": "Private Beta",
       "inProduction": "Im Produktiveinsatz",
-      "preBeta": "Pre-Beta"
+      "preBeta": "Pre-Beta",
+      "privateBuild": "Privater Build"
     },
     "caseStudies": {
       "magnetmiles": {
@@ -142,13 +143,23 @@
       },
       "outthere": {
         "typeLabel": "TAGESAUSFLÜGE · WEB-APP",
-        "summary": "Finde einen Tagesausflug, der zur verfügbaren Zeit passt und dich trotzdem pünktlich nach Hause bringt.",
+        "summary": "Zeitbegrenzte Empfehlungs-Engine: Jeder Ausflug muss Hinfahrt, einen echten Aufenthalt, Rückfahrt und einen Sicherheitspuffer in dein Zeitfenster bekommen, sonst wird er verworfen.",
         "highlights": [
           "Zeitbewusstes Ranking",
           "Ausflüge rund um München",
           "Entscheidung zuerst"
         ],
-        "readinessNote": "Nur München"
+        "readinessNote": "Pre-Beta · zuerst München · frameworkfreie TypeScript-Engine mit Tests"
+      },
+      "applytrackly": {
+        "typeLabel": "BEWERBUNGSTRACKING · CHROME-ERWEITERUNG",
+        "summary": "Local-first Tracker für Bewerbungen. Enthält eine Migration von Huntr in eine Browser-Datenbank: Vorschau vor dem Import, idempotent, transaktional und rückgängig zu machen. Kein Konto, kein Server, keine Telemetrie.",
+        "highlights": [
+          "Local-first",
+          "Huntr-Migration",
+          "IndexedDB"
+        ],
+        "readinessNote": "Chrome-Erweiterung · keine Live-Demo · Quellcode privat"
       }
     },
     "githubSignalTitle": "Entwicklungsaktivität",
@@ -204,7 +215,7 @@
     "hideActivity": "Aktivität ausblenden",
     "showProjects": "Projekte anzeigen",
     "hideProjects": "Projekte ausblenden",
-    "summaryProducts": "Vier aktive Produkte, dazu ein früher Build",
+    "summaryProducts": "Vier aktive Produkte, dazu zwei weitere Builds",
     "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",
     "viewAllRepos": "Alle Repositories ansehen",

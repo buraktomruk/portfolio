@@ -97,7 +97,8 @@
       "productionMvp": "Production MVP",
       "privateBeta": "Private beta",
       "inProduction": "In production",
-      "preBeta": "Pre-beta"
+      "preBeta": "Pre-beta",
+      "privateBuild": "Private build"
     },
     "caseStudies": {
       "magnetmiles": {
@@ -142,13 +143,23 @@
       },
       "outthere": {
         "typeLabel": "DAY-TRIP PLANNING · WEB APP",
-        "summary": "Find a day trip that fits the time you have and still gets you home when you want.",
+        "summary": "Time-constrained recommendation engine: every trip must fit outbound travel, a real visit, the return and a safety reserve inside your time window, or it is dropped.",
         "highlights": [
           "Time-aware ranking",
           "Munich trips",
           "Decision-first UI"
         ],
-        "readinessNote": "Munich only"
+        "readinessNote": "Pre-beta · Munich-first · framework-free TypeScript engine with tests"
+      },
+      "applytrackly": {
+        "typeLabel": "JOB TRACKING · CHROME EXTENSION",
+        "summary": "Local-first job application tracker. Includes a migration from Huntr into an in-browser database: reviewed before import, idempotent, transactional and undoable. No account, server or telemetry.",
+        "highlights": [
+          "Local-first",
+          "Huntr migration",
+          "IndexedDB"
+        ],
+        "readinessNote": "Chrome extension · no live demo · source private"
       }
     },
     "githubSignalTitle": "Engineering Activity",
@@ -204,7 +215,7 @@
     "hideActivity": "Hide activity",
     "showProjects": "Show projects",
     "hideProjects": "Hide projects",
-    "summaryProducts": "Four active products, plus one early-stage build",
+    "summaryProducts": "Four active products, plus two more builds",
     "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",
     "viewAllRepos": "View all repositories",

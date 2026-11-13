@@ -273,11 +273,14 @@ test('every featured and secondary build has complete EN and DE case-study copy'
           && projects.statusLabels[item.statusKey].trim().length > 0,
         `Missing projects.statusLabels.${item.statusKey} in ${lang}`,
       );
-      const ctaKey = item.ctaKey.replace(/^projects\./, '');
-      assert.ok(
-        typeof projects[ctaKey] === 'string' && projects[ctaKey].trim().length > 0,
-        `Missing projects.${ctaKey} in ${lang}`,
-      );
+      // A CTA label is only required when the build has a link to point at.
+      if (item.demoUrl) {
+        const ctaKey = item.ctaKey.replace(/^projects\./, '');
+        assert.ok(
+          typeof projects[ctaKey] === 'string' && projects[ctaKey].trim().length > 0,
+          `Missing projects.${ctaKey} in ${lang}`,
+        );
+      }
     }
   }
 });
@@ -372,7 +375,7 @@ test('buildGithubSignalMetrics omits null contributions but preserves numeric ze
 test('activeProductCount derives from featured + secondary work items', async () => {
   const { activeProductCount, featuredWorkItems, secondaryWorkItems } = await import('../src/data/featuredWork.js');
   assert.strictEqual(activeProductCount, featuredWorkItems.length + secondaryWorkItems.length);
-  assert.strictEqual(activeProductCount, 5);
+  assert.strictEqual(activeProductCount, 6);
 });
 
 test('filterAndSortGithubRepos never exposes private repos', () => {
