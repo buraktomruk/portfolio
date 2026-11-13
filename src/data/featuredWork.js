@@ -60,6 +60,14 @@ export const featuredWorkItems = [
 // Rendered as a compact row under the featured grid.
 export const secondaryWorkItems = [
   {
+    id: "applytrackly",
+    title: "ApplyTrackly",
+    statusKey: "privateBuild",
+    accent: "indigo",
+    demoUrl: null,
+    repoUrl: null,
+  },
+  {
     id: "outthere",
     title: "OutThere",
     statusKey: "preBeta",
