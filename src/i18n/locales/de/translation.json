@@ -36,17 +36,11 @@
   "skills": {
     "title": "Technische Fähigkeiten",
     "categories": {
-      "frontend": "Kern-Frontend",
+      "frontend": "Frontend Technologien",
       "backend": "Backend & Daten",
-      "devops": "Delivery",
-      "testing": "Testing & Qualität",
-      "other": "Weitere Erfahrung"
-    },
-    "groups": {
-      "frontend": "Produkt-UI",
-      "backend": "Systeme & Daten",
-      "delivery": "Delivery & Qualität",
-      "other": "Weitere Erfahrung"
+      "devops": "DevOps & CI/CD",
+      "testing": "Testing & QA",
+      "other": "Weitere Tools"
     }
   },
   "education": {
@@ -143,23 +137,23 @@
       },
       "outthere": {
         "typeLabel": "TAGESAUSFLÜGE · WEB-APP",
-        "summary": "Zeitbegrenzte Empfehlungs-Engine: Jeder Ausflug muss Hinfahrt, einen echten Aufenthalt, Rückfahrt und einen Sicherheitspuffer in dein Zeitfenster bekommen, sonst wird er verworfen.",
+        "summary": "OutThere empfiehlt Ausflüge, bei denen Hin- und Rückfahrt, Aufenthalt und Zeitpuffer in dein Zeitfenster passen.",
         "highlights": [
           "Zeitbewusstes Ranking",
           "Ausflüge rund um München",
           "Entscheidung zuerst"
         ],
-        "readinessNote": "Pre-Beta · zuerst München · frameworkfreie TypeScript-Engine mit Tests"
+        "readinessNote": "Zuerst in München getestet · TypeScript-Engine ohne Framework mit automatisierten Tests"
       },
       "applytrackly": {
         "typeLabel": "BEWERBUNGSTRACKING · CHROME-ERWEITERUNG",
-        "summary": "Local-first Tracker für Bewerbungen. Enthält eine Migration von Huntr in eine Browser-Datenbank: Vorschau vor dem Import, idempotent, transaktional und rückgängig zu machen. Kein Konto, kein Server, keine Telemetrie.",
+        "summary": "Verwalte deine Bewerbungen lokal in Chrome. Prüfe deine Huntr-Daten vor dem Import, wiederhole ihn ohne Duplikate und mache ihn bei Bedarf rückgängig. Die Änderungen werden in einer einzigen IndexedDB-Transaktion gespeichert.",
         "highlights": [
           "Local-first",
           "Huntr-Migration",
           "IndexedDB"
         ],
-        "readinessNote": "Chrome-Erweiterung · keine Live-Demo · Quellcode privat"
+        "readinessNote": "Chrome-Erweiterung · keine öffentliche Demo"
       }
     },
     "githubSignalTitle": "Entwicklungsaktivität",
@@ -186,7 +180,7 @@
     "githubCachedNote": "Zuletzt zwischengespeicherte GitHub-Aktivität, dazu technische Themen aus den Produkten oben.",
     "githubFallbackNote": "GitHub-Aktivität ist vorübergehend nicht verfügbar. Die Produktarbeit oben zeigt weiterhin, woran ich arbeite.",
     "githubMetrics": {
-      "activeProducts": "Aktive Produkte",
+      "activeProducts": "Vorgestellte Projekte",
       "publicEvents": "Öffentliche Events · 30 T.",
       "activeDays": "Aktive Tage · 30 T.",
       "publicRepos": "Öffentliche Repositories",
@@ -215,7 +209,7 @@
     "hideActivity": "Aktivität ausblenden",
     "showProjects": "Projekte anzeigen",
     "hideProjects": "Projekte ausblenden",
-    "summaryProducts": "Vier aktive Produkte, dazu zwei weitere Builds",
+    "summaryProducts": "Vier ausgewählte Projekte und zwei Projekte in der Frühphase",
     "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",
     "viewAllRepos": "Alle Repositories ansehen",

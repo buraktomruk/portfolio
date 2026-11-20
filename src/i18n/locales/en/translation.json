@@ -36,17 +36,11 @@
   "skills": {
     "title": "Technical Skills",
     "categories": {
-      "frontend": "Core Frontend",
+      "frontend": "Frontend Technologies",
       "backend": "Backend & Data",
-      "devops": "Delivery",
-      "testing": "Testing & Quality",
-      "other": "Additional Experience"
-    },
-    "groups": {
-      "frontend": "Product UI",
-      "backend": "Systems & data",
-      "delivery": "Delivery & quality",
-      "other": "Additional experience"
+      "devops": "DevOps & CI/CD",
+      "testing": "Testing & QA",
+      "other": "Other Tools"
     }
   },
   "education": {
@@ -143,23 +137,23 @@
       },
       "outthere": {
         "typeLabel": "DAY-TRIP PLANNING · WEB APP",
-        "summary": "Time-constrained recommendation engine: every trip must fit outbound travel, a real visit, the return and a safety reserve inside your time window, or it is dropped.",
+        "summary": "Find day trips that fit your schedule. OutThere checks travel both ways, time at the destination and a buffer before recommending a trip.",
         "highlights": [
           "Time-aware ranking",
           "Munich trips",
           "Decision-first UI"
         ],
-        "readinessNote": "Pre-beta · Munich-first · framework-free TypeScript engine with tests"
+        "readinessNote": "Tested first in Munich · framework-free TypeScript engine with automated tests"
       },
       "applytrackly": {
         "typeLabel": "JOB TRACKING · CHROME EXTENSION",
-        "summary": "Local-first job application tracker. Includes a migration from Huntr into an in-browser database: reviewed before import, idempotent, transactional and undoable. No account, server or telemetry.",
+        "summary": "Track job applications locally in Chrome. Preview your Huntr import before saving, rerun it without creating duplicates, and undo it if needed. Changes are saved in a single IndexedDB transaction.",
         "highlights": [
           "Local-first",
           "Huntr migration",
           "IndexedDB"
         ],
-        "readinessNote": "Chrome extension · no live demo · source private"
+        "readinessNote": "Chrome extension · no public demo"
       }
     },
     "githubSignalTitle": "Engineering Activity",
@@ -186,7 +180,7 @@
     "githubCachedNote": "Recent cached GitHub activity, plus technical themes from the products above.",
     "githubFallbackNote": "GitHub activity is temporarily unavailable. The product work above still shows what I'm building.",
     "githubMetrics": {
-      "activeProducts": "Active products",
+      "activeProducts": "Projects showcased",
       "publicEvents": "Public events · 30d",
       "activeDays": "Active days · 30d",
       "publicRepos": "Public repositories",
@@ -215,7 +209,7 @@
     "hideActivity": "Hide activity",
     "showProjects": "Show projects",
     "hideProjects": "Hide projects",
-    "summaryProducts": "Four active products, plus two more builds",
+    "summaryProducts": "Four featured projects, plus two early-stage builds",
     "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",
     "viewAllRepos": "View all repositories",
