@@ -78,9 +78,9 @@
   },
   "projects": {
     "title": "Selected Projects",
-    "subtitle": "Independent products I build outside work — from travel and sports data to subscription tracking and fitness.",
+    "subtitle": "Independent products I build outside work — from travel to subscription tracking and fitness.",
     "showcaseTitle": "Featured work",
-    "showcaseDescription": "Four active products, each solving a different problem and showing a different part of how I design, build and ship software.",
+    "showcaseDescription": "Three featured products, each solving a different problem and showing a different part of how I design, build and ship software.",
     "previewBuild": "Preview build",
     "ctaLiveApp": "Open live app",
     "ctaApp": "Open app",
@@ -104,16 +104,6 @@
           "Optional Google sync"
         ],
         "readinessNote": "Local-first · optional Google sync"
-      },
-      "coefpulse": {
-        "typeLabel": "UEFA COEFFICIENT MODELING · WEB APP",
-        "summary": "See how European match results change a country's UEFA coefficient and ranking race.",
-        "highlights": [
-          "55 UEFA associations",
-          "Scenario simulator",
-          "Verified snapshots"
-        ],
-        "readinessNote": "Verified snapshots · not live scores"
       },
       "subtrackerrr": {
         "typeLabel": "RECURRING SPEND · WEB APP",
@@ -187,10 +177,6 @@
       "contributions": "Contributions · {{year}}"
     },
     "githubFallback": {
-      "coefpulse": {
-        "title": "CoefPulse — verified data pipeline",
-        "caption": "Coefficient modeling across 55 associations, with snapshot validation and freshness gates."
-      },
       "magnetmiles": {
         "title": "MagnetMiles — local-first product work",
         "caption": "251 curated city images, offline-capable board and map, licensed image attribution."
@@ -202,14 +188,14 @@
     },
     "githubMomentumFallback": {
       "releaseHardening": "Improving reliability across auth, persistence and installed-app flows.",
-      "dataCorrectness": "Keeping sports-data and recurring-spend calculations correct and explainable.",
+      "dataCorrectness": "Keeping recurring-spend and membership-value calculations correct and explainable.",
       "systemDesign": "Designing local-first workflows that stay useful without an account or constant connectivity."
     },
     "showActivity": "Show activity",
     "hideActivity": "Hide activity",
     "showProjects": "Show projects",
     "hideProjects": "Hide projects",
-    "summaryProducts": "Four featured projects, plus two early-stage builds",
+    "summaryProducts": "Three featured projects, plus two early-stage builds",
     "summaryGithub": "Recent public GitHub activity and the technical themes I'm working on",
     "repoTitle": "Public Code",
     "viewAllRepos": "View all repositories",

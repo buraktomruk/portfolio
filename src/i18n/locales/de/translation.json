@@ -78,9 +78,9 @@
   },
   "projects": {
     "title": "Ausgewählte Projekte",
-    "subtitle": "Eigene Produkte, die ich neben dem Job baue — von Reise- und Sportdaten bis zu Abo-Tracking und Fitness.",
+    "subtitle": "Eigene Produkte, die ich neben dem Job baue — von Reisen bis zu Abo-Tracking und Fitness.",
     "showcaseTitle": "Aktuelle Projekte",
-    "showcaseDescription": "Vier aktive Produkte, jedes löst ein anderes Problem und zeigt einen anderen Teil davon, wie ich Software designe, baue und ausliefere.",
+    "showcaseDescription": "Drei ausgewählte Produkte, jedes löst ein anderes Problem und zeigt einen anderen Teil davon, wie ich Software designe, baue und ausliefere.",
     "previewBuild": "Build ansehen",
     "ctaLiveApp": "Live-App öffnen",
     "ctaApp": "App öffnen",
@@ -104,16 +104,6 @@
           "Optionale Google-Sync"
         ],
         "readinessNote": "Local-first · Google-Sync optional"
-      },
-      "coefpulse": {
-        "typeLabel": "UEFA-KOEFFIZIENTEN · WEB-APP",
-        "summary": "Sieh, wie europäische Spielergebnisse den UEFA-Koeffizienten und das Ranking-Rennen eines Landes verändern.",
-        "highlights": [
-          "55 UEFA-Verbände",
-          "Szenario-Simulator",
-          "Geprüfte Datenstände"
-        ],
-        "readinessNote": "Geprüfte Datenstände · keine Live-Ergebnisse"
       },
       "subtrackerrr": {
         "typeLabel": "WIEDERKEHRENDE KOSTEN · WEB-APP",
@@ -187,10 +177,6 @@
       "contributions": "Beiträge · {{year}}"
     },
     "githubFallback": {
-      "coefpulse": {
-        "title": "CoefPulse — geprüfte Datenpipeline",
-        "caption": "Koeffizientenmodell über 55 Verbände, mit validierten Snapshots und Aktualitätsprüfung."
-      },
       "magnetmiles": {
         "title": "MagnetMiles — Local-First-Produktarbeit",
         "caption": "251 kuratierte Städtebilder, offlinefähige Pinnwand und Karte, lizenzkonforme Bildnachweise."
@@ -202,14 +188,14 @@
     },
     "githubMomentumFallback": {
       "releaseHardening": "Verbessere die Zuverlässigkeit von Auth-, Persistenz- und Installed-App-Abläufen.",
-      "dataCorrectness": "Halte Sportdaten- und Abo-Berechnungen korrekt und nachvollziehbar.",
+      "dataCorrectness": "Halte Abo- und Mitgliedschaftswert-Berechnungen korrekt und nachvollziehbar.",
       "systemDesign": "Entwerfe Local-first-Workflows, die auch ohne Konto oder ständige Verbindung nutzbar bleiben."
     },
     "showActivity": "Aktivität anzeigen",
     "hideActivity": "Aktivität ausblenden",
     "showProjects": "Projekte anzeigen",
     "hideProjects": "Projekte ausblenden",
-    "summaryProducts": "Vier ausgewählte Projekte und zwei Projekte in der Frühphase",
+    "summaryProducts": "Drei ausgewählte Projekte und zwei Projekte in der Frühphase",
     "summaryGithub": "Aktuelle öffentliche GitHub-Aktivität und die technischen Themen, an denen ich arbeite",
     "repoTitle": "Öffentlicher Code",
     "viewAllRepos": "Alle Repositories ansehen",
