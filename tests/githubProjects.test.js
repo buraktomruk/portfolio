@@ -375,7 +375,7 @@ test('buildGithubSignalMetrics omits null contributions but preserves numeric ze
 test('activeProductCount derives from featured + secondary work items', async () => {
   const { activeProductCount, featuredWorkItems, secondaryWorkItems } = await import('../src/data/featuredWork.js');
   assert.strictEqual(activeProductCount, featuredWorkItems.length + secondaryWorkItems.length);
-  assert.strictEqual(activeProductCount, 6);
+  assert.strictEqual(activeProductCount, 5);
 });
 
 test('filterAndSortGithubRepos never exposes private repos', () => {
@@ -486,4 +486,15 @@ test('public/auth cache namespaces are separated', async () => {
   const statsPublic = getGithubStatsCacheKey('stats_public_fresh', username);
   const statsAuth = getGithubStatsCacheKey('stats_auth_fresh', username);
   assert.notStrictEqual(statsPublic, statsAuth);
+});
+
+test('portfolio contains only the five selected products', async () => {
+  const { featuredWorkItems, secondaryWorkItems, curatedFallbackHighlights } = await import('../src/data/featuredWork.js');
+  assert.deepStrictEqual(featuredWorkItems.map(item => item.id), ['magnetmiles', 'subtrackerrr', 'fitvalue']);
+  assert.deepStrictEqual(secondaryWorkItems.map(item => item.id), ['applytrackly', 'outthere']);
+  assert.ok(!curatedFallbackHighlights.some(item => item.id === 'coefpulse'));
+  for (const lang of ['en', 'de']) {
+    const projects = loadLocale(lang).projects;
+    assert.ok(!projects.caseStudies.coefpulse && !projects.githubFallback.coefpulse);
+  }
 });

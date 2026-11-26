@@ -19,18 +19,6 @@ export const featuredWorkItems = [
     repoUrl: null,
   },
   {
-    id: "coefpulse",
-    title: "CoefPulse",
-    statusKey: "productionMvp",
-    ctaKey: "projects.ctaLiveApp",
-    accent: "indigo",
-    logoSrc: "/project-previews/coefpulse-logo.png",
-    logoTileClass: "bg-[radial-gradient(circle_at_top,_rgba(129,140,248,0.28),_transparent_58%),linear-gradient(145deg,rgba(15,23,42,0.98),rgba(2,6,23,0.9))]",
-    logoClass: "h-12 w-12 rounded-[1rem]",
-    demoUrl: "https://coefpulse.netlify.app/",
-    repoUrl: null,
-  },
-  {
     id: "subtrackerrr",
     title: "SubTracker",
     statusKey: "privateBeta",
@@ -91,12 +79,6 @@ export const engineeringMomentumThemeKeys = [
 // Curated product-engineering evidence. These are engineering signals, not
 // evidence that a build is production-ready or that its source is public.
 export const curatedFallbackHighlights = [
-  {
-    id: "coefpulse",
-    titleKey: "projects.githubFallback.coefpulse.title",
-    captionKey: "projects.githubFallback.coefpulse.caption",
-    logoSrc: "/project-previews/coefpulse-logo.png",
-  },
   {
     id: "magnetmiles",
     titleKey: "projects.githubFallback.magnetmiles.title",
