@@ -33,7 +33,7 @@ export const featuredWorkItems = [
   {
     id: "fitvalue",
     title: "FitValue",
-    statusKey: "inProduction",
+    statusKey: "webMvp",
     ctaKey: "projects.ctaLiveApp",
     accent: "emerald",
     logoSrc: "/project-previews/fitvalue-logo.svg",

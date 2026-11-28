@@ -90,7 +90,7 @@
       "publicWebMvp": "Öffentliches Web-MVP",
       "productionMvp": "Produktives MVP",
       "privateBeta": "Private Beta",
-      "inProduction": "Im Produktiveinsatz",
+      "webMvp": "Web-MVP",
       "preBeta": "Pre-Beta",
       "privateBuild": "Privater Build"
     },
